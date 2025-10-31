@@ -1,10 +1,9 @@
-import 'package:conflux/components/plane/plane_list.dart';
-import 'package:conflux/components/plane/plane_search_card.dart';
+import 'package:conflux/components/team/team_invitation_list.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class PlaneView extends HookConsumerWidget {
-  const PlaneView({super.key});
+class TeamView extends HookConsumerWidget {
+  const TeamView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -13,8 +12,7 @@ class PlaneView extends HookConsumerWidget {
         SliverOverlapInjector(
           handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
         ),
-        PlaneSearchCard(),
-        PlaneList(),
+        TeamInvitationList(),
       ],
     );
   }

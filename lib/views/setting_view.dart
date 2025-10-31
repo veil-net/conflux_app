@@ -11,23 +11,21 @@ class SettingView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Center(
-      child: CustomScrollView(
-        slivers: [
-          SliverOverlapInjector(
-            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+    return CustomScrollView(
+      slivers: [
+        SliverOverlapInjector(
+          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+        ),
+        SliverToBoxAdapter(
+          child: Wrap(
+            children: [
+              GeneralSettingsCard(),
+              AccountManagement(),
+              if (Platform.isWindows) WindowsSettings(),
+            ],
           ),
-          SliverToBoxAdapter(
-            child: Wrap(
-              children: [
-                GeneralSettingsCard(),
-                AccountManagement(),
-                if (Platform.isWindows) WindowsSettings(),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

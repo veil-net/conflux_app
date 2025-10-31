@@ -11,7 +11,7 @@ abstract class Team with _$Team {
     required String user_id,
     required String organisation_id,
     required String name,
-    required String email,
+    required String? email,
     String? plane_id,
   }) = _Team;
 

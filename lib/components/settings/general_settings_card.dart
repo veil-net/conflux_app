@@ -42,6 +42,7 @@ class GeneralSettingsCard extends HookConsumerWidget {
                     ),
                     const Divider(),
                     SwitchListTile.adaptive(
+                      dense: true,
                       title: Text(
                         'Dark Mode',
                         style: TextStyle(
@@ -56,6 +57,7 @@ class GeneralSettingsCard extends HookConsumerWidget {
                       },
                     ),
                     SwitchListTile.adaptive(
+                      dense: true,
                       title: Text(
                         'Developer Mode',
                         style: TextStyle(

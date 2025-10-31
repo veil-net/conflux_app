@@ -33,12 +33,12 @@ class SelectedPlane extends HookConsumerWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
             child: AppCard(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: selectedPlane.when(
-                  data: (plane) {
-                    if (plane == null) {
-                      return Column(
+              child: selectedPlane.when(
+                data: (plane) {
+                  if (plane == null) {
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
                         mainAxisSize: MainAxisSize.min,
                         spacing: 16,
                         children: [
@@ -86,152 +86,160 @@ class SelectedPlane extends HookConsumerWidget {
                             expand: true,
                           ),
                         ],
-                      );
-                    } else {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ListTile(
-                            leading: Text(
-                              plane.region.toFlag,
-                              style: Theme.of(context).textTheme.headlineLarge,
-                            ),
-                            title: Text(
-                              plane.name,
-                              style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.primary,
-                                  ),
-                            ),
-                            subtitle: Text(
-                              plane.subnet,
-                              style: Theme.of(context).textTheme.titleSmall
-                                  ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.secondary,
-                                  ),
-                            ),
-                            trailing: AppButton(
-                              outline: true,
-                              label: 'Change',
-                              onPressed:
-                                  veilNetState == VeilNetState.disconnected
-                                  ? () async {
-                                      ref
-                                          .read(pageControllerProvider)
-                                          .jumpToPage(1);
-                                    }
-                                  : null,
-                            ),
+                      ),
+                    );
+                  } else {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ListTile(
+                          leading: Text(
+                            plane.region.toFlag,
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
-                          AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 250),
-                            transitionBuilder: (child, animation) =>
-                                FadeTransition(
-                                  opacity: animation,
-                                  child: child,
+                          title: Text(
+                            plane.name,
+                            style: Theme.of(context).textTheme.titleLarge
+                                ?.copyWith(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.primary,
                                 ),
-                            child: switch (veilNetState) {
-                              VeilNetState.connected => AppButton(
-                                label: 'Disconnect',
-                                onPressed: () async {
-                                  try {
-                                    await ref
-                                        .read(veilNetProvider.notifier)
-                                        .disconnect();
-                                  } catch (e) {
-                                    if (context.mounted) {
-                                      DialogManager.showDialog(
-                                        context,
-                                        'Failed to disconnect from VeilNet: $e',
-                                        DialogType.error,
-                                      );
-                                    }
+                          ),
+                          subtitle: Text(
+                            plane.subnet,
+                            style: Theme.of(context).textTheme.titleSmall
+                                ?.copyWith(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.secondary,
+                                ),
+                          ),
+                          trailing: veilNetState == VeilNetState.disconnected
+                              ? AppButton(
+                                  outline: true,
+                                  label: 'Change',
+                                  onPressed: () async {
+                                    ref
+                                        .read(pageControllerProvider)
+                                        .jumpToPage(1);
+                                  },
+                                )
+                              : null,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: switch (veilNetState) {
+                            VeilNetState.connected => AppButton(
+                              label: 'Disconnect',
+                              onPressed: () async {
+                                try {
+                                  await ref
+                                      .read(veilNetProvider.notifier)
+                                      .disconnect();
+                                } catch (e) {
+                                  if (context.mounted) {
+                                    DialogManager.showDialog(
+                                      context,
+                                      'Failed to disconnect from VeilNet: $e',
+                                      DialogType.error,
+                                    );
                                   }
-                                },
-                                expand: true,
-                                outline: true,
-                              ),
-                              VeilNetState.disconnected => AppButton(
-                                label: 'Connect',
-                                onPressed: plane.portals > 0
-                                    ? () async {
-                                        try {
-                                          final resp = await supabase.rpc(
-                                            'count_user_public_rifts',
-                                            params: {'uid': plane.user_id},
-                                          );
-                                          final count = (resp as num).toInt();
-                                          final serviceTier = await ref.read(serviceTierProvider.future);
-                                          final userProfile = await ref.read(userProfileProvider.future);
-                                          switch (serviceTier) {
-                                            case 0:
-                                              if (userProfile.mp < 0) {
-                                                launchUrl(Uri.parse('https://auth.veilnet.app/subscription?refresh_token=${ref.read(currentSessionProvider)?.refreshToken}'));
-                                              }
-                                              break;
-                                            case 1:
-                                              if (count >= 3) {
-                                                throw Exception('You can not connect more than 3 devices at the same time.');
-                                              }
-                                              break;
-                                            case 2:
-                                              if (count >= 10) {
-                                                throw Exception('You can not connect more than 10 devices at the same time.');
-                                              }
-                                              break;
-                                            default:
-                                              throw Exception('Invalid service tier');
-                                          }
-                                          await ref
-                                              .read(veilNetProvider.notifier)
-                                              .connect(plane);
-                                        } catch (e) {
-                                          if (context.mounted) {
-                                            DialogManager.showDialog(
-                                              context,
-                                              'Failed to connect to VeilNet: $e',
-                                              DialogType.error,
+                                }
+                              },
+                              expand: true,
+                              outline: true,
+                            ),
+                            VeilNetState.disconnected => AppButton(
+                              label: 'Connect',
+                              onPressed: plane.portals > 0
+                                  ? () async {
+                                      try {
+                                        final resp = await supabase.rpc(
+                                          'count_user_public_rifts',
+                                          params: {'uid': plane.user_id},
+                                        );
+                                        final count = (resp as num).toInt();
+                                        final serviceTier = await ref.read(
+                                          serviceTierProvider.future,
+                                        );
+                                        final userProfile = await ref.read(
+                                          userProfileProvider.future,
+                                        );
+                                        switch (serviceTier) {
+                                          case 0:
+                                            if (userProfile.mp < 0) {
+                                              launchUrl(
+                                                Uri.parse(
+                                                  'https://auth.veilnet.app/subscription?refresh_token=${ref.read(currentSessionProvider)?.refreshToken}',
+                                                ),
+                                              );
+                                            }
+                                            break;
+                                          case 1:
+                                            if (count >= 3) {
+                                              throw Exception(
+                                                'You can not connect more than 3 devices at the same time.',
+                                              );
+                                            }
+                                            break;
+                                          case 2:
+                                            if (count >= 10) {
+                                              throw Exception(
+                                                'You can not connect more than 10 devices at the same time.',
+                                              );
+                                            }
+                                            break;
+                                          default:
+                                            throw Exception(
+                                              'Invalid service tier',
                                             );
-                                          }
+                                        }
+                                        await ref
+                                            .read(veilNetProvider.notifier)
+                                            .connect(plane);
+                                      } catch (e) {
+                                        if (context.mounted) {
+                                          DialogManager.showDialog(
+                                            context,
+                                            'Failed to connect to VeilNet: $e',
+                                            DialogType.error,
+                                          );
                                         }
                                       }
-                                    : null,
-                                expand: true,
-                                outline: false,
+                                    }
+                                  : null,
+                              expand: true,
+                              outline: false,
+                            ),
+                            VeilNetState.connecting => AppButton(
+                              label: 'Connecting...',
+                              onPressed: null,
+                              expand: true,
+                              outline: true,
+                            ),
+                            VeilNetState.disconnecting => AppButton(
+                              label: 'Disconnecting...',
+                              onPressed: null,
+                              expand: true,
+                              outline: true,
+                            ),
+                            VeilNetState.error => TextButton(
+                              onPressed: () async {
+                                ref.invalidate(veilNetProvider);
+                              },
+                              child: Text(
+                                'Failed to load VeilNet state, retry',
                               ),
-                              VeilNetState.connecting => AppButton(
-                                label: 'Connecting...',
-                                onPressed: null,
-                                expand: true,
-                                outline: true,
-                              ),
-                              VeilNetState.disconnecting => AppButton(
-                                label: 'Disconnecting...',
-                                onPressed: null,
-                                expand: true,
-                                outline: true,
-                              ),
-                              VeilNetState.error => TextButton(
-                                onPressed: () async {
-                                  ref.invalidate(veilNetProvider);
-                                },
-                                child: Text(
-                                  'Failed to load VeilNet state, retry',
-                                ),
-                              ),
-                            },
-                          ),
-                        ],
-                      );
-                    }
-                  },
-                  error: (error, stackTrace) => Text('Error: $error'),
-                  loading: () => SizedBox.shrink(),
-                ),
+                            ),
+                          },
+                        ),
+                      ],
+                    );
+                  }
+                },
+                error: (error, stackTrace) => Text('Error: $error'),
+                loading: () => SizedBox.shrink(),
               ),
             ).animate().slideY(duration: 500.milliseconds, curve: Curves.easeInOut),
           ),

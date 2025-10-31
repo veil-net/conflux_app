@@ -12,7 +12,7 @@ _Team _$TeamFromJson(Map<String, dynamic> json) => _Team(
   user_id: json['user_id'] as String,
   organisation_id: json['organisation_id'] as String,
   name: json['name'] as String,
-  email: json['email'] as String,
+  email: json['email'] as String?,
   plane_id: json['plane_id'] as String?,
 );
 

@@ -20,12 +20,14 @@ class AppNavigationBar extends HookConsumerWidget {
             color: Colors.transparent,
             borderRadius: BorderRadius.all(Radius.circular(16)),
             border: Border(
-              bottom: BorderSide(color: Colors.grey.withAlpha(50)),
+              bottom: BorderSide(
+                color: Theme.of(context).colorScheme.secondary.withAlpha(100),
+              ),
             ),
           ),
           child: NavigationBar(
             elevation: 5,
-            height: kToolbarHeight + 64,
+            height: kToolbarHeight * 2,
             selectedIndex: currentIndex,
             backgroundColor: Colors.transparent,
             onDestinationSelected: (index) {
@@ -39,8 +41,9 @@ class AppNavigationBar extends HookConsumerWidget {
               NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
               NavigationDestination(
                 icon: Icon(Icons.language),
-                label: 'Countries',
+                label: 'Planes',
               ),
+              NavigationDestination(icon: Icon(Icons.people), label: 'Team'),
               NavigationDestination(
                 icon: Icon(Icons.settings),
                 label: 'Settings',

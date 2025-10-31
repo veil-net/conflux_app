@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
-enum DialogType { info, warning, success, error }
+enum DialogType { info, warning, success, error, confirm }
 
 class DialogManager {
   static void showDialog(
@@ -14,6 +14,8 @@ class DialogManager {
     DialogType type, {
     String? label = 'Close',
     Future<void> Function()? onPressed,
+    Future<void> Function()? onConfirm,
+    Future<void> Function()? onCancel,
   }) {
     final title = switch (type) {
       DialogType.info => Text(
@@ -39,6 +41,12 @@ class DialogManager {
         style: Theme.of(
           context,
         ).textTheme.titleLarge?.copyWith(color: Colors.red),
+      ),
+      DialogType.confirm => Text(
+        'Confirm',
+        style: Theme.of(
+          context,
+        ).textTheme.titleLarge?.copyWith(color: Colors.amber),
       ),
     };
 
@@ -79,19 +87,29 @@ class DialogManager {
         ),
         child: const Icon(Icons.error, color: Colors.white),
       ),
+      DialogType.confirm => Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.amber,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: const Icon(Icons.help, color: Colors.white),
+      ),
     };
 
     showAdaptiveDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) => BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
         child: AlertDialog(
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          shadowColor: Theme.of(context).colorScheme.secondary.withAlpha(50),
+          backgroundColor: Theme.of(context).colorScheme.surface.withAlpha(200),
+          // shadowColor: Theme.of(context).colorScheme.secondary.withAlpha(50),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
             side: BorderSide(
-              color: Theme.of(context).colorScheme.primary.withAlpha(50),
+              color: Theme.of(context).colorScheme.secondary.withAlpha(100),
               width: 1,
             ),
           ),
@@ -122,15 +140,39 @@ class DialogManager {
                   Clipboard.setData(ClipboardData(text: message));
                 },
               ),
-            AppButton(
-              label: label ?? 'Close',
-              outline: true,
-              onPressed:
-                  onPressed ??
-                  () async {
-                    context.pop();
-                  },
-            ),
+            if (type == DialogType.confirm) ...[
+              AppButton(
+                label: 'Cancel',
+                outline: true,
+                onPressed:
+                    onCancel ??
+                    () async {
+                      context.pop();
+                    },
+              ),
+              AppButton(
+                label: 'Confirm',
+                onPressed: onConfirm != null
+                    ? () async {
+                        await onConfirm();
+                        if (context.mounted) {
+                          context.pop();
+                        }
+                      }
+                    : () async {
+                        context.pop();
+                      },
+              ),
+            ] else
+              AppButton(
+                label: label ?? 'Close',
+                outline: true,
+                onPressed:
+                    onPressed ??
+                    () async {
+                      context.pop();
+                    },
+              ),
           ],
         ),
       ),

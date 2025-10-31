@@ -9,20 +9,18 @@ class HomeView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Center(
-      child: CustomScrollView(
-        slivers: [
-          SliverOverlapInjector(
-            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+    return CustomScrollView(
+      slivers: [
+        SliverOverlapInjector(
+          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+        ),
+        SliverFillRemaining(
+          child: Wrap(
+            runAlignment: WrapAlignment.end,
+            children: [ConfluxMetrics(), CurrentConfluxCard(), SelectedPlane()],
           ),
-          SliverFillRemaining(
-            child: Wrap(
-              runAlignment: WrapAlignment.end,
-              children: [ConfluxMetrics(), CurrentConfluxCard(), SelectedPlane()],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

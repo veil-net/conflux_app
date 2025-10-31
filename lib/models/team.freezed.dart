@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Team {
 
- String get id; DateTime get created_at; String get user_id; String get organisation_id; String get name; String get email; String? get plane_id;
+ String get id; DateTime get created_at; String get user_id; String get organisation_id; String get name; String? get email; String? get plane_id;
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $TeamCopyWith<$Res>  {
   factory $TeamCopyWith(Team value, $Res Function(Team) _then) = _$TeamCopyWithImpl;
 @useResult
 $Res call({
- String id, DateTime created_at, String user_id, String organisation_id, String name, String email, String? plane_id
+ String id, DateTime created_at, String user_id, String organisation_id, String name, String? email, String? plane_id
 });
 
 
@@ -65,15 +65,15 @@ class _$TeamCopyWithImpl<$Res>
 
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? organisation_id = null,Object? name = null,Object? email = null,Object? plane_id = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? organisation_id = null,Object? name = null,Object? email = freezed,Object? plane_id = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
 as DateTime,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable
 as String,organisation_id: null == organisation_id ? _self.organisation_id : organisation_id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,plane_id: freezed == plane_id ? _self.plane_id : plane_id // ignore: cast_nullable_to_non_nullable
+as String,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String?,plane_id: freezed == plane_id ? _self.plane_id : plane_id // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -159,7 +159,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String organisation_id,  String name,  String email,  String? plane_id)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String organisation_id,  String name,  String? email,  String? plane_id)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Team() when $default != null:
 return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_that.name,_that.email,_that.plane_id);case _:
@@ -180,7 +180,7 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String organisation_id,  String name,  String email,  String? plane_id)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String organisation_id,  String name,  String? email,  String? plane_id)  $default,) {final _that = this;
 switch (_that) {
 case _Team():
 return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_that.name,_that.email,_that.plane_id);case _:
@@ -200,7 +200,7 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  String user_id,  String organisation_id,  String name,  String email,  String? plane_id)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  String user_id,  String organisation_id,  String name,  String? email,  String? plane_id)?  $default,) {final _that = this;
 switch (_that) {
 case _Team() when $default != null:
 return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_that.name,_that.email,_that.plane_id);case _:
@@ -223,7 +223,7 @@ class _Team implements Team {
 @override final  String user_id;
 @override final  String organisation_id;
 @override final  String name;
-@override final  String email;
+@override final  String? email;
 @override final  String? plane_id;
 
 /// Create a copy of Team
@@ -259,7 +259,7 @@ abstract mixin class _$TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
   factory _$TeamCopyWith(_Team value, $Res Function(_Team) _then) = __$TeamCopyWithImpl;
 @override @useResult
 $Res call({
- String id, DateTime created_at, String user_id, String organisation_id, String name, String email, String? plane_id
+ String id, DateTime created_at, String user_id, String organisation_id, String name, String? email, String? plane_id
 });
 
 
@@ -276,15 +276,15 @@ class __$TeamCopyWithImpl<$Res>
 
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? organisation_id = null,Object? name = null,Object? email = null,Object? plane_id = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? organisation_id = null,Object? name = null,Object? email = freezed,Object? plane_id = freezed,}) {
   return _then(_Team(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
 as DateTime,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable
 as String,organisation_id: null == organisation_id ? _self.organisation_id : organisation_id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,plane_id: freezed == plane_id ? _self.plane_id : plane_id // ignore: cast_nullable_to_non_nullable
+as String,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String?,plane_id: freezed == plane_id ? _self.plane_id : plane_id // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

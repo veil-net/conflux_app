@@ -21,7 +21,8 @@ class AppHeader extends HookConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.surface.withAlpha(200),
         surfaceTintColor: Colors.transparent,
         title: AppHeaderTitle(),
-        pinned: true,
+        floating: true,
+        snap: true,
         centerTitle: true,
         expandedHeight:
             MediaQuery.of(context).orientation == Orientation.portrait

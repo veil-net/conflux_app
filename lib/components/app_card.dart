@@ -18,8 +18,8 @@ class AppCard extends HookConsumerWidget {
             color: Theme.of(context).colorScheme.surface.withAlpha(200),
             borderRadius: BorderRadius.all(Radius.circular(16)),
             border: Border(
-              right: BorderSide(color: Colors.grey.withAlpha(50)),
-              bottom: BorderSide(color: Colors.grey.withAlpha(50)),
+              right: BorderSide(color: Theme.of(context).colorScheme.secondary.withAlpha(100)),
+              bottom: BorderSide(color: Theme.of(context).colorScheme.secondary.withAlpha(100)),
             ),
             // boxShadow: [
             //   BoxShadow(

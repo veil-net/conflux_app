@@ -138,21 +138,29 @@ class AccountManagement extends HookConsumerWidget {
                         ),
                       ],
                     ),
-                    AppButton(
-                      label: 'Change Password',
-                      onPressed: resetPassword,
-                      expand: true,
+                    ListTile(
+                      dense: true,
+                      onTap: resetPassword,
+                      title: Text('Change Password', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),),
+                      trailing: Icon(Icons.open_in_new),
                     ),
-                    AppButton(
-                      label: 'Manage Account',
-                      onPressed: manageAccount,
-                      expand: true,
+                    ListTile(
+                      dense: true,
+                      onTap: manageAccount,
+                      title: Text('Manage Account', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),),
+                      trailing: Icon(Icons.open_in_new),
                     ),
-                    AppButton(
-                      label: 'Switch Account',
-                      outline: true,
-                      onPressed: switchAccount,
-                      expand: true,
+                    ListTile(
+                      dense: true,
+                      onTap: switchAccount,
+                      title: Text('Switch Account', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),),
+                      trailing: Icon(Icons.open_in_new),
                     ),
                   ],
                 ),
