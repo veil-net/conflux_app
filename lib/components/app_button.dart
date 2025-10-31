@@ -1,0 +1,90 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+class AppButton extends HookConsumerWidget {
+  final IconData? icon;
+  final String label;
+  final Future<void> Function()? onPressed;
+  final bool expand;
+  final bool outline;
+  const AppButton({
+    super.key,
+    this.icon,
+    required this.label,
+    required this.onPressed,
+    this.expand = false,
+    this.outline = false,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isLoading = useState(false);
+    return outline
+        ? OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(color: Theme.of(context).colorScheme.secondary),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            onPressed: isLoading.value
+                ? null
+                : onPressed != null
+                ? () async {
+                    isLoading.value = true;
+                    await onPressed!();
+                    if (context.mounted) {
+                      isLoading.value = false;
+                    }
+                  }
+                : null,
+            child: Row(
+              mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 8,
+              children: [
+                if (icon != null) Icon(icon),
+                Text(
+                  label,
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
+              ],
+            ),
+          )
+        : FilledButton(
+            style: FilledButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            onPressed: isLoading.value
+                ? null
+                : onPressed != null
+                ? () async {
+                    isLoading.value = true;
+                    await onPressed!();
+                    if (context.mounted) {
+                      isLoading.value = false;
+                    }
+                  }
+                : null,
+            child: Row(
+              mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 8,
+              children: [
+                if (icon != null) Icon(icon),
+                Text(
+                  label,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.labelLarge?.copyWith(color: Colors.white),
+                ),
+              ],
+            ),
+          );
+  }
+}
