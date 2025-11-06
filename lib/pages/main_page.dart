@@ -1,6 +1,5 @@
 import 'package:conflux/components/app_background.dart';
 import 'package:conflux/components/app_header.dart';
-import 'package:conflux/providers/app_bar_collapsed_provider.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
 import 'package:conflux/views/home_view.dart';
 import 'package:conflux/views/plane_view.dart';
@@ -22,9 +21,6 @@ class MainPage extends HookConsumerWidget {
             Positioned.fill(child: AppBackground()),
             NestedScrollView(
               headerSliverBuilder: (context, innerBoxIsScrolled) {
-                Future.microtask(() {
-                  ref.read(appBarCollapsedProvider.notifier).setCollapsed(innerBoxIsScrolled);
-                });
                 return [
                   AppHeader(innerBoxIsScrolled: innerBoxIsScrolled),
                 ];

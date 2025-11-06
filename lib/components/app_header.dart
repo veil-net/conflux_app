@@ -80,7 +80,7 @@ class AppHeaderSpaceBar extends HookConsumerWidget {
                   duration: 500.milliseconds,
                   curve: Curves.easeInOut,
                 ),
-                SizedBox(height: kToolbarHeight + 16),
+                SizedBox(height: kToolbarHeight),
               ],
             ),
           ),

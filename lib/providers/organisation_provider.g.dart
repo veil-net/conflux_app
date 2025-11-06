@@ -9,19 +9,11 @@ part of 'organisation_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(organisations)
+@ProviderFor(Organisations)
 const organisationsProvider = OrganisationsProvider._();
 
 final class OrganisationsProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<Organisation>>,
-          List<Organisation>,
-          Stream<List<Organisation>>
-        >
-    with
-        $FutureModifier<List<Organisation>>,
-        $StreamProvider<List<Organisation>> {
+    extends $AsyncNotifierProvider<Organisations, List<Organisation>> {
   const OrganisationsProvider._()
     : super(
         from: null,
@@ -38,17 +30,30 @@ final class OrganisationsProvider
 
   @$internal
   @override
-  $StreamProviderElement<List<Organisation>> $createElement(
-    $ProviderPointer pointer,
-  ) => $StreamProviderElement(pointer);
-
-  @override
-  Stream<List<Organisation>> create(Ref ref) {
-    return organisations(ref);
-  }
+  Organisations create() => Organisations();
 }
 
-String _$organisationsHash() => r'2daafd2c2ee1a3da607c8b0a8b09686346ac4fef';
+String _$organisationsHash() => r'1b7b3d974707e4ef5ec7770b8c8c05785cb2f22e';
+
+abstract class _$Organisations extends $AsyncNotifier<List<Organisation>> {
+  FutureOr<List<Organisation>> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref =
+        this.ref as $Ref<AsyncValue<List<Organisation>>, List<Organisation>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<List<Organisation>>, List<Organisation>>,
+              AsyncValue<List<Organisation>>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}
 
 @ProviderFor(ownedOrganisation)
 const ownedOrganisationProvider = OwnedOrganisationProvider._();
@@ -58,9 +63,9 @@ final class OwnedOrganisationProvider
         $FunctionalProvider<
           AsyncValue<Organisation?>,
           Organisation?,
-          Stream<Organisation?>
+          FutureOr<Organisation?>
         >
-    with $FutureModifier<Organisation?>, $StreamProvider<Organisation?> {
+    with $FutureModifier<Organisation?>, $FutureProvider<Organisation?> {
   const OwnedOrganisationProvider._()
     : super(
         from: null,
@@ -77,14 +82,14 @@ final class OwnedOrganisationProvider
 
   @$internal
   @override
-  $StreamProviderElement<Organisation?> $createElement(
+  $FutureProviderElement<Organisation?> $createElement(
     $ProviderPointer pointer,
-  ) => $StreamProviderElement(pointer);
+  ) => $FutureProviderElement(pointer);
 
   @override
-  Stream<Organisation?> create(Ref ref) {
+  FutureOr<Organisation?> create(Ref ref) {
     return ownedOrganisation(ref);
   }
 }
 
-String _$ownedOrganisationHash() => r'83a1c9d8876d08324c52e5eba2b0a62ac037d1c3';
+String _$ownedOrganisationHash() => r'156ec890f78ee0673c947fe1ec3d46ba25fde221';

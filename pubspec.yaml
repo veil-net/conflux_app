@@ -48,6 +48,7 @@ dependencies:
   supabase_flutter: ^2.10.3
   url_launcher: ^6.3.2
   uuid: ^4.5.1
+  country_flags: ^4.1.0
 
 dev_dependencies:
   build_runner: null

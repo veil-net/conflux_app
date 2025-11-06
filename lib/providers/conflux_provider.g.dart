@@ -9,17 +9,11 @@ part of 'conflux_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(confluxes)
+@ProviderFor(Confluxes)
 const confluxesProvider = ConfluxesProvider._();
 
 final class ConfluxesProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<Conflux>>,
-          List<Conflux>,
-          Stream<List<Conflux>>
-        >
-    with $FutureModifier<List<Conflux>>, $StreamProvider<List<Conflux>> {
+    extends $AsyncNotifierProvider<Confluxes, List<Conflux>> {
   const ConfluxesProvider._()
     : super(
         from: null,
@@ -36,17 +30,29 @@ final class ConfluxesProvider
 
   @$internal
   @override
-  $StreamProviderElement<List<Conflux>> $createElement(
-    $ProviderPointer pointer,
-  ) => $StreamProviderElement(pointer);
-
-  @override
-  Stream<List<Conflux>> create(Ref ref) {
-    return confluxes(ref);
-  }
+  Confluxes create() => Confluxes();
 }
 
-String _$confluxesHash() => r'3137e8cac0cee119718c76baab55b7c01ae5c4a5';
+String _$confluxesHash() => r'f2b17e6380b9bb9514306a01df1c69df400b75a3';
+
+abstract class _$Confluxes extends $AsyncNotifier<List<Conflux>> {
+  FutureOr<List<Conflux>> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<AsyncValue<List<Conflux>>, List<Conflux>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<List<Conflux>>, List<Conflux>>,
+              AsyncValue<List<Conflux>>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}
 
 @ProviderFor(confluxByID)
 const confluxByIDProvider = ConfluxByIDFamily._();
@@ -98,7 +104,7 @@ final class ConfluxByIDProvider
   }
 }
 
-String _$confluxByIDHash() => r'3b44f28b85736040f767f3af323539b3edb66cbc';
+String _$confluxByIDHash() => r'62f4be6e235150e05dd358962cf3559b2f1e9650';
 
 final class ConfluxByIDFamily extends $Family
     with $FunctionalFamilyOverride<Stream<Conflux?>, String> {
@@ -117,3 +123,81 @@ final class ConfluxByIDFamily extends $Family
   @override
   String toString() => r'confluxByIDProvider';
 }
+
+@ProviderFor(confluxRifts)
+const confluxRiftsProvider = ConfluxRiftsProvider._();
+
+final class ConfluxRiftsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Conflux>>,
+          List<Conflux>,
+          FutureOr<List<Conflux>>
+        >
+    with $FutureModifier<List<Conflux>>, $FutureProvider<List<Conflux>> {
+  const ConfluxRiftsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'confluxRiftsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$confluxRiftsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Conflux>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Conflux>> create(Ref ref) {
+    return confluxRifts(ref);
+  }
+}
+
+String _$confluxRiftsHash() => r'3a847ef0074849725edd0442a33a341bf74ff96f';
+
+@ProviderFor(confluxPortals)
+const confluxPortalsProvider = ConfluxPortalsProvider._();
+
+final class ConfluxPortalsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Conflux>>,
+          List<Conflux>,
+          FutureOr<List<Conflux>>
+        >
+    with $FutureModifier<List<Conflux>>, $FutureProvider<List<Conflux>> {
+  const ConfluxPortalsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'confluxPortalsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$confluxPortalsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Conflux>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Conflux>> create(Ref ref) {
+    return confluxPortals(ref);
+  }
+}
+
+String _$confluxPortalsHash() => r'c2a34225388bfc0aa0d5995adc2de3d7dbf804c4';

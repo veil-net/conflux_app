@@ -1,5 +1,6 @@
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
+import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,63 +24,57 @@ class CurrentConfluxCard extends HookConsumerWidget {
                 : constraints.maxWidth * 0.5,
           ),
           child:
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                child: AppCard(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "You are connected as:",
-                              style: Theme.of(context).textTheme.labelLarge
+              AppCard(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "You are connected as:",
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                        ),
+                      ],
+                    ),
+                    ListTile(
+                      leading: SizedBox(
+                        width: 40,
+                        height: 30,
+                        child: CountryFlag.fromCountryCode(
+                          confluxDetails.region,
+                        ),
+                      ),
+                      title: confluxDetails.tag != null
+                          ? Text(
+                              confluxDetails.tag!,
+                              style: Theme.of(context).textTheme.titleLarge
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                  ),
+                            )
+                          : const LinearProgressIndicator(),
+                      subtitle: confluxDetails.cidr != null
+                          ? Text(
+                              confluxDetails.cidr!,
+                              style: Theme.of(context).textTheme.titleSmall
                                   ?.copyWith(
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.secondary,
                                   ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.electric_bolt,
-                          color: Theme.of(context).colorScheme.secondary,
-                          size: 32,
-                        ),
-                        title: confluxDetails.tag != null
-                            ? Text(
-                                confluxDetails.tag!,
-                                style: Theme.of(context).textTheme.titleLarge
-                                    ?.copyWith(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.primary,
-                                    ),
-                              )
-                            : const LinearProgressIndicator(),
-                        subtitle: confluxDetails.cidr != null
-                            ? Text(
-                                confluxDetails.cidr!,
-                                style: Theme.of(context).textTheme.titleSmall
-                                    ?.copyWith(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.secondary,
-                                    ),
-                              )
-                            : const LinearProgressIndicator(),
-                      ),
-                    ],
-                  ),
-                ).animate().slideY(
-                  duration: 500.milliseconds,
-                  curve: Curves.easeInOut,
+                            )
+                          : const LinearProgressIndicator(),
+                    ),
+                  ],
                 ),
+              ).animate().slideY(
+                duration: 500.milliseconds,
+                curve: Curves.easeInOut,
               ),
         );
       },

@@ -7,26 +7,26 @@ part 'conflux_session_provider.g.dart';
 @riverpod
 Stream<List<ConfluxSession>> confluxSessions(Ref ref) {
   ref.keepAlive();
-  final confluxSession = supabase
-      .from('conflux_session')
+  return supabase
+      .from('conflux_sessions')
       .stream(primaryKey: ['id'])
       .map(
-        (event) => event.map((data) => ConfluxSession.fromJson(data)).toList(),
+        (event) =>
+            event.map((data) => ConfluxSession.fromJson(data)).toList(),
       );
-  return confluxSession;
 }
 
 @riverpod
-Stream<ConfluxSession> confluxSession(Ref ref, String confluxId) {
+Stream<ConfluxSession?> confluxSession(Ref ref, String confluxId) {
   ref.keepAlive(); 
   final confluxSession = supabase
-      .from('conflux_session')
+      .from('conflux_sessions')
       .stream(primaryKey: ['id'])
-      .eq('conflux_id', confluxId)
+      .eq('id', confluxId)
       .limit(1)
       .map(
         (event) {
-          return event.map((data) => ConfluxSession.fromJson(data)).toList().first;
+          return event.map((data) => ConfluxSession.fromJson(data)).toList().firstOrNull;
         },
       );
   return confluxSession;

@@ -10,27 +10,28 @@ part 'plane_details_provider.g.dart';
 
 @riverpod
 Future<List<PlaneDetails>> planesDetails(Ref ref) async {
+  ref.keepAlive();
   ref.watch(planesProvider);
   final planeDetails = await supabase.from('plane_details').select('*');
   return planeDetails.map((data) => PlaneDetails.fromJson(data)).toList();
 }
 
 @riverpod
-Future<PlaneDetails?> planeDetails(Ref ref, String id) async {
+Future<PlaneDetails> planeDetails(Ref ref, String id) async {
+  ref.keepAlive();
   ref.watch(planeProvider(id));
   final planeDetails = await supabase
       .from('plane_details')
       .select('*')
       .eq('id', id)
-      .limit(1);
-  return planeDetails.isNotEmpty
-      ? PlaneDetails.fromJson(planeDetails.first)
-      : null;
+      .single();
+  return PlaneDetails.fromJson(planeDetails);
 }
 
 @riverpod
 Future<List<PlaneDetails>> privatePlaneDetails(Ref ref) async {
-  ref.watch(privatePlaneProvider);
+  ref.keepAlive();
+  ref.watch(privatePlanesProvider);
   final planeDetails = await supabase
       .from('plane_details')
       .select('*')
@@ -40,13 +41,15 @@ Future<List<PlaneDetails>> privatePlaneDetails(Ref ref) async {
 
 @riverpod
 Future<List<PlaneDetails>> publicPlaneDetails(Ref ref) async {
-  ref.watch(publicPlaneProvider);
+  ref.keepAlive();
+  ref.watch(publicPlanesProvider);
   final planeDetails = await supabase
       .from('plane_details')
       .select('*')
       .eq('public', true);
   return planeDetails.map((data) => PlaneDetails.fromJson(data)).toList();
 }
+
 
 @riverpod
 class SelectedPlaneDetails extends _$SelectedPlaneDetails {

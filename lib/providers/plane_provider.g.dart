@@ -9,17 +9,11 @@ part of 'plane_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(planes)
+@ProviderFor(Planes)
 const planesProvider = PlanesProvider._();
 
 final class PlanesProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<Plane>>,
-          List<Plane>,
-          Stream<List<Plane>>
-        >
-    with $FutureModifier<List<Plane>>, $StreamProvider<List<Plane>> {
+    extends $StreamNotifierProvider<Planes, List<Plane>> {
   const PlanesProvider._()
     : super(
         from: null,
@@ -36,17 +30,29 @@ final class PlanesProvider
 
   @$internal
   @override
-  $StreamProviderElement<List<Plane>> $createElement(
-    $ProviderPointer pointer,
-  ) => $StreamProviderElement(pointer);
-
-  @override
-  Stream<List<Plane>> create(Ref ref) {
-    return planes(ref);
-  }
+  Planes create() => Planes();
 }
 
-String _$planesHash() => r'3e83428f97ccabb68d2b32c933163511e950ea88';
+String _$planesHash() => r'e698eb074612b436a032f990acadc3286b842906';
+
+abstract class _$Planes extends $StreamNotifier<List<Plane>> {
+  Stream<List<Plane>> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<AsyncValue<List<Plane>>, List<Plane>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<List<Plane>>, List<Plane>>,
+              AsyncValue<List<Plane>>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}
 
 @ProviderFor(plane)
 const planeProvider = PlaneFamily._();
@@ -97,7 +103,7 @@ final class PlaneProvider
   }
 }
 
-String _$planeHash() => r'eace0285d6e294bbc458250340b39e4695ffe25a';
+String _$planeHash() => r'593c529874e659be2ecd65c248ad6f21ea6f78f1';
 
 final class PlaneFamily extends $Family
     with $FunctionalFamilyOverride<Stream<Plane?>, String> {
@@ -124,9 +130,9 @@ final class OwnedPlanesProvider
         $FunctionalProvider<
           AsyncValue<List<Plane>>,
           List<Plane>,
-          Stream<List<Plane>>
+          FutureOr<List<Plane>>
         >
-    with $FutureModifier<List<Plane>>, $StreamProvider<List<Plane>> {
+    with $FutureModifier<List<Plane>>, $FutureProvider<List<Plane>> {
   const OwnedPlanesProvider._()
     : super(
         from: null,
@@ -143,80 +149,92 @@ final class OwnedPlanesProvider
 
   @$internal
   @override
-  $StreamProviderElement<List<Plane>> $createElement(
+  $FutureProviderElement<List<Plane>> $createElement(
     $ProviderPointer pointer,
-  ) => $StreamProviderElement(pointer);
+  ) => $FutureProviderElement(pointer);
 
   @override
-  Stream<List<Plane>> create(Ref ref) {
+  FutureOr<List<Plane>> create(Ref ref) {
     return ownedPlanes(ref);
   }
 }
 
-String _$ownedPlanesHash() => r'86820c172433a8c36123070cba24b0eefa384c8d';
+String _$ownedPlanesHash() => r'c1caac5db25cdf177434c4c5cb612cb11bb25e45';
 
-@ProviderFor(privatePlane)
-const privatePlaneProvider = PrivatePlaneProvider._();
+@ProviderFor(privatePlanes)
+const privatePlanesProvider = PrivatePlanesProvider._();
 
-final class PrivatePlaneProvider
-    extends $FunctionalProvider<AsyncValue<Plane>, Plane, Stream<Plane>>
-    with $FutureModifier<Plane>, $StreamProvider<Plane> {
-  const PrivatePlaneProvider._()
+final class PrivatePlanesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Plane>>,
+          List<Plane>,
+          FutureOr<List<Plane>>
+        >
+    with $FutureModifier<List<Plane>>, $FutureProvider<List<Plane>> {
+  const PrivatePlanesProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'privatePlaneProvider',
+        name: r'privatePlanesProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$privatePlaneHash();
+  String debugGetCreateSourceHash() => _$privatePlanesHash();
 
   @$internal
   @override
-  $StreamProviderElement<Plane> $createElement($ProviderPointer pointer) =>
-      $StreamProviderElement(pointer);
+  $FutureProviderElement<List<Plane>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
   @override
-  Stream<Plane> create(Ref ref) {
-    return privatePlane(ref);
+  FutureOr<List<Plane>> create(Ref ref) {
+    return privatePlanes(ref);
   }
 }
 
-String _$privatePlaneHash() => r'f80c8a07bc1e4c112fefa76dc27a340c09f66800';
+String _$privatePlanesHash() => r'ac23b5685dbc46936d2a0230ee5f07cef0cf5dbe';
 
-@ProviderFor(publicPlane)
-const publicPlaneProvider = PublicPlaneProvider._();
+@ProviderFor(publicPlanes)
+const publicPlanesProvider = PublicPlanesProvider._();
 
-final class PublicPlaneProvider
-    extends $FunctionalProvider<AsyncValue<Plane>, Plane, Stream<Plane>>
-    with $FutureModifier<Plane>, $StreamProvider<Plane> {
-  const PublicPlaneProvider._()
+final class PublicPlanesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Plane>>,
+          List<Plane>,
+          FutureOr<List<Plane>>
+        >
+    with $FutureModifier<List<Plane>>, $FutureProvider<List<Plane>> {
+  const PublicPlanesProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'publicPlaneProvider',
+        name: r'publicPlanesProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$publicPlaneHash();
+  String debugGetCreateSourceHash() => _$publicPlanesHash();
 
   @$internal
   @override
-  $StreamProviderElement<Plane> $createElement($ProviderPointer pointer) =>
-      $StreamProviderElement(pointer);
+  $FutureProviderElement<List<Plane>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
 
   @override
-  Stream<Plane> create(Ref ref) {
-    return publicPlane(ref);
+  FutureOr<List<Plane>> create(Ref ref) {
+    return publicPlanes(ref);
   }
 }
 
-String _$publicPlaneHash() => r'1b8edc7e20d0c21090278853e587ab7d568dbaf9';
+String _$publicPlanesHash() => r'9eefafc4a10f595d8e325f9b2b8b328e1e2bf32a';

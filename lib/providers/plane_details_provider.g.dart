@@ -48,7 +48,7 @@ final class PlanesDetailsProvider
   }
 }
 
-String _$planesDetailsHash() => r'cfb140a1fa0ebb99084b0abd699c4427be4929c1';
+String _$planesDetailsHash() => r'3cd1b91147e0613d8581bd370d4219ade7e3b266';
 
 @ProviderFor(planeDetails)
 const planeDetailsProvider = PlaneDetailsFamily._();
@@ -56,11 +56,11 @@ const planeDetailsProvider = PlaneDetailsFamily._();
 final class PlaneDetailsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<PlaneDetails?>,
-          PlaneDetails?,
-          FutureOr<PlaneDetails?>
+          AsyncValue<PlaneDetails>,
+          PlaneDetails,
+          FutureOr<PlaneDetails>
         >
-    with $FutureModifier<PlaneDetails?>, $FutureProvider<PlaneDetails?> {
+    with $FutureModifier<PlaneDetails>, $FutureProvider<PlaneDetails> {
   const PlaneDetailsProvider._({
     required PlaneDetailsFamily super.from,
     required String super.argument,
@@ -84,12 +84,12 @@ final class PlaneDetailsProvider
 
   @$internal
   @override
-  $FutureProviderElement<PlaneDetails?> $createElement(
+  $FutureProviderElement<PlaneDetails> $createElement(
     $ProviderPointer pointer,
   ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<PlaneDetails?> create(Ref ref) {
+  FutureOr<PlaneDetails> create(Ref ref) {
     final argument = this.argument as String;
     return planeDetails(ref, argument);
   }
@@ -105,10 +105,10 @@ final class PlaneDetailsProvider
   }
 }
 
-String _$planeDetailsHash() => r'e0a7de0c470e1057abed80caf05fe91a183ee380';
+String _$planeDetailsHash() => r'd30725cd966014e5b59ca52fa366d367f53875de';
 
 final class PlaneDetailsFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<PlaneDetails?>, String> {
+    with $FunctionalFamilyOverride<FutureOr<PlaneDetails>, String> {
   const PlaneDetailsFamily._()
     : super(
         retry: null,
@@ -165,7 +165,7 @@ final class PrivatePlaneDetailsProvider
 }
 
 String _$privatePlaneDetailsHash() =>
-    r'5bf75558023d47fbff1d13b42825271e7f22a5b5';
+    r'07d1fe458577b05fac97a03172f18faa1deb16af';
 
 @ProviderFor(publicPlaneDetails)
 const publicPlaneDetailsProvider = PublicPlaneDetailsProvider._();
@@ -207,7 +207,7 @@ final class PublicPlaneDetailsProvider
 }
 
 String _$publicPlaneDetailsHash() =>
-    r'426187e930ee1a8dddbfa5826c38a0284e7b01f1';
+    r'bcb31983f0609bfa614446d5fb12d18c263ef512';
 
 @ProviderFor(SelectedPlaneDetails)
 const selectedPlaneDetailsProvider = SelectedPlaneDetailsProvider._();

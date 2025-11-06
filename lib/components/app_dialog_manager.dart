@@ -2,21 +2,19 @@ import 'dart:ui';
 
 import 'package:conflux/components/app_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
-enum DialogType { info, warning, success, error, confirm }
+enum DialogType { info, warning, success, error, confirmation }
 
 class DialogManager {
-  static void showDialog(
+  static Future<bool> showDialog(
     BuildContext context,
     String message,
     DialogType type, {
     String? label = 'Close',
+    String? confirmLabel = 'Confirm',
     Future<void> Function()? onPressed,
-    Future<void> Function()? onConfirm,
-    Future<void> Function()? onCancel,
-  }) {
+  }) async {
     final title = switch (type) {
       DialogType.info => Text(
         'Info',
@@ -42,11 +40,11 @@ class DialogManager {
           context,
         ).textTheme.titleLarge?.copyWith(color: Colors.red),
       ),
-      DialogType.confirm => Text(
+      DialogType.confirmation => Text(
         'Confirm',
         style: Theme.of(
           context,
-        ).textTheme.titleLarge?.copyWith(color: Colors.amber),
+        ).textTheme.titleLarge?.copyWith(color: Colors.orange),
       ),
     };
 
@@ -87,29 +85,28 @@ class DialogManager {
         ),
         child: const Icon(Icons.error, color: Colors.white),
       ),
-      DialogType.confirm => Container(
+      DialogType.confirmation => Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.amber,
+          color: Colors.orange,
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(16),
         ),
-        child: const Icon(Icons.help, color: Colors.white),
+        child: const Icon(Icons.help_outline, color: Colors.white),
       ),
     };
 
-    showAdaptiveDialog(
-      barrierDismissible: false,
+    final result = await showAdaptiveDialog<bool>(
       context: context,
       builder: (context) => BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
         child: AlertDialog(
-          backgroundColor: Theme.of(context).colorScheme.surface.withAlpha(200),
-          // shadowColor: Theme.of(context).colorScheme.secondary.withAlpha(50),
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          shadowColor: Theme.of(context).colorScheme.secondary.withAlpha(50),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
             side: BorderSide(
-              color: Theme.of(context).colorScheme.secondary.withAlpha(100),
+              color: Theme.of(context).colorScheme.primary.withAlpha(50),
               width: 1,
             ),
           ),
@@ -133,49 +130,39 @@ class DialogManager {
             ],
           ),
           actions: [
-            if (type == DialogType.error)
+            if (type == DialogType.confirmation) ...[
               AppButton(
-                label: 'Copy',
+                outline: true,
+                label: label ?? 'Cancel',
                 onPressed: () async {
-                  Clipboard.setData(ClipboardData(text: message));
+                  context.pop(false);
                 },
               ),
-            if (type == DialogType.confirm) ...[
               AppButton(
-                label: 'Cancel',
-                outline: true,
-                onPressed:
-                    onCancel ??
-                    () async {
-                      context.pop();
-                    },
-              ),
-              AppButton(
-                label: 'Confirm',
-                onPressed: onConfirm != null
-                    ? () async {
-                        await onConfirm();
-                        if (context.mounted) {
-                          context.pop();
-                        }
-                      }
-                    : () async {
-                        context.pop();
-                      },
+                label: confirmLabel ?? 'Confirm',
+                onPressed: () async {
+                  if (onPressed != null) {
+                    await onPressed();
+                  }
+                  if (context.mounted) {
+                    context.pop(true);
+                  }
+                },
               ),
             ] else
               AppButton(
                 label: label ?? 'Close',
-                outline: true,
                 onPressed:
                     onPressed ??
                     () async {
-                      context.pop();
+                      context.pop(true);
                     },
               ),
           ],
         ),
       ),
     );
+
+    return result ?? false;
   }
 }

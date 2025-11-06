@@ -8,7 +8,7 @@ class AppHeaderNavigationBar extends HookConsumerWidget
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SizedBox(height: kToolbarHeight + 16, child: AppNavigationBar());
+    return SizedBox(height: kToolbarHeight, child: AppNavigationBar());
   }
 
   @override

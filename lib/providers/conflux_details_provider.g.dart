@@ -64,7 +64,7 @@ final class ConfluxDetailsProvider
   }
 }
 
-String _$confluxDetailsHash() => r'317b5effd482f861dffbc178db6baf5daddb3bc3';
+String _$confluxDetailsHash() => r'd8606e2c3a3ed87ddc4630d580e433d9d560379b';
 
 final class ConfluxDetailsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ConfluxDetails?>, String> {

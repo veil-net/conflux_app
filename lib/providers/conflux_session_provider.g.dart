@@ -48,7 +48,7 @@ final class ConfluxSessionsProvider
   }
 }
 
-String _$confluxSessionsHash() => r'746b57eb4bed70c1370dc2ac44041f4e350084f8';
+String _$confluxSessionsHash() => r'a9cc4893b98ed1d89f01c96d9d56cd4f62e3b1f6';
 
 @ProviderFor(confluxSession)
 const confluxSessionProvider = ConfluxSessionFamily._();
@@ -56,11 +56,11 @@ const confluxSessionProvider = ConfluxSessionFamily._();
 final class ConfluxSessionProvider
     extends
         $FunctionalProvider<
-          AsyncValue<ConfluxSession>,
-          ConfluxSession,
-          Stream<ConfluxSession>
+          AsyncValue<ConfluxSession?>,
+          ConfluxSession?,
+          Stream<ConfluxSession?>
         >
-    with $FutureModifier<ConfluxSession>, $StreamProvider<ConfluxSession> {
+    with $FutureModifier<ConfluxSession?>, $StreamProvider<ConfluxSession?> {
   const ConfluxSessionProvider._({
     required ConfluxSessionFamily super.from,
     required String super.argument,
@@ -84,12 +84,12 @@ final class ConfluxSessionProvider
 
   @$internal
   @override
-  $StreamProviderElement<ConfluxSession> $createElement(
+  $StreamProviderElement<ConfluxSession?> $createElement(
     $ProviderPointer pointer,
   ) => $StreamProviderElement(pointer);
 
   @override
-  Stream<ConfluxSession> create(Ref ref) {
+  Stream<ConfluxSession?> create(Ref ref) {
     final argument = this.argument as String;
     return confluxSession(ref, argument);
   }
@@ -105,10 +105,10 @@ final class ConfluxSessionProvider
   }
 }
 
-String _$confluxSessionHash() => r'048c137e17f7da7362d7536fa61145614cc5beae';
+String _$confluxSessionHash() => r'2e027a1f43a837fb505b3dc49067fa73e1d2da7b';
 
 final class ConfluxSessionFamily extends $Family
-    with $FunctionalFamilyOverride<Stream<ConfluxSession>, String> {
+    with $FunctionalFamilyOverride<Stream<ConfluxSession?>, String> {
   const ConfluxSessionFamily._()
     : super(
         retry: null,

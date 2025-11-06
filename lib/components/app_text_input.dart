@@ -6,7 +6,7 @@ class AppTextInput extends HookConsumerWidget {
   final String hint;
   final TextEditingController controller;
   final TextInputType keyboardType;
-  final IconData prefixIcon;
+  final IconData? prefixIcon;
   final IconData? suffixIcon;
   final bool obscureText;
   final bool readOnly;
@@ -21,7 +21,7 @@ class AppTextInput extends HookConsumerWidget {
     required this.hint,
     required this.controller,
     required this.keyboardType,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.suffixIcon,
     required this.obscureText,
     required this.readOnly,
@@ -38,7 +38,7 @@ class AppTextInput extends HookConsumerWidget {
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
-        prefixIcon: Icon(prefixIcon),
+        prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
         suffixIcon: onSuffixIconPressed != null
             ? IconButton(onPressed: onSuffixIconPressed, icon: Icon(suffixIcon))
             : null,
