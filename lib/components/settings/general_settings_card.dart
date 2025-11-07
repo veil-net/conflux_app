@@ -1,4 +1,5 @@
 import 'package:conflux/components/app_card.dart';
+import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -10,6 +11,7 @@ class GeneralSettingsCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final darkMode = ref.watch(darkModeProvider);
+    final developerMode = ref.watch(developerModeProvider);
     return LayoutBuilder(
       builder: (context, constraints) {
         return ConstrainedBox(
@@ -46,6 +48,29 @@ class GeneralSettingsCard extends HookConsumerWidget {
                     await ref
                         .read(darkModeProvider.notifier)
                         .setDarkMode(value);
+                  },
+                ),
+                SwitchListTile.adaptive(
+                  dense: true,
+                  title: Text(
+                    'Developer Mode',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+
+                  value: developerMode,
+                  onChanged: (value) async {
+                    if (value) {
+                      DialogManager.showDialog(
+                        context,
+                        'Developer Mode enables options for developers to manage Veilnet Private Planes and Conflux nodes.\n\nIf you are using VeilNet as VPN service, you do not need to enable this option.',
+                        DialogType.warning,
+                      );
+                    }
+                    await ref
+                        .read(developerModeProvider.notifier)
+                        .setDeveloperMode(value);
                   },
                 ),
               ],

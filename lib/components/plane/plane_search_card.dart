@@ -4,6 +4,7 @@ import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/components/app_text_input.dart';
 import 'package:conflux/providers/current_session_provider.dart';
 import 'package:conflux/providers/plane_details_provider.dart';
+import 'package:conflux/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -18,6 +19,7 @@ class PlaneSearchCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final planeNameTextController = useTextEditingController();
     final planePublicity = ref.watch(planePublicityProvider);
+    final developerMode = ref.watch(developerModeProvider);
     return AppCard(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -84,21 +86,22 @@ class PlaneSearchCard extends HookConsumerWidget {
                 },
               ),
             ),
-            AppButton(
-              label: 'manage Private Planes',
-              onPressed: () async {
-                final session = ref.watch(currentSessionProvider);
-                if (session != null) {
-                  await launchUrl(
-                    Uri.parse(
-                      'https://auth.veilnet.app/plane?refresh_token=${session.refreshToken}',
-                    ),
-                  );
-                }
-              },
-              expand: true,
-              outline: true,
-            ),
+            if (developerMode)
+              AppButton(
+                label: 'manage Private Planes',
+                onPressed: () async {
+                  final session = ref.watch(currentSessionProvider);
+                  if (session != null) {
+                    await launchUrl(
+                      Uri.parse(
+                        'https://auth.veilnet.app/plane?refresh_token=${session.refreshToken}',
+                      ),
+                    );
+                  }
+                },
+                expand: true,
+                outline: true,
+              ),
           ],
         ),
       ),

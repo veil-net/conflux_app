@@ -4,6 +4,7 @@ import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/providers/conflux_details_provider.dart';
 import 'package:conflux/providers/conflux_provider.dart';
 import 'package:conflux/providers/current_session_provider.dart';
+import 'package:conflux/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -17,7 +18,7 @@ class ConfluxSummaryCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final confluxRifts = ref.watch(confluxRiftsDetailsProvider);
     final confluxPortals = ref.watch(confluxPortalsDetailsProvider);
-
+    final developerMode = ref.watch(developerModeProvider);
     final numberOfOnlineRifts = useState(0);
     final numberOfOnlinePortals = useState(0);
     final numberOfRifts = useState(0);
@@ -155,21 +156,22 @@ class ConfluxSummaryCard extends HookConsumerWidget {
                       ),
                     ],
                   ),
-                  AppButton(
-                    label: 'Manage Conflux',
-                    onPressed: () async {
-                      final session = ref.watch(currentSessionProvider);
-                      if (session != null) {
-                        launchUrl(
-                          Uri.parse(
-                            'https://auth.veilnet.app/deploy?refresh_token=${session.refreshToken}',
-                          ),
-                        );
-                      }
-                    },
-                    expand: true,
-                    outline: true,
-                  ),
+                  if (developerMode)
+                    AppButton(
+                      label: 'Manage Conflux',
+                      onPressed: () async {
+                        final session = ref.watch(currentSessionProvider);
+                        if (session != null) {
+                          launchUrl(
+                            Uri.parse(
+                              'https://auth.veilnet.app/deploy?refresh_token=${session.refreshToken}',
+                            ),
+                          );
+                        }
+                      },
+                      expand: true,
+                      outline: true,
+                    ),
                 ],
               ),
             ),
