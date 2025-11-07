@@ -10,10 +10,9 @@ class PlaneView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return CustomScrollView(
       slivers: [
-        SliverOverlapInjector(
-          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+        SliverFloatingHeader(
+          child: PlaneSearchCard()
         ),
-        PlaneSearchCard(),
         PlaneList(),
       ],
     );

@@ -17,6 +17,9 @@ abstract class PlaneDetails with _$PlaneDetails {
     required String veil_host,
     required int veil_port,
     required int portals,
+    String? team,
+    String? subscription,
+    String? status,
   }) = _PlaneDetails;
 
   factory PlaneDetails.fromJson(Map<String, dynamic> json) =>

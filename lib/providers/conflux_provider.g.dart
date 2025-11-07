@@ -13,7 +13,7 @@ part of 'conflux_provider.dart';
 const confluxesProvider = ConfluxesProvider._();
 
 final class ConfluxesProvider
-    extends $AsyncNotifierProvider<Confluxes, List<Conflux>> {
+    extends $StreamNotifierProvider<Confluxes, List<Conflux>> {
   const ConfluxesProvider._()
     : super(
         from: null,
@@ -33,10 +33,10 @@ final class ConfluxesProvider
   Confluxes create() => Confluxes();
 }
 
-String _$confluxesHash() => r'f2b17e6380b9bb9514306a01df1c69df400b75a3';
+String _$confluxesHash() => r'b35a6a44f80d42ff7c42a64a42d3f4152c77446f';
 
-abstract class _$Confluxes extends $AsyncNotifier<List<Conflux>> {
-  FutureOr<List<Conflux>> build();
+abstract class _$Confluxes extends $StreamNotifier<List<Conflux>> {
+  Stream<List<Conflux>> build();
   @$mustCallSuper
   @override
   void runBuild() {

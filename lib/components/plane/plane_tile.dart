@@ -27,6 +27,7 @@ class PlaneTile extends HookConsumerWidget {
           ),
           child: AppCard(
             child: ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 16),
               leading: SizedBox(
                 width: 40,
                 height: 30,
@@ -34,13 +35,11 @@ class PlaneTile extends HookConsumerWidget {
               ),
               title: Text(
                 planeDetails.name,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
               subtitle: Text(
                 planeDetails.subnet,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                style: TextStyle(
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),

@@ -28,7 +28,12 @@ class PlaneList extends HookConsumerWidget {
 
         if (filteredData.isEmpty) {
           return SliverFillRemaining(
-            child: Center(child: Text('No planes found')),
+            child: Center(
+              child: Text(
+                'No planes found',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
           );
         }
 

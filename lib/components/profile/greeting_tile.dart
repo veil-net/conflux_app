@@ -6,12 +6,12 @@ import 'package:conflux/providers/api_provider.dart';
 import 'package:conflux/providers/conflux_provider.dart';
 import 'package:conflux/providers/service_tier_provider.dart';
 import 'package:conflux/providers/user_profile_provider.dart';
+import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class GreetingTile extends HookConsumerWidget {
   const GreetingTile({super.key});
@@ -21,6 +21,7 @@ class GreetingTile extends HookConsumerWidget {
     final displayName = useTextEditingController();
     final serviceTier = ref.watch(serviceTierProvider);
     final confluxRifts = ref.watch(confluxRiftsProvider);
+    final veilnetState = ref.watch(veilNetProvider);
     Future<void> setDsiplayName() async {
       if (displayName.text.isEmpty) {
         if (context.mounted) {
@@ -45,6 +46,29 @@ class GreetingTile extends HookConsumerWidget {
             e.response?.data['message'],
             DialogType.error,
           );
+        }
+      } catch (e) {
+        if (context.mounted) {
+          DialogManager.showDialog(context, e.toString(), DialogType.error);
+        }
+      }
+    }
+
+    Future<void> signOut() async {
+      try {
+        if (veilnetState != VeilNetState.disconnected) {
+          if (context.mounted) {
+            DialogManager.showDialog(
+              context,
+              'Please disconnect from VeilNet to sign out',
+              DialogType.error,
+            );
+          }
+          return;
+        }
+        await supabase.auth.signOut();
+        if (context.mounted) {
+          context.go('/');
         }
       } catch (e) {
         if (context.mounted) {
@@ -90,33 +114,7 @@ class GreetingTile extends HookConsumerWidget {
                   enable: true,
                 ),
           trailing: userProfile.value?.display_name != null
-              ? IconButton(
-                  onPressed: () async {
-                    try {
-                      await supabase.auth.signOut();
-                      if (context.mounted) {
-                        context.go('/');
-                      }
-                    } on AuthException catch (e) {
-                      if (context.mounted) {
-                        DialogManager.showDialog(
-                          context,
-                          e.message,
-                          DialogType.error,
-                        );
-                      }
-                    } catch (e) {
-                      if (context.mounted) {
-                        DialogManager.showDialog(
-                          context,
-                          e.toString(),
-                          DialogType.error,
-                        );
-                      }
-                    }
-                  },
-                  icon: Icon(Icons.logout),
-                )
+              ? IconButton(onPressed: signOut, icon: Icon(Icons.logout))
               : TextButton(
                   onPressed: () {
                     setDsiplayName();
@@ -126,18 +124,13 @@ class GreetingTile extends HookConsumerWidget {
         ),
         ListTile(
           contentPadding: EdgeInsets.zero,
-          title: Text(
-            switch (serviceTier.value) {
-              1 => 'Unlimited for ${confluxRifts.value?.length ?? 0}/3',
-              2 => 'Unlimited for ${confluxRifts.value?.length ?? 0}/10',
-              _ => '${((userProfile.value?.mp ?? 0) / 60).toInt()} minutes',
-            },
-            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-          ),
+          title: Text(switch (serviceTier.value) {
+            1 => 'Unlimited ${confluxRifts.value?.length ?? 0}/3 devices',
+            2 => 'Unlimited ${confluxRifts.value?.length ?? 0}/10 devices',
+            _ => '${((userProfile.value?.mp ?? 0) / 60).toInt()} minutes',
+          }, style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
           subtitle: Text(
-            'remaining access to VeilNet Public Plane',
+            'access to VeilNet Public Plane',
             style: TextStyle(color: Theme.of(context).colorScheme.primary),
           ),
           trailing: ServiceTierChip(),

@@ -19,6 +19,9 @@ _PlaneDetails _$PlaneDetailsFromJson(Map<String, dynamic> json) =>
       veil_host: json['veil_host'] as String,
       veil_port: (json['veil_port'] as num).toInt(),
       portals: (json['portals'] as num).toInt(),
+      team: json['team'] as String?,
+      subscription: json['subscription'] as String?,
+      status: json['status'] as String?,
     );
 
 Map<String, dynamic> _$PlaneDetailsToJson(_PlaneDetails instance) =>
@@ -34,4 +37,7 @@ Map<String, dynamic> _$PlaneDetailsToJson(_PlaneDetails instance) =>
       'veil_host': instance.veil_host,
       'veil_port': instance.veil_port,
       'portals': instance.portals,
+      'team': instance.team,
+      'subscription': instance.subscription,
+      'status': instance.status,
     };

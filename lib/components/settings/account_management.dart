@@ -1,14 +1,9 @@
-import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
-import 'package:conflux/components/app_text_input.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/main.dart';
-import 'package:conflux/providers/api_provider.dart';
-import 'package:conflux/providers/user_profile_provider.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,37 +14,7 @@ class AccountManagement extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final displayNameController = useTextEditingController();
     final veilnetState = ref.watch(veilNetProvider);
-
-    Future<void> setDsiplayName() async {
-      try {
-        final api = ref.watch(apiProvider);
-        await api.patch(
-          '/auth/profile/display-name?display_name=${displayNameController.text}',
-        );
-        ref.invalidate(userProfileProvider);
-        if (context.mounted) {
-          DialogManager.showDialog(
-            context,
-            'Display name changed successfully',
-            DialogType.success,
-          );
-        }
-      } on DioException catch (e) {
-        if (context.mounted) {
-          DialogManager.showDialog(
-            context,
-            e.response?.data['message'],
-            DialogType.error,
-          );
-        }
-      } catch (e) {
-        if (context.mounted) {
-          DialogManager.showDialog(context, e.toString(), DialogType.error);
-        }
-      }
-    }
 
     Future<void> switchAccount() async {
       if (veilnetState != VeilNetState.disconnected) {
@@ -79,7 +44,7 @@ class AccountManagement extends HookConsumerWidget {
 
     Future<void> manageAccount() async {
       launchUrl(
-        Uri.parse('https://billing.stripe.com/p/login/00wbJ282hg55dlAdEl6Na00'),
+        Uri.parse('https://auth.veilnet.app/subscribe'),
       );
     }
 
@@ -95,79 +60,58 @@ class AccountManagement extends HookConsumerWidget {
                 ? constraints.maxWidth
                 : constraints.maxWidth * 0.5,
           ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-            child: AppCard(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  spacing: 16,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Account Management',
-                          style: Theme.of(context).textTheme.labelLarge
-                              ?.copyWith(
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                        ),
-                      ],
-                    ),
-                    const Divider(),
-                    Row(
-                      spacing: 16,
-                      children: [
-                        Flexible(
-                          child: AppTextInput(
-                            label: 'Change Display Name',
-                            hint: 'New display name',
-                            controller: displayNameController,
-                            keyboardType: TextInputType.text,
-                            prefixIcon: Icons.person,
-                            obscureText: false,
-                            readOnly: false,
-                            enable: true,
-                          ),
-                        ),
-                        AppButton(
-                          label: 'Change',
-                          onPressed: setDsiplayName,
-                          outline: true,
-                        ),
-                      ],
-                    ),
-                    ListTile(
-                      dense: true,
-                      onTap: resetPassword,
-                      title: Text('Change Password', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),),
-                      trailing: Icon(Icons.open_in_new),
-                    ),
-                    ListTile(
-                      dense: true,
-                      onTap: manageAccount,
-                      title: Text('Manage Account', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),),
-                      trailing: Icon(Icons.open_in_new),
-                    ),
-                    ListTile(
-                      dense: true,
-                      onTap: switchAccount,
-                      title: Text('Switch Account', style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),),
-                      trailing: Icon(Icons.open_in_new),
-                    ),
-                  ],
+          child: AppCard(
+            child: ExpansionTile(
+              tilePadding: EdgeInsets.symmetric(horizontal: 16),
+              childrenPadding: EdgeInsets.symmetric(horizontal: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              initiallyExpanded: true,
+              title: Text(
+                'Account Management',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
+              children: [
+                ListTile(
+                  dense: true,
+                  onTap: resetPassword,
+                  title: Text(
+                    'Change Password',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  trailing: Icon(Icons.open_in_new),
+                ),
+                ListTile(
+                  dense: true,
+                  onTap: manageAccount,
+                  title: Text(
+                    'Manage Account',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  trailing: Icon(Icons.open_in_new),
+                ),
+                ListTile(
+                  dense: true,
+                  onTap: switchAccount,
+                  title: Text(
+                    'Switch Account',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  trailing: Icon(Icons.open_in_new),
+                ),
+              ],
             ),
           ),
-        );
+        ).animate().slideX(duration: 500.milliseconds, curve: Curves.easeInOut);
       },
     );
   }

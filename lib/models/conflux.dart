@@ -10,7 +10,6 @@ abstract class Conflux with _$Conflux {
     required DateTime created_at,
     required String user_id,
     required String plane_id,
-    required String name,
     String? tag,
     required bool portal,
   }) = _Conflux;

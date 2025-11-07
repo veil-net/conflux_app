@@ -1,7 +1,7 @@
 import 'package:conflux/components/app_card.dart';
-import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class GeneralSettingsCard extends HookConsumerWidget {
@@ -10,7 +10,6 @@ class GeneralSettingsCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final darkMode = ref.watch(darkModeProvider);
-    final developerMode = ref.watch(developerModeProvider);
     return LayoutBuilder(
       builder: (context, constraints) {
         return ConstrainedBox(
@@ -19,72 +18,39 @@ class GeneralSettingsCard extends HookConsumerWidget {
                 ? constraints.maxWidth
                 : constraints.maxWidth * 0.5,
           ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-            child: AppCard(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  spacing: 8,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'General',
-                          style: Theme.of(context).textTheme.labelLarge
-                              ?.copyWith(
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                        ),
-                      ],
-                    ),
-                    const Divider(),
-                    SwitchListTile.adaptive(
-                      dense: true,
-                      title: Text(
-                        'Dark Mode',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      value: darkMode,
-                      onChanged: (value) async {
-                        await ref
-                            .read(darkModeProvider.notifier)
-                            .setDarkMode(value);
-                      },
-                    ),
-                    SwitchListTile.adaptive(
-                      dense: true,
-                      title: Text(
-                        'Developer Mode',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      value: developerMode,
-                      onChanged: (value) async {
-                        if (value) {
-                          DialogManager.showDialog(
-                            context,
-                            'Developer mode will show management options for the Veilnet Conflux and Private Plan. '
-                            'This is intended for developers and advanced users for deploying Veilnet Conflux on their own infrastructure. '
-                            'If you are using VeilNet as VPN service, you do not need to enable this option.',
-                            DialogType.info,
-                          );
-                        }
-                        await ref
-                            .read(developerModeProvider.notifier)
-                            .setDeveloperMode(value);
-                      },
-                    ),
-                  ],
+          child: AppCard(
+            child: ExpansionTile(
+              tilePadding: EdgeInsets.symmetric(horizontal: 16),
+              childrenPadding: EdgeInsets.symmetric(horizontal: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              initiallyExpanded: true,
+              title: Text(
+                'General',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
+              children: [
+                SwitchListTile.adaptive(
+                  dense: true,
+                  title: Text(
+                    'Dark Mode',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  value: darkMode,
+                  onChanged: (value) async {
+                    await ref
+                        .read(darkModeProvider.notifier)
+                        .setDarkMode(value);
+                  },
+                ),
+              ],
             ),
-          ),
+          ).animate().slideX(duration: 500.milliseconds, curve: Curves.easeInOut),
         );
       },
     );

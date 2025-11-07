@@ -24,7 +24,9 @@ class AppButton extends HookConsumerWidget {
         ? OutlinedButton(
             style: OutlinedButton.styleFrom(
               side: BorderSide(color: Theme.of(context).colorScheme.secondary),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
             onPressed: isLoading.value
                 ? null
@@ -37,21 +39,43 @@ class AppButton extends HookConsumerWidget {
                     }
                   }
                 : null,
-            child: isLoading.value ? SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Theme.of(context).colorScheme.secondary)) : Row(
-              mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 8,
-              children: [
-                if (icon != null) Icon(icon, color: Theme.of(context).colorScheme.secondary),
-                Text(label, style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
-                )),
-              ],
-            ),
+            child: isLoading.value
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ],
+                  )
+                : Row(
+                    mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 8,
+                    children: [
+                      if (icon != null)
+                        Icon(
+                          icon,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      Text(
+                        label,
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ],
+                  ),
           )
         : FilledButton(
             style: FilledButton.styleFrom(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
             onPressed: isLoading.value
                 ? null
@@ -64,17 +88,31 @@ class AppButton extends HookConsumerWidget {
                     }
                   }
                 : null,
-            child: isLoading.value ? SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white)) : Row(
-              mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 8,
-              children: [
-                if (icon != null) Icon(icon, color: Colors.white),
-                Text(label, style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: Colors.white,
-                )),
-              ],
-            ),
+            child: isLoading.value
+                ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(color: Colors.white),
+                      ),
+                    ],
+                  )
+                : Row(
+                    mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 8,
+                    children: [
+                      if (icon != null) Icon(icon, color: Colors.white),
+                      Text(
+                        label,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.labelLarge?.copyWith(color: Colors.white),
+                      ),
+                    ],
+                  ),
           );
   }
 }

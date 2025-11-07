@@ -26,3 +26,25 @@ Future<ConfluxDetails?> confluxDetails(Ref ref, String id) async {
       .limit(1);
   return result.isNotEmpty ? ConfluxDetails.fromJson(result.first) : null;
 }
+
+@riverpod
+Future<List<ConfluxDetails>> confluxRiftsDetails(Ref ref) async {
+  ref.keepAlive();
+  ref.watch(confluxRiftsProvider);
+  final result = await supabase
+      .from('conflux_details')
+      .select('*')
+      .eq('portal', false);
+  return result.map((data) => ConfluxDetails.fromJson(data)).toList();
+}
+
+@riverpod
+Future<List<ConfluxDetails>> confluxPortalsDetails(Ref ref) async {
+  ref.keepAlive();
+  ref.watch(confluxPortalsProvider);
+  final result = await supabase
+      .from('conflux_details')
+      .select('*')
+      .eq('portal', true);
+  return result.map((data) => ConfluxDetails.fromJson(data)).toList();
+}

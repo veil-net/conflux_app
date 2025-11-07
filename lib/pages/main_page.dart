@@ -1,10 +1,9 @@
 import 'package:conflux/components/app_background.dart';
-import 'package:conflux/components/app_header.dart';
+import 'package:conflux/components/app_navigation_bar.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
 import 'package:conflux/views/home_view.dart';
 import 'package:conflux/views/plane_view.dart';
 import 'package:conflux/views/setting_view.dart';
-import 'package:conflux/views/team_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -19,29 +18,18 @@ class MainPage extends HookConsumerWidget {
         child: Stack(
           children: [
             Positioned.fill(child: AppBackground()),
-            NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return [
-                  AppHeader(innerBoxIsScrolled: innerBoxIsScrolled),
-                ];
+            PageView(
+              controller: pageController,
+              onPageChanged: (index) {
+                ref.read(currentPageProvider.notifier).setPage(index);
               },
-              body: PageView(
-                controller: pageController,
-                onPageChanged: (index) {
-                  ref.read(currentPageProvider.notifier).setPage(index);
-                },
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  HomeView(),
-                  PlaneView(),
-                  TeamView(),
-                  SettingView(),
-                ],
-              ),
+              physics: const NeverScrollableScrollPhysics(),
+              children: [HomeView(), PlaneView(), SettingView()],
             ),
           ],
         ),
       ),
+      bottomNavigationBar: AppNavigationBar(),
     );
   }
 }

@@ -83,3 +83,87 @@ final class ConfluxDetailsFamily extends $Family
   @override
   String toString() => r'confluxDetailsProvider';
 }
+
+@ProviderFor(confluxRiftsDetails)
+const confluxRiftsDetailsProvider = ConfluxRiftsDetailsProvider._();
+
+final class ConfluxRiftsDetailsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ConfluxDetails>>,
+          List<ConfluxDetails>,
+          FutureOr<List<ConfluxDetails>>
+        >
+    with
+        $FutureModifier<List<ConfluxDetails>>,
+        $FutureProvider<List<ConfluxDetails>> {
+  const ConfluxRiftsDetailsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'confluxRiftsDetailsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$confluxRiftsDetailsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<ConfluxDetails>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<ConfluxDetails>> create(Ref ref) {
+    return confluxRiftsDetails(ref);
+  }
+}
+
+String _$confluxRiftsDetailsHash() =>
+    r'a2873c38d1a6ce276904958b25bc22051e9943b1';
+
+@ProviderFor(confluxPortalsDetails)
+const confluxPortalsDetailsProvider = ConfluxPortalsDetailsProvider._();
+
+final class ConfluxPortalsDetailsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ConfluxDetails>>,
+          List<ConfluxDetails>,
+          FutureOr<List<ConfluxDetails>>
+        >
+    with
+        $FutureModifier<List<ConfluxDetails>>,
+        $FutureProvider<List<ConfluxDetails>> {
+  const ConfluxPortalsDetailsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'confluxPortalsDetailsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$confluxPortalsDetailsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<ConfluxDetails>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<ConfluxDetails>> create(Ref ref) {
+    return confluxPortalsDetails(ref);
+  }
+}
+
+String _$confluxPortalsDetailsHash() =>
+    r'7f9db6b33ef1082db39596b82713a5eba634dbf9';

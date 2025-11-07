@@ -10,11 +10,8 @@ class CurrentConfluxCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(veilNetProvider);
+    final veilNetState = ref.watch(veilNetProvider);
     final confluxDetails = ref.watch(veilNetProvider.notifier).confluxDetails;
-    if (confluxDetails == null) {
-      return const SizedBox.shrink();
-    }
     return LayoutBuilder(
       builder: (context, constraints) {
         return ConstrainedBox(
@@ -23,70 +20,118 @@ class CurrentConfluxCard extends HookConsumerWidget {
                 ? constraints.maxWidth
                 : constraints.maxWidth * 0.5,
           ),
-          child:
-              AppCard(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "You are connected as:",
-                          style: Theme.of(context).textTheme.labelLarge
-                              ?.copyWith(
+          child: AppCard(
+            child: ExpansionTile(
+              tilePadding: EdgeInsets.symmetric(horizontal: 16),
+              childrenPadding: EdgeInsets.symmetric(horizontal: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              title: Text(
+                veilNetState == VeilNetState.connected
+                    ? "You are connected"
+                    : "You are disconnected",
+                style: TextStyle(
+                  color: veilNetState == VeilNetState.connected
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.error,
+                ),
+              ),
+              initiallyExpanded: true,
+              children: [
+                switch (veilNetState) {
+                  VeilNetState.connected =>
+                    confluxDetails == null
+                        ? TextButton(
+                            onPressed: () {
+                              ref.invalidate(veilNetProvider);
+                            },
+                            child: Text(
+                              'Failed to load conflux details, retry',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                            ),
+                          )
+                        : ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            leading: SizedBox(
+                              width: 40,
+                              height: 30,
+                              child: CountryFlag.fromCountryCode(
+                                confluxDetails.region,
+                              ),
+                            ),
+                            title: Text(
+                              confluxDetails.tag ?? 'No tag',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            subtitle: Text(
+                              confluxDetails.cidr ?? 'No cidr',
+                              style: TextStyle(
                                 color: Theme.of(context).colorScheme.secondary,
                               ),
-                        ),
-                      ],
+                            ),
+                          ),
+                  VeilNetState.disconnected => ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(
+                      Icons.warning,
+                      color: Theme.of(context).colorScheme.error,
                     ),
-                    ListTile(
-                      leading: SizedBox(
-                        width: 40,
-                        height: 30,
-                        child: CountryFlag.fromCountryCode(
-                          confluxDetails.region,
+                    title: Text(
+                      'Please select a plane to connect with VeilNet',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    ),
+                  ),
+                  VeilNetState.connecting => ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: CircularProgressIndicator(),
+                    title: Text(
+                      'Connecting to VeilNet...',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  VeilNetState.disconnecting => ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: CircularProgressIndicator(),
+                    title: Text(
+                      'Disconnecting from VeilNet...',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  VeilNetState.error => ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(
+                      Icons.error,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                    title: TextButton(
+                      onPressed: () {
+                        ref.invalidate(veilNetProvider);
+                      },
+                      child: Text(
+                        'Failed to load veilnet state, retry',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
                         ),
                       ),
-                      title: confluxDetails.tag != null
-                          ? Text(
-                              confluxDetails.tag!,
-                              style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.primary,
-                                  ),
-                            )
-                          : const LinearProgressIndicator(),
-                      subtitle: confluxDetails.cidr != null
-                          ? Text(
-                              confluxDetails.cidr!,
-                              style: Theme.of(context).textTheme.titleSmall
-                                  ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.secondary,
-                                  ),
-                            )
-                          : const LinearProgressIndicator(),
                     ),
-                  ],
-                ),
-              ).animate().slideY(
-                duration: 500.milliseconds,
-                curve: Curves.easeInOut,
-              ),
+                  ),
+                },
+              ],
+            ),
+          ).animate().slideX(duration: 500.milliseconds, curve: Curves.easeInOut),
         );
       },
-    );
-  }
-}
-
-extension convertFlag on String {
-  String get toFlag {
-    return (this).toUpperCase().replaceAllMapped(
-      RegExp(r'[A-Z]'),
-      (match) => String.fromCharCode(match.group(0)!.codeUnitAt(0) + 127397),
     );
   }
 }

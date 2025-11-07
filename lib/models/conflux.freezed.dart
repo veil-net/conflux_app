@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Conflux {
 
- String get id; DateTime get created_at; String get user_id; String get plane_id; String get name; String? get tag; bool get portal;
+ String get id; DateTime get created_at; String get user_id; String get plane_id; String? get tag; bool get portal;
 /// Create a copy of Conflux
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ConfluxCopyWith<Conflux> get copyWith => _$ConfluxCopyWithImpl<Conflux>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Conflux&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.plane_id, plane_id) || other.plane_id == plane_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.tag, tag) || other.tag == tag)&&(identical(other.portal, portal) || other.portal == portal));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Conflux&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.plane_id, plane_id) || other.plane_id == plane_id)&&(identical(other.tag, tag) || other.tag == tag)&&(identical(other.portal, portal) || other.portal == portal));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,created_at,user_id,plane_id,name,tag,portal);
+int get hashCode => Object.hash(runtimeType,id,created_at,user_id,plane_id,tag,portal);
 
 @override
 String toString() {
-  return 'Conflux(id: $id, created_at: $created_at, user_id: $user_id, plane_id: $plane_id, name: $name, tag: $tag, portal: $portal)';
+  return 'Conflux(id: $id, created_at: $created_at, user_id: $user_id, plane_id: $plane_id, tag: $tag, portal: $portal)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ConfluxCopyWith<$Res>  {
   factory $ConfluxCopyWith(Conflux value, $Res Function(Conflux) _then) = _$ConfluxCopyWithImpl;
 @useResult
 $Res call({
- String id, DateTime created_at, String user_id, String plane_id, String name, String? tag, bool portal
+ String id, DateTime created_at, String user_id, String plane_id, String? tag, bool portal
 });
 
 
@@ -65,13 +65,12 @@ class _$ConfluxCopyWithImpl<$Res>
 
 /// Create a copy of Conflux
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? plane_id = null,Object? name = null,Object? tag = freezed,Object? portal = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? plane_id = null,Object? tag = freezed,Object? portal = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
 as DateTime,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable
 as String,plane_id: null == plane_id ? _self.plane_id : plane_id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,tag: freezed == tag ? _self.tag : tag // ignore: cast_nullable_to_non_nullable
 as String?,portal: null == portal ? _self.portal : portal // ignore: cast_nullable_to_non_nullable
 as bool,
@@ -159,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String plane_id,  String name,  String? tag,  bool portal)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String plane_id,  String? tag,  bool portal)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Conflux() when $default != null:
-return $default(_that.id,_that.created_at,_that.user_id,_that.plane_id,_that.name,_that.tag,_that.portal);case _:
+return $default(_that.id,_that.created_at,_that.user_id,_that.plane_id,_that.tag,_that.portal);case _:
   return orElse();
 
 }
@@ -180,10 +179,10 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.plane_id,_that.nam
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String plane_id,  String name,  String? tag,  bool portal)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String plane_id,  String? tag,  bool portal)  $default,) {final _that = this;
 switch (_that) {
 case _Conflux():
-return $default(_that.id,_that.created_at,_that.user_id,_that.plane_id,_that.name,_that.tag,_that.portal);case _:
+return $default(_that.id,_that.created_at,_that.user_id,_that.plane_id,_that.tag,_that.portal);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +199,10 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.plane_id,_that.nam
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  String user_id,  String plane_id,  String name,  String? tag,  bool portal)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  String user_id,  String plane_id,  String? tag,  bool portal)?  $default,) {final _that = this;
 switch (_that) {
 case _Conflux() when $default != null:
-return $default(_that.id,_that.created_at,_that.user_id,_that.plane_id,_that.name,_that.tag,_that.portal);case _:
+return $default(_that.id,_that.created_at,_that.user_id,_that.plane_id,_that.tag,_that.portal);case _:
   return null;
 
 }
@@ -215,14 +214,13 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.plane_id,_that.nam
 @JsonSerializable()
 
 class _Conflux implements Conflux {
-   _Conflux({required this.id, required this.created_at, required this.user_id, required this.plane_id, required this.name, this.tag, required this.portal});
+   _Conflux({required this.id, required this.created_at, required this.user_id, required this.plane_id, this.tag, required this.portal});
   factory _Conflux.fromJson(Map<String, dynamic> json) => _$ConfluxFromJson(json);
 
 @override final  String id;
 @override final  DateTime created_at;
 @override final  String user_id;
 @override final  String plane_id;
-@override final  String name;
 @override final  String? tag;
 @override final  bool portal;
 
@@ -239,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Conflux&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.plane_id, plane_id) || other.plane_id == plane_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.tag, tag) || other.tag == tag)&&(identical(other.portal, portal) || other.portal == portal));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Conflux&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.plane_id, plane_id) || other.plane_id == plane_id)&&(identical(other.tag, tag) || other.tag == tag)&&(identical(other.portal, portal) || other.portal == portal));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,created_at,user_id,plane_id,name,tag,portal);
+int get hashCode => Object.hash(runtimeType,id,created_at,user_id,plane_id,tag,portal);
 
 @override
 String toString() {
-  return 'Conflux(id: $id, created_at: $created_at, user_id: $user_id, plane_id: $plane_id, name: $name, tag: $tag, portal: $portal)';
+  return 'Conflux(id: $id, created_at: $created_at, user_id: $user_id, plane_id: $plane_id, tag: $tag, portal: $portal)';
 }
 
 
@@ -259,7 +257,7 @@ abstract mixin class _$ConfluxCopyWith<$Res> implements $ConfluxCopyWith<$Res> {
   factory _$ConfluxCopyWith(_Conflux value, $Res Function(_Conflux) _then) = __$ConfluxCopyWithImpl;
 @override @useResult
 $Res call({
- String id, DateTime created_at, String user_id, String plane_id, String name, String? tag, bool portal
+ String id, DateTime created_at, String user_id, String plane_id, String? tag, bool portal
 });
 
 
@@ -276,13 +274,12 @@ class __$ConfluxCopyWithImpl<$Res>
 
 /// Create a copy of Conflux
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? plane_id = null,Object? name = null,Object? tag = freezed,Object? portal = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? plane_id = null,Object? tag = freezed,Object? portal = null,}) {
   return _then(_Conflux(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
 as DateTime,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable
 as String,plane_id: null == plane_id ? _self.plane_id : plane_id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,tag: freezed == tag ? _self.tag : tag // ignore: cast_nullable_to_non_nullable
 as String?,portal: null == portal ? _self.portal : portal // ignore: cast_nullable_to_non_nullable
 as bool,

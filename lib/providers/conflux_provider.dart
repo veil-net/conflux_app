@@ -9,11 +9,15 @@ part 'conflux_provider.g.dart';
 @riverpod
 class Confluxes extends _$Confluxes {
   @override
-  Future<List<Conflux>> build() async {
-    return await supabase
+  Stream<List<Conflux>> build() {
+    ref.keepAlive();
+    return supabase
         .from('confluxes')
-        .select('*')
-        .then((value) => value.map((data) => Conflux.fromJson(data)).toList());
+        .stream(primaryKey: ['id'])
+        .map(
+          (event) =>
+              event.map((data) => Conflux.fromJson(data)).toList(),
+        );
   }
 
   Future<void> createConflux(String name, String plane_id, String? tag) async {

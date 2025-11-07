@@ -14,6 +14,7 @@ abstract class Plane with _$Plane {
     required String subnet,
     required bool public,
     required int portals,
+    String? subscription,
   }) = _Plane;
 
   factory Plane.fromJson(Map<String, dynamic> json) => _$PlaneFromJson(json);

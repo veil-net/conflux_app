@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PlaneDetails {
 
- String get id; DateTime get created_at; String get user_id; String get veil_id; String get name; String get subnet; bool get public; String get region; String get veil_host; int get veil_port; int get portals;
+ String get id; DateTime get created_at; String get user_id; String get veil_id; String get name; String get subnet; bool get public; String get region; String get veil_host; int get veil_port; int get portals; String? get team; String? get subscription; String? get status;
 /// Create a copy of PlaneDetails
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PlaneDetailsCopyWith<PlaneDetails> get copyWith => _$PlaneDetailsCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlaneDetails&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.region, region) || other.region == region)&&(identical(other.veil_host, veil_host) || other.veil_host == veil_host)&&(identical(other.veil_port, veil_port) || other.veil_port == veil_port)&&(identical(other.portals, portals) || other.portals == portals));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlaneDetails&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.region, region) || other.region == region)&&(identical(other.veil_host, veil_host) || other.veil_host == veil_host)&&(identical(other.veil_port, veil_port) || other.veil_port == veil_port)&&(identical(other.portals, portals) || other.portals == portals)&&(identical(other.team, team) || other.team == team)&&(identical(other.subscription, subscription) || other.subscription == subscription)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,created_at,user_id,veil_id,name,subnet,public,region,veil_host,veil_port,portals);
+int get hashCode => Object.hash(runtimeType,id,created_at,user_id,veil_id,name,subnet,public,region,veil_host,veil_port,portals,team,subscription,status);
 
 @override
 String toString() {
-  return 'PlaneDetails(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, region: $region, veil_host: $veil_host, veil_port: $veil_port, portals: $portals)';
+  return 'PlaneDetails(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, region: $region, veil_host: $veil_host, veil_port: $veil_port, portals: $portals, team: $team, subscription: $subscription, status: $status)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PlaneDetailsCopyWith<$Res>  {
   factory $PlaneDetailsCopyWith(PlaneDetails value, $Res Function(PlaneDetails) _then) = _$PlaneDetailsCopyWithImpl;
 @useResult
 $Res call({
- String id, DateTime created_at, String user_id, String veil_id, String name, String subnet, bool public, String region, String veil_host, int veil_port, int portals
+ String id, DateTime created_at, String user_id, String veil_id, String name, String subnet, bool public, String region, String veil_host, int veil_port, int portals, String? team, String? subscription, String? status
 });
 
 
@@ -65,7 +65,7 @@ class _$PlaneDetailsCopyWithImpl<$Res>
 
 /// Create a copy of PlaneDetails
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? veil_id = null,Object? name = null,Object? subnet = null,Object? public = null,Object? region = null,Object? veil_host = null,Object? veil_port = null,Object? portals = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? veil_id = null,Object? name = null,Object? subnet = null,Object? public = null,Object? region = null,Object? veil_host = null,Object? veil_port = null,Object? portals = null,Object? team = freezed,Object? subscription = freezed,Object? status = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
@@ -78,7 +78,10 @@ as bool,region: null == region ? _self.region : region // ignore: cast_nullable_
 as String,veil_host: null == veil_host ? _self.veil_host : veil_host // ignore: cast_nullable_to_non_nullable
 as String,veil_port: null == veil_port ? _self.veil_port : veil_port // ignore: cast_nullable_to_non_nullable
 as int,portals: null == portals ? _self.portals : portals // ignore: cast_nullable_to_non_nullable
-as int,
+as int,team: freezed == team ? _self.team : team // ignore: cast_nullable_to_non_nullable
+as String?,subscription: freezed == subscription ? _self.subscription : subscription // ignore: cast_nullable_to_non_nullable
+as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -163,10 +166,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  String region,  String veil_host,  int veil_port,  int portals)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  String region,  String veil_host,  int veil_port,  int portals,  String? team,  String? subscription,  String? status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PlaneDetails() when $default != null:
-return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.region,_that.veil_host,_that.veil_port,_that.portals);case _:
+return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.region,_that.veil_host,_that.veil_port,_that.portals,_that.team,_that.subscription,_that.status);case _:
   return orElse();
 
 }
@@ -184,10 +187,10 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  String region,  String veil_host,  int veil_port,  int portals)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  String region,  String veil_host,  int veil_port,  int portals,  String? team,  String? subscription,  String? status)  $default,) {final _that = this;
 switch (_that) {
 case _PlaneDetails():
-return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.region,_that.veil_host,_that.veil_port,_that.portals);case _:
+return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.region,_that.veil_host,_that.veil_port,_that.portals,_that.team,_that.subscription,_that.status);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +207,10 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  String region,  String veil_host,  int veil_port,  int portals)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  String region,  String veil_host,  int veil_port,  int portals,  String? team,  String? subscription,  String? status)?  $default,) {final _that = this;
 switch (_that) {
 case _PlaneDetails() when $default != null:
-return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.region,_that.veil_host,_that.veil_port,_that.portals);case _:
+return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.region,_that.veil_host,_that.veil_port,_that.portals,_that.team,_that.subscription,_that.status);case _:
   return null;
 
 }
@@ -219,7 +222,7 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name
 @JsonSerializable()
 
 class _PlaneDetails implements PlaneDetails {
-   _PlaneDetails({required this.id, required this.created_at, required this.user_id, required this.veil_id, required this.name, required this.subnet, required this.public, required this.region, required this.veil_host, required this.veil_port, required this.portals});
+   _PlaneDetails({required this.id, required this.created_at, required this.user_id, required this.veil_id, required this.name, required this.subnet, required this.public, required this.region, required this.veil_host, required this.veil_port, required this.portals, this.team, this.subscription, this.status});
   factory _PlaneDetails.fromJson(Map<String, dynamic> json) => _$PlaneDetailsFromJson(json);
 
 @override final  String id;
@@ -233,6 +236,9 @@ class _PlaneDetails implements PlaneDetails {
 @override final  String veil_host;
 @override final  int veil_port;
 @override final  int portals;
+@override final  String? team;
+@override final  String? subscription;
+@override final  String? status;
 
 /// Create a copy of PlaneDetails
 /// with the given fields replaced by the non-null parameter values.
@@ -247,16 +253,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlaneDetails&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.region, region) || other.region == region)&&(identical(other.veil_host, veil_host) || other.veil_host == veil_host)&&(identical(other.veil_port, veil_port) || other.veil_port == veil_port)&&(identical(other.portals, portals) || other.portals == portals));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlaneDetails&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.region, region) || other.region == region)&&(identical(other.veil_host, veil_host) || other.veil_host == veil_host)&&(identical(other.veil_port, veil_port) || other.veil_port == veil_port)&&(identical(other.portals, portals) || other.portals == portals)&&(identical(other.team, team) || other.team == team)&&(identical(other.subscription, subscription) || other.subscription == subscription)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,created_at,user_id,veil_id,name,subnet,public,region,veil_host,veil_port,portals);
+int get hashCode => Object.hash(runtimeType,id,created_at,user_id,veil_id,name,subnet,public,region,veil_host,veil_port,portals,team,subscription,status);
 
 @override
 String toString() {
-  return 'PlaneDetails(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, region: $region, veil_host: $veil_host, veil_port: $veil_port, portals: $portals)';
+  return 'PlaneDetails(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, region: $region, veil_host: $veil_host, veil_port: $veil_port, portals: $portals, team: $team, subscription: $subscription, status: $status)';
 }
 
 
@@ -267,7 +273,7 @@ abstract mixin class _$PlaneDetailsCopyWith<$Res> implements $PlaneDetailsCopyWi
   factory _$PlaneDetailsCopyWith(_PlaneDetails value, $Res Function(_PlaneDetails) _then) = __$PlaneDetailsCopyWithImpl;
 @override @useResult
 $Res call({
- String id, DateTime created_at, String user_id, String veil_id, String name, String subnet, bool public, String region, String veil_host, int veil_port, int portals
+ String id, DateTime created_at, String user_id, String veil_id, String name, String subnet, bool public, String region, String veil_host, int veil_port, int portals, String? team, String? subscription, String? status
 });
 
 
@@ -284,7 +290,7 @@ class __$PlaneDetailsCopyWithImpl<$Res>
 
 /// Create a copy of PlaneDetails
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? veil_id = null,Object? name = null,Object? subnet = null,Object? public = null,Object? region = null,Object? veil_host = null,Object? veil_port = null,Object? portals = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? veil_id = null,Object? name = null,Object? subnet = null,Object? public = null,Object? region = null,Object? veil_host = null,Object? veil_port = null,Object? portals = null,Object? team = freezed,Object? subscription = freezed,Object? status = freezed,}) {
   return _then(_PlaneDetails(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
@@ -297,7 +303,10 @@ as bool,region: null == region ? _self.region : region // ignore: cast_nullable_
 as String,veil_host: null == veil_host ? _self.veil_host : veil_host // ignore: cast_nullable_to_non_nullable
 as String,veil_port: null == veil_port ? _self.veil_port : veil_port // ignore: cast_nullable_to_non_nullable
 as int,portals: null == portals ? _self.portals : portals // ignore: cast_nullable_to_non_nullable
-as int,
+as int,team: freezed == team ? _self.team : team // ignore: cast_nullable_to_non_nullable
+as String?,subscription: freezed == subscription ? _self.subscription : subscription // ignore: cast_nullable_to_non_nullable
+as String?,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

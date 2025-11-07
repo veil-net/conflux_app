@@ -15,6 +15,7 @@ _Plane _$PlaneFromJson(Map<String, dynamic> json) => _Plane(
   subnet: json['subnet'] as String,
   public: json['public'] as bool,
   portals: (json['portals'] as num).toInt(),
+  subscription: json['subscription'] as String?,
 );
 
 Map<String, dynamic> _$PlaneToJson(_Plane instance) => <String, dynamic>{
@@ -26,4 +27,5 @@ Map<String, dynamic> _$PlaneToJson(_Plane instance) => <String, dynamic>{
   'subnet': instance.subnet,
   'public': instance.public,
   'portals': instance.portals,
+  'subscription': instance.subscription,
 };

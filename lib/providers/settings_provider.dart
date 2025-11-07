@@ -28,29 +28,3 @@ class DarkMode extends _$DarkMode {
     ref.invalidateSelf();
   }
 }
-
-@riverpod
-class DeveloperMode extends _$DeveloperMode {
-  @override
-  bool build() {
-    ref.keepAlive();
-    final prefs = ref.watch(preferenceProvider);
-    return prefs.when(
-      data: (value) {
-        return value.getBool('developer_mode') ?? false;
-      },
-      error: (error, stackTrace) {
-        return false;
-      },
-      loading: () {
-        return false;
-      },
-    );
-  }
-
-  Future<void> setDeveloperMode(bool value) async {
-    final prefs = await ref.watch(preferenceProvider.future);
-    await prefs.setBool('developer_mode', value);
-    ref.invalidateSelf();
-  }
-}

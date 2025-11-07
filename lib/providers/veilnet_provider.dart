@@ -68,6 +68,7 @@ class VeilNet extends _$VeilNet {
   ConfluxDetails? _confluxDetails;
   @override
   VeilNetState build() {
+    ref.keepAlive();
     final pref = ref.watch(preferenceProvider);
     pref.when(
       data: (pref) {
@@ -179,14 +180,15 @@ class VeilNet extends _$VeilNet {
     }
 
     try {
+      _intentState = VeilNetState.connected;
       final hostname = await ref.watch(deviceHostnameProvider.future);
       final api = ref.watch(apiProvider);
       final response = await api.post(
-        '/conflux?plane_id=${plane.id}&tag=$hostname',
+        '/conflux',
+        data: {'plane_id': plane.id, 'tag': hostname},
       );
       final anchorToken = response.data['token'];
       final confluxID = response.data['conflux_id'];
-      _intentState = VeilNetState.connected;
       switch (Platform.operatingSystem) {
         case "windows":
           await ref.read(confluxServiceProvider.notifier).up(anchorToken);

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Plane {
 
- String get id; DateTime get created_at; String get user_id; String get veil_id; String get name; String get subnet; bool get public; int get portals;
+ String get id; DateTime get created_at; String get user_id; String get veil_id; String get name; String get subnet; bool get public; int get portals; String? get subscription;
 /// Create a copy of Plane
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PlaneCopyWith<Plane> get copyWith => _$PlaneCopyWithImpl<Plane>(this as Plane, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Plane&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.portals, portals) || other.portals == portals));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Plane&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.portals, portals) || other.portals == portals)&&(identical(other.subscription, subscription) || other.subscription == subscription));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,created_at,user_id,veil_id,name,subnet,public,portals);
+int get hashCode => Object.hash(runtimeType,id,created_at,user_id,veil_id,name,subnet,public,portals,subscription);
 
 @override
 String toString() {
-  return 'Plane(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, portals: $portals)';
+  return 'Plane(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, portals: $portals, subscription: $subscription)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PlaneCopyWith<$Res>  {
   factory $PlaneCopyWith(Plane value, $Res Function(Plane) _then) = _$PlaneCopyWithImpl;
 @useResult
 $Res call({
- String id, DateTime created_at, String user_id, String veil_id, String name, String subnet, bool public, int portals
+ String id, DateTime created_at, String user_id, String veil_id, String name, String subnet, bool public, int portals, String? subscription
 });
 
 
@@ -65,7 +65,7 @@ class _$PlaneCopyWithImpl<$Res>
 
 /// Create a copy of Plane
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? veil_id = null,Object? name = null,Object? subnet = null,Object? public = null,Object? portals = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? veil_id = null,Object? name = null,Object? subnet = null,Object? public = null,Object? portals = null,Object? subscription = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
@@ -75,7 +75,8 @@ as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non
 as String,subnet: null == subnet ? _self.subnet : subnet // ignore: cast_nullable_to_non_nullable
 as String,public: null == public ? _self.public : public // ignore: cast_nullable_to_non_nullable
 as bool,portals: null == portals ? _self.portals : portals // ignore: cast_nullable_to_non_nullable
-as int,
+as int,subscription: freezed == subscription ? _self.subscription : subscription // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -160,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  int portals)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  int portals,  String? subscription)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Plane() when $default != null:
-return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.portals);case _:
+return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.portals,_that.subscription);case _:
   return orElse();
 
 }
@@ -181,10 +182,10 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  int portals)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  int portals,  String? subscription)  $default,) {final _that = this;
 switch (_that) {
 case _Plane():
-return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.portals);case _:
+return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.portals,_that.subscription);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +202,10 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  int portals)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  int portals,  String? subscription)?  $default,) {final _that = this;
 switch (_that) {
 case _Plane() when $default != null:
-return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.portals);case _:
+return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.portals,_that.subscription);case _:
   return null;
 
 }
@@ -216,7 +217,7 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name
 @JsonSerializable()
 
 class _Plane implements Plane {
-   _Plane({required this.id, required this.created_at, required this.user_id, required this.veil_id, required this.name, required this.subnet, required this.public, required this.portals});
+   _Plane({required this.id, required this.created_at, required this.user_id, required this.veil_id, required this.name, required this.subnet, required this.public, required this.portals, this.subscription});
   factory _Plane.fromJson(Map<String, dynamic> json) => _$PlaneFromJson(json);
 
 @override final  String id;
@@ -227,6 +228,7 @@ class _Plane implements Plane {
 @override final  String subnet;
 @override final  bool public;
 @override final  int portals;
+@override final  String? subscription;
 
 /// Create a copy of Plane
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +243,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Plane&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.portals, portals) || other.portals == portals));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Plane&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.portals, portals) || other.portals == portals)&&(identical(other.subscription, subscription) || other.subscription == subscription));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,created_at,user_id,veil_id,name,subnet,public,portals);
+int get hashCode => Object.hash(runtimeType,id,created_at,user_id,veil_id,name,subnet,public,portals,subscription);
 
 @override
 String toString() {
-  return 'Plane(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, portals: $portals)';
+  return 'Plane(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, portals: $portals, subscription: $subscription)';
 }
 
 
@@ -261,7 +263,7 @@ abstract mixin class _$PlaneCopyWith<$Res> implements $PlaneCopyWith<$Res> {
   factory _$PlaneCopyWith(_Plane value, $Res Function(_Plane) _then) = __$PlaneCopyWithImpl;
 @override @useResult
 $Res call({
- String id, DateTime created_at, String user_id, String veil_id, String name, String subnet, bool public, int portals
+ String id, DateTime created_at, String user_id, String veil_id, String name, String subnet, bool public, int portals, String? subscription
 });
 
 
@@ -278,7 +280,7 @@ class __$PlaneCopyWithImpl<$Res>
 
 /// Create a copy of Plane
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? veil_id = null,Object? name = null,Object? subnet = null,Object? public = null,Object? portals = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? veil_id = null,Object? name = null,Object? subnet = null,Object? public = null,Object? portals = null,Object? subscription = freezed,}) {
   return _then(_Plane(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
@@ -288,7 +290,8 @@ as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non
 as String,subnet: null == subnet ? _self.subnet : subnet // ignore: cast_nullable_to_non_nullable
 as String,public: null == public ? _self.public : public // ignore: cast_nullable_to_non_nullable
 as bool,portals: null == portals ? _self.portals : portals // ignore: cast_nullable_to_non_nullable
-as int,
+as int,subscription: freezed == subscription ? _self.subscription : subscription // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
