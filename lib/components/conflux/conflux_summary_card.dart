@@ -1,7 +1,6 @@
 import 'package:conflux/components/app_button.dart';
-import 'package:conflux/components/app_dialog_manager.dart';
+import 'package:conflux/components/app_card.dart';
 import 'package:conflux/providers/conflux_details_provider.dart';
-import 'package:conflux/providers/conflux_provider.dart';
 import 'package:conflux/providers/current_session_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
@@ -15,23 +14,17 @@ class ConfluxSummaryCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final developerMode = ref.watch(developerModeProvider);
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).orientation == Orientation.portrait
-                ? constraints.maxWidth
-                : constraints.maxWidth * 0.5,
-          ),
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 1000),
+      child: AppCard(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             spacing: 16,
             children: [
               Row(
                 spacing: 16,
-                children: [
-                  PortalSummaryTitle(),
-                  RiftSummaryTitle(),
-                ],
+                children: [PortalSummaryTitle(), RiftSummaryTitle()],
               ),
               if (developerMode)
                 AppButton(
@@ -51,8 +44,8 @@ class ConfluxSummaryCard extends HookConsumerWidget {
                 ),
             ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
@@ -69,37 +62,11 @@ class RiftSummaryTitle extends HookConsumerWidget {
         leading: Icon(Icons.electric_bolt),
         title: Text(
           '${confluxRifts.value?.where((conflux) => conflux.signature != null).length} / ${confluxRifts.value?.length}',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.secondary,
-          ),
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         ),
         subtitle: Text(
           'Rifts',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-        trailing: confluxRifts.when(
-          data: (data) => IconButton(
-            onPressed: () {
-              DialogManager.showDialog(
-                context,
-                'VeilNet Conflux rifts forward all traffic from your device to VeilNet.\n\nConnecting a device with a rift will consume your credits if you don\'t have a subscription.',
-                DialogType.info,
-              );
-            },
-            icon: Icon(Icons.info_outline_rounded),
-          ),
-          error: (error, stackTrace) => IconButton(
-            onPressed: () {
-              ref.invalidate(confluxRiftsProvider);
-            },
-            icon: Icon(
-              Icons.refresh,
-              color: Theme.of(context).colorScheme.error,
-            ),
-          ),
-          loading: () => null,
+          style: TextStyle(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
@@ -123,28 +90,6 @@ class PortalSummaryTitle extends HookConsumerWidget {
         subtitle: Text(
           'Portals',
           style: TextStyle(color: Theme.of(context).colorScheme.primary),
-        ),
-        trailing: confluxPortals.when(
-          data: (data) => IconButton(
-            onPressed: () {
-              DialogManager.showDialog(
-                context,
-                'VeilNet Conflux Portals are gateway from VeilNet to regular networks.\n\nSelf-hosting a VeilNet conflux portal will earn you credits to access VeilNet Public Plane.',
-                DialogType.info,
-              );
-            },
-            icon: Icon(Icons.info_outline_rounded),
-          ),
-          error: (error, stackTrace) => IconButton(
-            onPressed: () {
-              ref.invalidate(confluxPortalsProvider);
-            },
-            icon: Icon(
-              Icons.refresh,
-              color: Theme.of(context).colorScheme.error,
-            ),
-          ),
-          loading: () => null,
         ),
       ),
     );

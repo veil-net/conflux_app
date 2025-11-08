@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:conflux/components/conflux/conflux_card.dart';
+import 'package:conflux/components/conflux/conflux_summary_card.dart';
 import 'package:conflux/components/plane/selected_plane.dart';
 import 'package:conflux/components/profile/greeting_tile.dart';
 import 'package:flutter/material.dart';
@@ -9,21 +12,35 @@ class HomeView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return CustomScrollView(
-      slivers: [
-        SliverFillRemaining(
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            crossAxisAlignment: WrapCrossAlignment.end,
-            runAlignment: MediaQuery.of(context).orientation == Orientation.portrait ? WrapAlignment.end : WrapAlignment.center,
-            children: [Column(
-              children: [
-                GreetingTile(), ConfluxCard(),
-              ],
-            ), SelectedPlane()],
+    if (Platform.isAndroid || Platform.isIOS) {
+      return CustomScrollView(
+        slivers: [
+          PinnedHeaderSliver(child: ConfluxCard()),
+          SliverFillRemaining(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [GreetingTile(), SelectedPlane()],
+            ),
           ),
-        ),
-      ],
-    );
+          SliverToBoxAdapter(child: ConfluxSummaryCard()),
+        ],
+      );
+    }
+
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      return CustomScrollView(
+        slivers: [
+          PinnedHeaderSliver(child: ConfluxCard()),
+          SliverFillRemaining(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [GreetingTile(), ConfluxSummaryCard(), SelectedPlane()],
+            ),
+          ),
+        ],
+      );
+    }
+
+    return Center(child: Text('Unsupported platform'));
   }
 }

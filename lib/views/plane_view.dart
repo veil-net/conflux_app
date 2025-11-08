@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:conflux/components/plane/plane_list.dart';
 import 'package:conflux/components/plane/plane_search_card.dart';
 import 'package:flutter/material.dart';
@@ -8,25 +10,24 @@ class PlaneView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return CustomScrollView(
-      slivers: [
-        SliverFillRemaining(
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            runAlignment:
-                MediaQuery.of(context).orientation == Orientation.portrait
-                ? WrapAlignment.start
-                : WrapAlignment.center,
-            children: [
-              ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 1000),
-                child: PlaneSearchCard(),
-              ),
-              PlaneList(),
-            ],
-          ),
-        ),
-      ],
-    );
+    if (Platform.isAndroid || Platform.isIOS) {
+      return CustomScrollView(
+        slivers: [
+          PinnedHeaderSliver(child: PlaneSearchCard()),
+          SliverToBoxAdapter(child: PlaneList()),
+        ],
+      );
+    }
+
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      return CustomScrollView(
+        slivers: [
+          PinnedHeaderSliver(child: PlaneSearchCard()),
+          SliverToBoxAdapter(child: PlaneList()),
+        ],
+      );
+    }
+
+    return Center(child: Text('Unsupported platform'));
   }
 }

@@ -18,6 +18,10 @@ Future<void> main() async {
     url: 'https://nabcgmuuviyfakyrhakv.supabase.co',
     anonKey: 'sb_publishable_c757oKzF-QNBms8a7TLWeQ_tOEm9Q3t',
   );
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   try {
     switch (Platform.operatingSystem) {
       case 'windows':

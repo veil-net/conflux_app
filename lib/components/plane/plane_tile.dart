@@ -56,7 +56,7 @@ class PlaneTile extends HookConsumerWidget {
                     : null,
               ),
             ),
-          ).animate().slideX(duration: 500.ms, curve: Curves.easeInOut),
+          ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
         );
       },
     );

@@ -1,8 +1,9 @@
+import 'package:conflux/components/app_card.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 
 class ConfluxStateTile extends HookConsumerWidget {
   const ConfluxStateTile({super.key});
@@ -10,14 +11,11 @@ class ConfluxStateTile extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final veilNetState = ref.watch(veilNetProvider);
     final confluxDetails = ref.watch(veilNetProvider.notifier).confluxDetails;
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).orientation == Orientation.portrait
-                ? constraints.maxWidth
-                : constraints.maxWidth * 0.5,
-          ),
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 1000),
+      child: AppCard(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: switch (veilNetState) {
             VeilNetState.connected =>
               confluxDetails == null
@@ -27,9 +25,7 @@ class ConfluxStateTile extends HookConsumerWidget {
                       },
                       child: Text(
                         'Failed to load conflux details, retry',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.error,
-                        ),
+                        style: TextStyle(color: Theme.of(context).colorScheme.error),
                       ),
                     )
                   : ListTile(
@@ -37,9 +33,7 @@ class ConfluxStateTile extends HookConsumerWidget {
                       leading: SizedBox(
                         width: 40,
                         height: 30,
-                        child: CountryFlag.fromCountryCode(
-                          confluxDetails.region,
-                        ),
+                        child: CountryFlag.fromCountryCode(confluxDetails.region),
                       ),
                       title: Text(
                         confluxDetails.tag ?? 'No tag',
@@ -83,10 +77,7 @@ class ConfluxStateTile extends HookConsumerWidget {
             ),
             VeilNetState.error => ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(
-                Icons.error,
-                color: Theme.of(context).colorScheme.error,
-              ),
+              leading: Icon(Icons.error, color: Theme.of(context).colorScheme.error),
               title: TextButton(
                 onPressed: () {
                   ref.invalidate(veilNetProvider);
@@ -98,8 +89,8 @@ class ConfluxStateTile extends HookConsumerWidget {
               ),
             ),
           },
-        );
-      },
+        ),
+      ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
     );
   }
 }

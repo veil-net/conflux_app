@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:conflux/components/app_background.dart';
-import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_bottom_navigation_bar.dart';
-import 'package:conflux/components/app_header_navigation_bar.dart';
+import 'package:conflux/components/app_status_background.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
 import 'package:conflux/views/home_view.dart';
 import 'package:conflux/views/plane_view.dart';
@@ -16,14 +17,12 @@ class MainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageController = ref.watch(pageControllerProvider);
     return Scaffold(
-      appBar: MediaQuery.of(context).orientation == Orientation.landscape
-          ? AppHeaderNavigationBar()
-          : null,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned.fill(child: AppBackground()),
-            PageView(
+      body: Stack(
+        children: [
+          Positioned.fill(child: AppBackground()),
+          Positioned.fill(child: AppStatusBackground()),
+          SafeArea(
+            child: PageView(
               controller: pageController,
               onPageChanged: (index) {
                 ref.read(currentPageProvider.notifier).setPage(index);
@@ -31,27 +30,12 @@ class MainPage extends HookConsumerWidget {
               physics: const NeverScrollableScrollPhysics(),
               children: [HomeView(), PlaneView(), SettingView()],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-      bottomNavigationBar:
-          MediaQuery.of(context).orientation == Orientation.portrait
+      bottomNavigationBar: Platform.isAndroid || Platform.isIOS
           ? AppBottomNavigationBar()
-          : null,
-      drawer: MediaQuery.of(context).orientation == Orientation.landscape
-          ? Drawer(
-              child: Column(
-                children: [
-                  AppButton(
-                    label: 'Home',
-                    onPressed: () async {
-                      ref.read(pageControllerProvider).jumpToPage(0);
-                    },
-                  ),
-                ],
-              ),
-            )
-          : null,
+          : AppBottomNavigationBar(),
     );
   }
 }

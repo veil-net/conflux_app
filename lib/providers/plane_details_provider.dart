@@ -58,17 +58,16 @@ class SelectedPlaneDetails extends _$SelectedPlaneDetails {
     ref.keepAlive();
     final prefs = await ref.watch(preferenceProvider.future);
     final currentPlaneData = prefs.getString('selected_plane');
-    if (currentPlaneData != null) {
-      final currentPlaneDetails = PlaneDetails.fromJson(
-        jsonDecode(currentPlaneData),
-      );
-      final selectedPlaneDetails = await ref.watch(
-        planeDetailsProvider(currentPlaneDetails.id).future,
-      );
-      return selectedPlaneDetails;
-    } else {
+    if (currentPlaneData == null) {
       return null;
     }
+    final currentPlaneDetails = PlaneDetails.fromJson(
+      jsonDecode(currentPlaneData),
+    );
+    final selectedPlaneDetails = await ref.watch(
+      planeDetailsProvider(currentPlaneDetails.id).future,
+    );
+    return selectedPlaneDetails;
   }
 
   Future<void> setSelectedPlane(PlaneDetails plane) async {

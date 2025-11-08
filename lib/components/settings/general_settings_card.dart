@@ -59,7 +59,7 @@ class GeneralSettingsCard extends HookConsumerWidget {
             ),
           ],
         ),
-      ).animate().slideX(duration: 500.milliseconds, curve: Curves.easeInOut),
+      ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
     );
   }
 }

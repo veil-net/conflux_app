@@ -114,15 +114,15 @@ class AuthPage extends HookConsumerWidget {
                         tag: 'logo',
                         child: Image.asset('assets/images/Logo_H.png'),
                       ).animate().slideY(
-                        duration: 500.milliseconds,
-                        curve: Curves.easeInOut,
+                        duration: 250.milliseconds,
+                        curve: Curves.easeInOut,  
                       ),
                       AppButton(
                         expand: true,
                         label: 'Sign in',
                         onPressed: signIn,
                       ).animate().slideY(
-                        duration: 500.milliseconds,
+                        duration: 250.milliseconds,
                         curve: Curves.easeInOut,
                       ),
                       AppButton(
@@ -135,7 +135,7 @@ class AuthPage extends HookConsumerWidget {
                           );
                         },
                       ).animate().slideY(
-                        duration: 500.milliseconds,
+                        duration: 250.milliseconds,
                         curve: Curves.easeInOut,
                       ),
                     ],

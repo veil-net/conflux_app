@@ -49,7 +49,7 @@ class AuthCallbackPage extends HookConsumerWidget {
                     tag: 'logo',
                     child: Image.asset('assets/images/Logo_H.png'),
                   ).animate().slideY(
-                    duration: 500.milliseconds,
+                    duration: 250.milliseconds,
                     curve: Curves.easeInOut,
                   ),
                   const CircularProgressIndicator(),

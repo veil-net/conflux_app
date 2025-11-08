@@ -17,12 +17,8 @@ class AppCard extends HookConsumerWidget {
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface.withAlpha(200),
+              color: Colors.transparent,
               borderRadius: BorderRadius.all(Radius.circular(16)),
-              border: Border(
-                right: BorderSide(color: Colors.grey.withAlpha(50)),
-                bottom: BorderSide(color: Colors.grey.withAlpha(50)),
-              )
             ),
             child: child,
           ),
