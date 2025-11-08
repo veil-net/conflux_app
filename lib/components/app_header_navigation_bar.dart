@@ -45,21 +45,52 @@ class AppHeaderNavigationBar extends HookConsumerWidget
               padding: const EdgeInsets.all(8.0),
               child: Image.asset('assets/icon/icon.png'),
             ),
-            title: Text(
-              'VeilNet Conflux',
-              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'VeilNet Conflux',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                Row(
+                  spacing: 16,
+                  children: [
+                    SizedBox(
+                      width: 150,
+                      child: AppButton(
+                        label: 'Home',
+                        icon: Icons.home,
+                        onPressed: () async {
+                          ref.read(pageControllerProvider).jumpToPage(0);
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 150,
+                      child: AppButton(
+                        label: 'Planes',
+                        icon: Icons.language,
+                        onPressed: () async {
+                          ref.read(pageControllerProvider).jumpToPage(1);
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 150,
+                      child: AppButton(
+                        label: 'Settings',
+                        icon: Icons.settings,
+                        onPressed: () async {
+                          ref.read(pageControllerProvider).jumpToPage(2);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            actions: [
-              AppButton(label: 'Home', onPressed: () async{
-                ref.read(pageControllerProvider).jumpToPage(0);
-              }),
-              AppButton(label: 'Planes', onPressed: () async{
-                ref.read(pageControllerProvider).jumpToPage(1);
-              }),
-              AppButton(label: 'Settings', onPressed: () async{
-                ref.read(pageControllerProvider).jumpToPage(2);
-              }),
-            ],
           ),
         ),
       ),

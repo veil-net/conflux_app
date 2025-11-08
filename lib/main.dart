@@ -31,8 +31,16 @@ Future<void> main() async {
         final exitCode = await process.exitCode;
         if (exitCode != 0) {
           log('Veilnet Conflux not running, installing...');
-          await Process.start(executable.path, ['remove']);
-          await Process.start(executable.path, ['install']);
+          var process = await Process.start(executable.path, ['remove']);
+          var exitCode = await process.exitCode;
+          if (exitCode != 0) {
+            log('Failed to remove Veilnet Conflux: $exitCode');
+          }
+          process = await Process.start(executable.path, ['install']);
+          exitCode = await process.exitCode;
+          if (exitCode != 0) {
+            log('Failed to install Veilnet Conflux: $exitCode');
+          }
           log('Veilnet Conflux installed');
         } else {
           log('Veilnet Conflux already running');
@@ -49,8 +57,16 @@ Future<void> main() async {
         final exitCode = await process.exitCode;
         if (exitCode != 0) {
           log('Veilnet Conflux not running, installing...');
-          await Process.start(executable.path, ['remove']);
-          await Process.start(executable.path, ['install']);
+          var process = await Process.start(executable.path, ['remove']);
+          var exitCode = await process.exitCode;
+          if (exitCode != 0) {
+            log('Failed to remove Veilnet Conflux: $exitCode');
+          }
+          process = await Process.start(executable.path, ['install']);
+          exitCode = await process.exitCode;
+          if (exitCode != 0) {
+            log('Failed to install Veilnet Conflux: $exitCode');
+          }
           log('Veilnet Conflux installed');
         } else {
           log('Veilnet Conflux already running');
@@ -67,8 +83,16 @@ Future<void> main() async {
         final exitCode = await process.exitCode;
         if (exitCode != 0) {
           log('Veilnet Conflux not running, installing...');
-          await Process.start(executable.path, ['remove']);
-          await Process.start(executable.path, ['install']);
+          var process = await Process.start(executable.path, ['remove']);
+          var exitCode = await process.exitCode;
+          if (exitCode != 0) {
+            log('Failed to remove Veilnet Conflux: $exitCode');
+          }
+          process = await Process.start(executable.path, ['install']);
+          exitCode = await process.exitCode;
+          if (exitCode != 0) {
+            log('Failed to install Veilnet Conflux: $exitCode');
+          }
           log('Veilnet Conflux installed');
         } else {
           log('Veilnet Conflux already running');

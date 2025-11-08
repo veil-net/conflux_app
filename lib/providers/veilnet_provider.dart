@@ -36,11 +36,9 @@ class ConfluxService extends _$ConfluxService {
       throw Exception('Veilnet is not initialized');
     }
     await Process.start(_executable.path, ['start']);
-    log('Starting Veilnet');
     final arguments = ['up', '-t', anchorToken.toString()];
     final process = await Process.start(_executable.path, arguments);
     exitCode = await process.exitCode;
-    log('Veilnet started');
     if (exitCode != 0) {
       final stderr = await process.stderr.transform(utf8.decoder).join();
       throw Exception(stderr);
@@ -52,6 +50,19 @@ class ConfluxService extends _$ConfluxService {
       throw Exception('Veilnet is not initialized');
     }
     final process = await Process.start(_executable.path, ['stop']);
+    final exitCode = await process.exitCode;
+    if (exitCode != 0) {
+      final stderr = await process.stderr.transform(utf8.decoder).join();
+      throw Exception(stderr);
+    }
+  }
+
+  Future<void> reinstall() async {
+    if (!_initialized) {
+      throw Exception('Veilnet is not initialized');
+    }
+    await Process.start(_executable.path, ['remove']);
+    final process = await Process.start(_executable.path, ['install']);
     final exitCode = await process.exitCode;
     if (exitCode != 0) {
       final stderr = await process.stderr.transform(utf8.decoder).join();

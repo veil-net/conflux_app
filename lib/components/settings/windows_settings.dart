@@ -54,7 +54,9 @@ class WindowsSettings extends HookConsumerWidget {
                     }
                   }
                 },
+                expand: true,
               ),
+
             ],
           ),
         ),
