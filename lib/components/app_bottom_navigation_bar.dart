@@ -22,16 +22,11 @@ class AppBottomNavigationBar extends HookConsumerWidget {
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
-            border: Border(
-              bottom: BorderSide(color: Colors.grey.withAlpha(50)),
-            ),
           ),
           child: NavigationBar(
             elevation: 5,
             selectedIndex: currentIndex,
-            backgroundColor: Theme.of(
-              context,
-            ).colorScheme.surface.withAlpha(200),
+            backgroundColor: Colors.transparent,
             onDestinationSelected: (index) {
               ref.read(currentPageProvider.notifier).setPage(index);
               pageController.jumpToPage(index);
