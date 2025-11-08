@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -36,6 +37,7 @@ class AppButton extends HookConsumerWidget {
                   ? null
                   : onPressed != null
                   ? () async {
+                      HapticFeedback.lightImpact();
                       isLoading.value = true;
                       await onPressed!();
                       if (context.mounted) {
@@ -80,8 +82,8 @@ class AppButton extends HookConsumerWidget {
             ),
           )
         : ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 500),
-          child: FilledButton(
+            constraints: BoxConstraints(maxWidth: 500),
+            child: FilledButton(
               style: FilledButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -91,6 +93,7 @@ class AppButton extends HookConsumerWidget {
                   ? null
                   : onPressed != null
                   ? () async {
+                      HapticFeedback.lightImpact();
                       isLoading.value = true;
                       await onPressed!();
                       if (context.mounted) {
@@ -110,7 +113,9 @@ class AppButton extends HookConsumerWidget {
                       ],
                     )
                   : Row(
-                      mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
+                      mainAxisSize: expand
+                          ? MainAxisSize.max
+                          : MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       spacing: 8,
                       children: [
@@ -124,6 +129,6 @@ class AppButton extends HookConsumerWidget {
                       ],
                     ),
             ),
-        );
+          );
   }
 }
