@@ -10,7 +10,6 @@ import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class GreetingTile extends HookConsumerWidget {
@@ -22,6 +21,7 @@ class GreetingTile extends HookConsumerWidget {
     final serviceTier = ref.watch(serviceTierProvider);
     final confluxRifts = ref.watch(confluxRiftsProvider);
     final veilnetState = ref.watch(veilNetProvider);
+
     Future<void> setDsiplayName() async {
       if (displayName.text.isEmpty) {
         if (context.mounted) {
@@ -67,9 +67,6 @@ class GreetingTile extends HookConsumerWidget {
           return;
         }
         await supabase.auth.signOut();
-        if (context.mounted) {
-          context.go('/');
-        }
       } catch (e) {
         if (context.mounted) {
           DialogManager.showDialog(context, e.toString(), DialogType.error);

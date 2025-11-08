@@ -85,15 +85,27 @@ Future<void> main() async {
 
 final supabase = Supabase.instance.client;
 
+class AuthStateListenable extends ChangeNotifier {
+  AuthStateListenable() {
+    supabase.auth.onAuthStateChange.listen((event) {
+      notifyListeners();
+    });
+  }
+}
+
 final router = GoRouter(
   initialLocation: '/auth',
+  refreshListenable: AuthStateListenable(),
   routes: [
     GoRoute(
       path: '/',
       builder: (context, state) => const MainPage(),
       redirect: (context, state) async {
         try {
-          await supabase.auth.getUser();
+          final session = supabase.auth.currentSession;
+          if (session == null) {
+            return '/auth';
+          }
           return null;
         } catch (e) {
           return '/auth';
@@ -105,7 +117,10 @@ final router = GoRouter(
       builder: (context, state) => const AuthPage(),
       redirect: (context, state) async {
         try {
-          await supabase.auth.getUser();
+          final session = supabase.auth.currentSession;
+          if (session == null) {
+            return null;
+          }
           return '/';
         } catch (e) {
           return null;

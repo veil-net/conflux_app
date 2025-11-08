@@ -24,7 +24,7 @@ abstract class SubscriptionPlan with _$SubscriptionPlan {
     required int amount,
     String? amount_decimal,
     required String billing_scheme,
-    @JsonKey(name: 'created') @TimestampConverter() required DateTime created,
+    @TimestampConverter() required DateTime created,
     required String currency,
     required String interval,
     required int interval_count,
@@ -64,7 +64,7 @@ abstract class SubscriptionPrice with _$SubscriptionPrice {
     required String type,
     required bool active,
     String? object,
-    @JsonKey(name: 'created') @TimestampConverter() required DateTime created,
+    @TimestampConverter() required DateTime created,
     required String product,
     required String currency,
     required bool livemode,
@@ -92,17 +92,15 @@ abstract class SubscriptionItem with _$SubscriptionItem {
     required SubscriptionPlan plan,
     required SubscriptionPrice price,
     String? object,
-    @JsonKey(name: 'created') @TimestampConverter() required DateTime created,
+    @TimestampConverter() required DateTime created,
     Map<String, dynamic>? metadata,
     required int quantity,
-    @JsonKey(name: 'discounts') @Default([]) List<dynamic> discounts,
-    @JsonKey(name: 'tax_rates') @Default([]) List<dynamic> tax_rates,
+    @Default([]) List<dynamic> discounts,
+    @Default([]) List<dynamic> tax_rates,
     required String subscription,
     Map<String, dynamic>? billing_thresholds,
-    @JsonKey(name: 'current_period_end')
     @NullableTimestampConverter()
     DateTime? current_period_end,
-    @JsonKey(name: 'current_period_start')
     @NullableTimestampConverter()
     DateTime? current_period_start,
   }) = _SubscriptionItem;
@@ -115,7 +113,7 @@ abstract class SubscriptionItem with _$SubscriptionItem {
 abstract class SubscriptionItems with _$SubscriptionItems {
   factory SubscriptionItems({
     required String url,
-    @JsonKey(name: 'data') required List<SubscriptionItem> data,
+    required List<SubscriptionItem> data,
     required String object,
     required bool has_more,
     required int total_count,
@@ -131,10 +129,8 @@ abstract class Subscription with _$Subscription {
     required String id,
     String? object,
     required bool cancel_at_period_end,
-    @JsonKey(name: 'current_period_end')
     @NullableTimestampConverter()
     DateTime? current_period_end,
-    @JsonKey(name: 'current_period_start')
     @NullableTimestampConverter()
     DateTime? current_period_start,
     String? default_payment_method,
@@ -144,47 +140,38 @@ abstract class Subscription with _$Subscription {
     Map<String, dynamic>? pending_update,
     required String status,
     double? application_fee_percent,
-    @JsonKey(name: 'billing_cycle_anchor')
     @NullableTimestampConverter()
     DateTime? billing_cycle_anchor,
     Map<String, dynamic>? billing_thresholds,
-    @JsonKey(name: 'cancel_at')
     @NullableTimestampConverter()
     DateTime? cancel_at,
-    @JsonKey(name: 'canceled_at')
     @NullableTimestampConverter()
     DateTime? canceled_at,
     String? collection_method,
-    @JsonKey(name: 'created') @TimestampConverter() required DateTime created,
+    @TimestampConverter() required DateTime created,
     int? days_until_due,
     String? default_source,
-    @JsonKey(name: 'default_tax_rates')
     @Default([])
     List<dynamic> default_tax_rates,
     Map<String, dynamic>? discount,
-    @JsonKey(name: 'ended_at') @NullableTimestampConverter() DateTime? ended_at,
+    @NullableTimestampConverter() DateTime? ended_at,
     required bool livemode,
     String? latest_invoice,
     String? next_pending_invoice_item_invoice,
     Map<String, dynamic>? pause_collection,
     Map<String, dynamic>? pending_invoice_item_interval,
-    @JsonKey(name: 'start_date')
     @NullableTimestampConverter()
     DateTime? start_date,
     Map<String, dynamic>? transfer_data,
-    @JsonKey(name: 'trial_end')
     @NullableTimestampConverter()
     DateTime? trial_end,
-    @JsonKey(name: 'trial_start')
     @NullableTimestampConverter()
     DateTime? trial_start,
     Map<String, dynamic>? schedule,
     String? customer,
     String? plan, // JSON string
-    @JsonKey(name: 'updated_at')
     @NullableTimestampConverter()
     DateTime? updated_at,
-    @JsonKey(name: 'last_synced_at')
     @NullableTimestampConverter()
     DateTime? last_synced_at,
   }) = _Subscription;
@@ -192,7 +179,6 @@ abstract class Subscription with _$Subscription {
   factory Subscription.fromJson(Map<String, dynamic> json) =>
       _$SubscriptionFromJson(json);
 }
-
 
 class TimestampConverter implements JsonConverter<DateTime, dynamic> {
   const TimestampConverter();

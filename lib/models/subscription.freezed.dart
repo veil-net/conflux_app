@@ -284,7 +284,7 @@ as String?,
 /// @nodoc
 mixin _$SubscriptionPlan {
 
- String get id; String? get object; bool get active; int get amount; String? get amount_decimal; String get billing_scheme;@JsonKey(name: 'created')@TimestampConverter() DateTime get created; String get currency; String get interval; int get interval_count; bool get livemode; Map<String, dynamic>? get metadata; String? get meter; String? get nickname; String get product; String? get tiers_mode; String? get transform_usage; int? get trial_period_days; String get usage_type;
+ String get id; String? get object; bool get active; int get amount; String? get amount_decimal; String get billing_scheme;@TimestampConverter() DateTime get created; String get currency; String get interval; int get interval_count; bool get livemode; Map<String, dynamic>? get metadata; String? get meter; String? get nickname; String get product; String? get tiers_mode; String? get transform_usage; int? get trial_period_days; String get usage_type;
 /// Create a copy of SubscriptionPlan
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -317,7 +317,7 @@ abstract mixin class $SubscriptionPlanCopyWith<$Res>  {
   factory $SubscriptionPlanCopyWith(SubscriptionPlan value, $Res Function(SubscriptionPlan) _then) = _$SubscriptionPlanCopyWithImpl;
 @useResult
 $Res call({
- String id, String? object, bool active, int amount, String? amount_decimal, String billing_scheme,@JsonKey(name: 'created')@TimestampConverter() DateTime created, String currency, String interval, int interval_count, bool livemode, Map<String, dynamic>? metadata, String? meter, String? nickname, String product, String? tiers_mode, String? transform_usage, int? trial_period_days, String usage_type
+ String id, String? object, bool active, int amount, String? amount_decimal, String billing_scheme,@TimestampConverter() DateTime created, String currency, String interval, int interval_count, bool livemode, Map<String, dynamic>? metadata, String? meter, String? nickname, String product, String? tiers_mode, String? transform_usage, int? trial_period_days, String usage_type
 });
 
 
@@ -440,7 +440,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? object,  bool active,  int amount,  String? amount_decimal,  String billing_scheme, @JsonKey(name: 'created')@TimestampConverter()  DateTime created,  String currency,  String interval,  int interval_count,  bool livemode,  Map<String, dynamic>? metadata,  String? meter,  String? nickname,  String product,  String? tiers_mode,  String? transform_usage,  int? trial_period_days,  String usage_type)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? object,  bool active,  int amount,  String? amount_decimal,  String billing_scheme, @TimestampConverter()  DateTime created,  String currency,  String interval,  int interval_count,  bool livemode,  Map<String, dynamic>? metadata,  String? meter,  String? nickname,  String product,  String? tiers_mode,  String? transform_usage,  int? trial_period_days,  String usage_type)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubscriptionPlan() when $default != null:
 return $default(_that.id,_that.object,_that.active,_that.amount,_that.amount_decimal,_that.billing_scheme,_that.created,_that.currency,_that.interval,_that.interval_count,_that.livemode,_that.metadata,_that.meter,_that.nickname,_that.product,_that.tiers_mode,_that.transform_usage,_that.trial_period_days,_that.usage_type);case _:
@@ -461,7 +461,7 @@ return $default(_that.id,_that.object,_that.active,_that.amount,_that.amount_dec
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? object,  bool active,  int amount,  String? amount_decimal,  String billing_scheme, @JsonKey(name: 'created')@TimestampConverter()  DateTime created,  String currency,  String interval,  int interval_count,  bool livemode,  Map<String, dynamic>? metadata,  String? meter,  String? nickname,  String product,  String? tiers_mode,  String? transform_usage,  int? trial_period_days,  String usage_type)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? object,  bool active,  int amount,  String? amount_decimal,  String billing_scheme, @TimestampConverter()  DateTime created,  String currency,  String interval,  int interval_count,  bool livemode,  Map<String, dynamic>? metadata,  String? meter,  String? nickname,  String product,  String? tiers_mode,  String? transform_usage,  int? trial_period_days,  String usage_type)  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionPlan():
 return $default(_that.id,_that.object,_that.active,_that.amount,_that.amount_decimal,_that.billing_scheme,_that.created,_that.currency,_that.interval,_that.interval_count,_that.livemode,_that.metadata,_that.meter,_that.nickname,_that.product,_that.tiers_mode,_that.transform_usage,_that.trial_period_days,_that.usage_type);case _:
@@ -481,7 +481,7 @@ return $default(_that.id,_that.object,_that.active,_that.amount,_that.amount_dec
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? object,  bool active,  int amount,  String? amount_decimal,  String billing_scheme, @JsonKey(name: 'created')@TimestampConverter()  DateTime created,  String currency,  String interval,  int interval_count,  bool livemode,  Map<String, dynamic>? metadata,  String? meter,  String? nickname,  String product,  String? tiers_mode,  String? transform_usage,  int? trial_period_days,  String usage_type)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? object,  bool active,  int amount,  String? amount_decimal,  String billing_scheme, @TimestampConverter()  DateTime created,  String currency,  String interval,  int interval_count,  bool livemode,  Map<String, dynamic>? metadata,  String? meter,  String? nickname,  String product,  String? tiers_mode,  String? transform_usage,  int? trial_period_days,  String usage_type)?  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionPlan() when $default != null:
 return $default(_that.id,_that.object,_that.active,_that.amount,_that.amount_decimal,_that.billing_scheme,_that.created,_that.currency,_that.interval,_that.interval_count,_that.livemode,_that.metadata,_that.meter,_that.nickname,_that.product,_that.tiers_mode,_that.transform_usage,_that.trial_period_days,_that.usage_type);case _:
@@ -496,7 +496,7 @@ return $default(_that.id,_that.object,_that.active,_that.amount,_that.amount_dec
 @JsonSerializable()
 
 class _SubscriptionPlan implements SubscriptionPlan {
-   _SubscriptionPlan({required this.id, this.object, required this.active, required this.amount, this.amount_decimal, required this.billing_scheme, @JsonKey(name: 'created')@TimestampConverter() required this.created, required this.currency, required this.interval, required this.interval_count, required this.livemode, final  Map<String, dynamic>? metadata, this.meter, this.nickname, required this.product, this.tiers_mode, this.transform_usage, this.trial_period_days, required this.usage_type}): _metadata = metadata;
+   _SubscriptionPlan({required this.id, this.object, required this.active, required this.amount, this.amount_decimal, required this.billing_scheme, @TimestampConverter() required this.created, required this.currency, required this.interval, required this.interval_count, required this.livemode, final  Map<String, dynamic>? metadata, this.meter, this.nickname, required this.product, this.tiers_mode, this.transform_usage, this.trial_period_days, required this.usage_type}): _metadata = metadata;
   factory _SubscriptionPlan.fromJson(Map<String, dynamic> json) => _$SubscriptionPlanFromJson(json);
 
 @override final  String id;
@@ -505,7 +505,7 @@ class _SubscriptionPlan implements SubscriptionPlan {
 @override final  int amount;
 @override final  String? amount_decimal;
 @override final  String billing_scheme;
-@override@JsonKey(name: 'created')@TimestampConverter() final  DateTime created;
+@override@TimestampConverter() final  DateTime created;
 @override final  String currency;
 @override final  String interval;
 @override final  int interval_count;
@@ -560,7 +560,7 @@ abstract mixin class _$SubscriptionPlanCopyWith<$Res> implements $SubscriptionPl
   factory _$SubscriptionPlanCopyWith(_SubscriptionPlan value, $Res Function(_SubscriptionPlan) _then) = __$SubscriptionPlanCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? object, bool active, int amount, String? amount_decimal, String billing_scheme,@JsonKey(name: 'created')@TimestampConverter() DateTime created, String currency, String interval, int interval_count, bool livemode, Map<String, dynamic>? metadata, String? meter, String? nickname, String product, String? tiers_mode, String? transform_usage, int? trial_period_days, String usage_type
+ String id, String? object, bool active, int amount, String? amount_decimal, String billing_scheme,@TimestampConverter() DateTime created, String currency, String interval, int interval_count, bool livemode, Map<String, dynamic>? metadata, String? meter, String? nickname, String product, String? tiers_mode, String? transform_usage, int? trial_period_days, String usage_type
 });
 
 
@@ -884,7 +884,7 @@ as int?,
 /// @nodoc
 mixin _$SubscriptionPrice {
 
- String get id; String get type; bool get active; String? get object;@JsonKey(name: 'created')@TimestampConverter() DateTime get created; String get product; String get currency; bool get livemode; Map<String, dynamic>? get metadata; String? get nickname; SubscriptionPriceRecurring get recurring; String? get lookup_key; String? get tiers_mode; int get unit_amount; String? get tax_behavior; String get billing_scheme; String? get custom_unit_amount; String? get transform_quantity; String? get unit_amount_decimal;
+ String get id; String get type; bool get active; String? get object;@TimestampConverter() DateTime get created; String get product; String get currency; bool get livemode; Map<String, dynamic>? get metadata; String? get nickname; SubscriptionPriceRecurring get recurring; String? get lookup_key; String? get tiers_mode; int get unit_amount; String? get tax_behavior; String get billing_scheme; String? get custom_unit_amount; String? get transform_quantity; String? get unit_amount_decimal;
 /// Create a copy of SubscriptionPrice
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -917,7 +917,7 @@ abstract mixin class $SubscriptionPriceCopyWith<$Res>  {
   factory $SubscriptionPriceCopyWith(SubscriptionPrice value, $Res Function(SubscriptionPrice) _then) = _$SubscriptionPriceCopyWithImpl;
 @useResult
 $Res call({
- String id, String type, bool active, String? object,@JsonKey(name: 'created')@TimestampConverter() DateTime created, String product, String currency, bool livemode, Map<String, dynamic>? metadata, String? nickname, SubscriptionPriceRecurring recurring, String? lookup_key, String? tiers_mode, int unit_amount, String? tax_behavior, String billing_scheme, String? custom_unit_amount, String? transform_quantity, String? unit_amount_decimal
+ String id, String type, bool active, String? object,@TimestampConverter() DateTime created, String product, String currency, bool livemode, Map<String, dynamic>? metadata, String? nickname, SubscriptionPriceRecurring recurring, String? lookup_key, String? tiers_mode, int unit_amount, String? tax_behavior, String billing_scheme, String? custom_unit_amount, String? transform_quantity, String? unit_amount_decimal
 });
 
 
@@ -1049,7 +1049,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String type,  bool active,  String? object, @JsonKey(name: 'created')@TimestampConverter()  DateTime created,  String product,  String currency,  bool livemode,  Map<String, dynamic>? metadata,  String? nickname,  SubscriptionPriceRecurring recurring,  String? lookup_key,  String? tiers_mode,  int unit_amount,  String? tax_behavior,  String billing_scheme,  String? custom_unit_amount,  String? transform_quantity,  String? unit_amount_decimal)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String type,  bool active,  String? object, @TimestampConverter()  DateTime created,  String product,  String currency,  bool livemode,  Map<String, dynamic>? metadata,  String? nickname,  SubscriptionPriceRecurring recurring,  String? lookup_key,  String? tiers_mode,  int unit_amount,  String? tax_behavior,  String billing_scheme,  String? custom_unit_amount,  String? transform_quantity,  String? unit_amount_decimal)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubscriptionPrice() when $default != null:
 return $default(_that.id,_that.type,_that.active,_that.object,_that.created,_that.product,_that.currency,_that.livemode,_that.metadata,_that.nickname,_that.recurring,_that.lookup_key,_that.tiers_mode,_that.unit_amount,_that.tax_behavior,_that.billing_scheme,_that.custom_unit_amount,_that.transform_quantity,_that.unit_amount_decimal);case _:
@@ -1070,7 +1070,7 @@ return $default(_that.id,_that.type,_that.active,_that.object,_that.created,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String type,  bool active,  String? object, @JsonKey(name: 'created')@TimestampConverter()  DateTime created,  String product,  String currency,  bool livemode,  Map<String, dynamic>? metadata,  String? nickname,  SubscriptionPriceRecurring recurring,  String? lookup_key,  String? tiers_mode,  int unit_amount,  String? tax_behavior,  String billing_scheme,  String? custom_unit_amount,  String? transform_quantity,  String? unit_amount_decimal)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String type,  bool active,  String? object, @TimestampConverter()  DateTime created,  String product,  String currency,  bool livemode,  Map<String, dynamic>? metadata,  String? nickname,  SubscriptionPriceRecurring recurring,  String? lookup_key,  String? tiers_mode,  int unit_amount,  String? tax_behavior,  String billing_scheme,  String? custom_unit_amount,  String? transform_quantity,  String? unit_amount_decimal)  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionPrice():
 return $default(_that.id,_that.type,_that.active,_that.object,_that.created,_that.product,_that.currency,_that.livemode,_that.metadata,_that.nickname,_that.recurring,_that.lookup_key,_that.tiers_mode,_that.unit_amount,_that.tax_behavior,_that.billing_scheme,_that.custom_unit_amount,_that.transform_quantity,_that.unit_amount_decimal);case _:
@@ -1090,7 +1090,7 @@ return $default(_that.id,_that.type,_that.active,_that.object,_that.created,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String type,  bool active,  String? object, @JsonKey(name: 'created')@TimestampConverter()  DateTime created,  String product,  String currency,  bool livemode,  Map<String, dynamic>? metadata,  String? nickname,  SubscriptionPriceRecurring recurring,  String? lookup_key,  String? tiers_mode,  int unit_amount,  String? tax_behavior,  String billing_scheme,  String? custom_unit_amount,  String? transform_quantity,  String? unit_amount_decimal)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String type,  bool active,  String? object, @TimestampConverter()  DateTime created,  String product,  String currency,  bool livemode,  Map<String, dynamic>? metadata,  String? nickname,  SubscriptionPriceRecurring recurring,  String? lookup_key,  String? tiers_mode,  int unit_amount,  String? tax_behavior,  String billing_scheme,  String? custom_unit_amount,  String? transform_quantity,  String? unit_amount_decimal)?  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionPrice() when $default != null:
 return $default(_that.id,_that.type,_that.active,_that.object,_that.created,_that.product,_that.currency,_that.livemode,_that.metadata,_that.nickname,_that.recurring,_that.lookup_key,_that.tiers_mode,_that.unit_amount,_that.tax_behavior,_that.billing_scheme,_that.custom_unit_amount,_that.transform_quantity,_that.unit_amount_decimal);case _:
@@ -1105,14 +1105,14 @@ return $default(_that.id,_that.type,_that.active,_that.object,_that.created,_tha
 @JsonSerializable()
 
 class _SubscriptionPrice implements SubscriptionPrice {
-   _SubscriptionPrice({required this.id, required this.type, required this.active, this.object, @JsonKey(name: 'created')@TimestampConverter() required this.created, required this.product, required this.currency, required this.livemode, final  Map<String, dynamic>? metadata, this.nickname, required this.recurring, this.lookup_key, this.tiers_mode, required this.unit_amount, this.tax_behavior, required this.billing_scheme, this.custom_unit_amount, this.transform_quantity, this.unit_amount_decimal}): _metadata = metadata;
+   _SubscriptionPrice({required this.id, required this.type, required this.active, this.object, @TimestampConverter() required this.created, required this.product, required this.currency, required this.livemode, final  Map<String, dynamic>? metadata, this.nickname, required this.recurring, this.lookup_key, this.tiers_mode, required this.unit_amount, this.tax_behavior, required this.billing_scheme, this.custom_unit_amount, this.transform_quantity, this.unit_amount_decimal}): _metadata = metadata;
   factory _SubscriptionPrice.fromJson(Map<String, dynamic> json) => _$SubscriptionPriceFromJson(json);
 
 @override final  String id;
 @override final  String type;
 @override final  bool active;
 @override final  String? object;
-@override@JsonKey(name: 'created')@TimestampConverter() final  DateTime created;
+@override@TimestampConverter() final  DateTime created;
 @override final  String product;
 @override final  String currency;
 @override final  bool livemode;
@@ -1169,7 +1169,7 @@ abstract mixin class _$SubscriptionPriceCopyWith<$Res> implements $SubscriptionP
   factory _$SubscriptionPriceCopyWith(_SubscriptionPrice value, $Res Function(_SubscriptionPrice) _then) = __$SubscriptionPriceCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String type, bool active, String? object,@JsonKey(name: 'created')@TimestampConverter() DateTime created, String product, String currency, bool livemode, Map<String, dynamic>? metadata, String? nickname, SubscriptionPriceRecurring recurring, String? lookup_key, String? tiers_mode, int unit_amount, String? tax_behavior, String billing_scheme, String? custom_unit_amount, String? transform_quantity, String? unit_amount_decimal
+ String id, String type, bool active, String? object,@TimestampConverter() DateTime created, String product, String currency, bool livemode, Map<String, dynamic>? metadata, String? nickname, SubscriptionPriceRecurring recurring, String? lookup_key, String? tiers_mode, int unit_amount, String? tax_behavior, String billing_scheme, String? custom_unit_amount, String? transform_quantity, String? unit_amount_decimal
 });
 
 
@@ -1227,7 +1227,7 @@ $SubscriptionPriceRecurringCopyWith<$Res> get recurring {
 /// @nodoc
 mixin _$SubscriptionItem {
 
- String get id; SubscriptionPlan get plan; SubscriptionPrice get price; String? get object;@JsonKey(name: 'created')@TimestampConverter() DateTime get created; Map<String, dynamic>? get metadata; int get quantity;@JsonKey(name: 'discounts') List<dynamic> get discounts;@JsonKey(name: 'tax_rates') List<dynamic> get tax_rates; String get subscription; Map<String, dynamic>? get billing_thresholds;@JsonKey(name: 'current_period_end')@NullableTimestampConverter() DateTime? get current_period_end;@JsonKey(name: 'current_period_start')@NullableTimestampConverter() DateTime? get current_period_start;
+ String get id; SubscriptionPlan get plan; SubscriptionPrice get price; String? get object;@TimestampConverter() DateTime get created; Map<String, dynamic>? get metadata; int get quantity; List<dynamic> get discounts; List<dynamic> get tax_rates; String get subscription; Map<String, dynamic>? get billing_thresholds;@NullableTimestampConverter() DateTime? get current_period_end;@NullableTimestampConverter() DateTime? get current_period_start;
 /// Create a copy of SubscriptionItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1260,7 +1260,7 @@ abstract mixin class $SubscriptionItemCopyWith<$Res>  {
   factory $SubscriptionItemCopyWith(SubscriptionItem value, $Res Function(SubscriptionItem) _then) = _$SubscriptionItemCopyWithImpl;
 @useResult
 $Res call({
- String id, SubscriptionPlan plan, SubscriptionPrice price, String? object,@JsonKey(name: 'created')@TimestampConverter() DateTime created, Map<String, dynamic>? metadata, int quantity,@JsonKey(name: 'discounts') List<dynamic> discounts,@JsonKey(name: 'tax_rates') List<dynamic> tax_rates, String subscription, Map<String, dynamic>? billing_thresholds,@JsonKey(name: 'current_period_end')@NullableTimestampConverter() DateTime? current_period_end,@JsonKey(name: 'current_period_start')@NullableTimestampConverter() DateTime? current_period_start
+ String id, SubscriptionPlan plan, SubscriptionPrice price, String? object,@TimestampConverter() DateTime created, Map<String, dynamic>? metadata, int quantity, List<dynamic> discounts, List<dynamic> tax_rates, String subscription, Map<String, dynamic>? billing_thresholds,@NullableTimestampConverter() DateTime? current_period_end,@NullableTimestampConverter() DateTime? current_period_start
 });
 
 
@@ -1395,7 +1395,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  SubscriptionPlan plan,  SubscriptionPrice price,  String? object, @JsonKey(name: 'created')@TimestampConverter()  DateTime created,  Map<String, dynamic>? metadata,  int quantity, @JsonKey(name: 'discounts')  List<dynamic> discounts, @JsonKey(name: 'tax_rates')  List<dynamic> tax_rates,  String subscription,  Map<String, dynamic>? billing_thresholds, @JsonKey(name: 'current_period_end')@NullableTimestampConverter()  DateTime? current_period_end, @JsonKey(name: 'current_period_start')@NullableTimestampConverter()  DateTime? current_period_start)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  SubscriptionPlan plan,  SubscriptionPrice price,  String? object, @TimestampConverter()  DateTime created,  Map<String, dynamic>? metadata,  int quantity,  List<dynamic> discounts,  List<dynamic> tax_rates,  String subscription,  Map<String, dynamic>? billing_thresholds, @NullableTimestampConverter()  DateTime? current_period_end, @NullableTimestampConverter()  DateTime? current_period_start)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubscriptionItem() when $default != null:
 return $default(_that.id,_that.plan,_that.price,_that.object,_that.created,_that.metadata,_that.quantity,_that.discounts,_that.tax_rates,_that.subscription,_that.billing_thresholds,_that.current_period_end,_that.current_period_start);case _:
@@ -1416,7 +1416,7 @@ return $default(_that.id,_that.plan,_that.price,_that.object,_that.created,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  SubscriptionPlan plan,  SubscriptionPrice price,  String? object, @JsonKey(name: 'created')@TimestampConverter()  DateTime created,  Map<String, dynamic>? metadata,  int quantity, @JsonKey(name: 'discounts')  List<dynamic> discounts, @JsonKey(name: 'tax_rates')  List<dynamic> tax_rates,  String subscription,  Map<String, dynamic>? billing_thresholds, @JsonKey(name: 'current_period_end')@NullableTimestampConverter()  DateTime? current_period_end, @JsonKey(name: 'current_period_start')@NullableTimestampConverter()  DateTime? current_period_start)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  SubscriptionPlan plan,  SubscriptionPrice price,  String? object, @TimestampConverter()  DateTime created,  Map<String, dynamic>? metadata,  int quantity,  List<dynamic> discounts,  List<dynamic> tax_rates,  String subscription,  Map<String, dynamic>? billing_thresholds, @NullableTimestampConverter()  DateTime? current_period_end, @NullableTimestampConverter()  DateTime? current_period_start)  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionItem():
 return $default(_that.id,_that.plan,_that.price,_that.object,_that.created,_that.metadata,_that.quantity,_that.discounts,_that.tax_rates,_that.subscription,_that.billing_thresholds,_that.current_period_end,_that.current_period_start);case _:
@@ -1436,7 +1436,7 @@ return $default(_that.id,_that.plan,_that.price,_that.object,_that.created,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  SubscriptionPlan plan,  SubscriptionPrice price,  String? object, @JsonKey(name: 'created')@TimestampConverter()  DateTime created,  Map<String, dynamic>? metadata,  int quantity, @JsonKey(name: 'discounts')  List<dynamic> discounts, @JsonKey(name: 'tax_rates')  List<dynamic> tax_rates,  String subscription,  Map<String, dynamic>? billing_thresholds, @JsonKey(name: 'current_period_end')@NullableTimestampConverter()  DateTime? current_period_end, @JsonKey(name: 'current_period_start')@NullableTimestampConverter()  DateTime? current_period_start)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  SubscriptionPlan plan,  SubscriptionPrice price,  String? object, @TimestampConverter()  DateTime created,  Map<String, dynamic>? metadata,  int quantity,  List<dynamic> discounts,  List<dynamic> tax_rates,  String subscription,  Map<String, dynamic>? billing_thresholds, @NullableTimestampConverter()  DateTime? current_period_end, @NullableTimestampConverter()  DateTime? current_period_start)?  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionItem() when $default != null:
 return $default(_that.id,_that.plan,_that.price,_that.object,_that.created,_that.metadata,_that.quantity,_that.discounts,_that.tax_rates,_that.subscription,_that.billing_thresholds,_that.current_period_end,_that.current_period_start);case _:
@@ -1451,14 +1451,14 @@ return $default(_that.id,_that.plan,_that.price,_that.object,_that.created,_that
 @JsonSerializable()
 
 class _SubscriptionItem implements SubscriptionItem {
-   _SubscriptionItem({required this.id, required this.plan, required this.price, this.object, @JsonKey(name: 'created')@TimestampConverter() required this.created, final  Map<String, dynamic>? metadata, required this.quantity, @JsonKey(name: 'discounts') final  List<dynamic> discounts = const [], @JsonKey(name: 'tax_rates') final  List<dynamic> tax_rates = const [], required this.subscription, final  Map<String, dynamic>? billing_thresholds, @JsonKey(name: 'current_period_end')@NullableTimestampConverter() this.current_period_end, @JsonKey(name: 'current_period_start')@NullableTimestampConverter() this.current_period_start}): _metadata = metadata,_discounts = discounts,_tax_rates = tax_rates,_billing_thresholds = billing_thresholds;
+   _SubscriptionItem({required this.id, required this.plan, required this.price, this.object, @TimestampConverter() required this.created, final  Map<String, dynamic>? metadata, required this.quantity, final  List<dynamic> discounts = const [], final  List<dynamic> tax_rates = const [], required this.subscription, final  Map<String, dynamic>? billing_thresholds, @NullableTimestampConverter() this.current_period_end, @NullableTimestampConverter() this.current_period_start}): _metadata = metadata,_discounts = discounts,_tax_rates = tax_rates,_billing_thresholds = billing_thresholds;
   factory _SubscriptionItem.fromJson(Map<String, dynamic> json) => _$SubscriptionItemFromJson(json);
 
 @override final  String id;
 @override final  SubscriptionPlan plan;
 @override final  SubscriptionPrice price;
 @override final  String? object;
-@override@JsonKey(name: 'created')@TimestampConverter() final  DateTime created;
+@override@TimestampConverter() final  DateTime created;
  final  Map<String, dynamic>? _metadata;
 @override Map<String, dynamic>? get metadata {
   final value = _metadata;
@@ -1470,14 +1470,14 @@ class _SubscriptionItem implements SubscriptionItem {
 
 @override final  int quantity;
  final  List<dynamic> _discounts;
-@override@JsonKey(name: 'discounts') List<dynamic> get discounts {
+@override@JsonKey() List<dynamic> get discounts {
   if (_discounts is EqualUnmodifiableListView) return _discounts;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_discounts);
 }
 
  final  List<dynamic> _tax_rates;
-@override@JsonKey(name: 'tax_rates') List<dynamic> get tax_rates {
+@override@JsonKey() List<dynamic> get tax_rates {
   if (_tax_rates is EqualUnmodifiableListView) return _tax_rates;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_tax_rates);
@@ -1493,8 +1493,8 @@ class _SubscriptionItem implements SubscriptionItem {
   return EqualUnmodifiableMapView(value);
 }
 
-@override@JsonKey(name: 'current_period_end')@NullableTimestampConverter() final  DateTime? current_period_end;
-@override@JsonKey(name: 'current_period_start')@NullableTimestampConverter() final  DateTime? current_period_start;
+@override@NullableTimestampConverter() final  DateTime? current_period_end;
+@override@NullableTimestampConverter() final  DateTime? current_period_start;
 
 /// Create a copy of SubscriptionItem
 /// with the given fields replaced by the non-null parameter values.
@@ -1529,7 +1529,7 @@ abstract mixin class _$SubscriptionItemCopyWith<$Res> implements $SubscriptionIt
   factory _$SubscriptionItemCopyWith(_SubscriptionItem value, $Res Function(_SubscriptionItem) _then) = __$SubscriptionItemCopyWithImpl;
 @override @useResult
 $Res call({
- String id, SubscriptionPlan plan, SubscriptionPrice price, String? object,@JsonKey(name: 'created')@TimestampConverter() DateTime created, Map<String, dynamic>? metadata, int quantity,@JsonKey(name: 'discounts') List<dynamic> discounts,@JsonKey(name: 'tax_rates') List<dynamic> tax_rates, String subscription, Map<String, dynamic>? billing_thresholds,@JsonKey(name: 'current_period_end')@NullableTimestampConverter() DateTime? current_period_end,@JsonKey(name: 'current_period_start')@NullableTimestampConverter() DateTime? current_period_start
+ String id, SubscriptionPlan plan, SubscriptionPrice price, String? object,@TimestampConverter() DateTime created, Map<String, dynamic>? metadata, int quantity, List<dynamic> discounts, List<dynamic> tax_rates, String subscription, Map<String, dynamic>? billing_thresholds,@NullableTimestampConverter() DateTime? current_period_end,@NullableTimestampConverter() DateTime? current_period_start
 });
 
 
@@ -1590,7 +1590,7 @@ $SubscriptionPriceCopyWith<$Res> get price {
 /// @nodoc
 mixin _$SubscriptionItems {
 
- String get url;@JsonKey(name: 'data') List<SubscriptionItem> get data; String get object; bool get has_more; int get total_count;
+ String get url; List<SubscriptionItem> get data; String get object; bool get has_more; int get total_count;
 /// Create a copy of SubscriptionItems
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1623,7 +1623,7 @@ abstract mixin class $SubscriptionItemsCopyWith<$Res>  {
   factory $SubscriptionItemsCopyWith(SubscriptionItems value, $Res Function(SubscriptionItems) _then) = _$SubscriptionItemsCopyWithImpl;
 @useResult
 $Res call({
- String url,@JsonKey(name: 'data') List<SubscriptionItem> data, String object, bool has_more, int total_count
+ String url, List<SubscriptionItem> data, String object, bool has_more, int total_count
 });
 
 
@@ -1732,7 +1732,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String url, @JsonKey(name: 'data')  List<SubscriptionItem> data,  String object,  bool has_more,  int total_count)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String url,  List<SubscriptionItem> data,  String object,  bool has_more,  int total_count)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubscriptionItems() when $default != null:
 return $default(_that.url,_that.data,_that.object,_that.has_more,_that.total_count);case _:
@@ -1753,7 +1753,7 @@ return $default(_that.url,_that.data,_that.object,_that.has_more,_that.total_cou
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String url, @JsonKey(name: 'data')  List<SubscriptionItem> data,  String object,  bool has_more,  int total_count)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String url,  List<SubscriptionItem> data,  String object,  bool has_more,  int total_count)  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionItems():
 return $default(_that.url,_that.data,_that.object,_that.has_more,_that.total_count);case _:
@@ -1773,7 +1773,7 @@ return $default(_that.url,_that.data,_that.object,_that.has_more,_that.total_cou
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String url, @JsonKey(name: 'data')  List<SubscriptionItem> data,  String object,  bool has_more,  int total_count)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String url,  List<SubscriptionItem> data,  String object,  bool has_more,  int total_count)?  $default,) {final _that = this;
 switch (_that) {
 case _SubscriptionItems() when $default != null:
 return $default(_that.url,_that.data,_that.object,_that.has_more,_that.total_count);case _:
@@ -1788,12 +1788,12 @@ return $default(_that.url,_that.data,_that.object,_that.has_more,_that.total_cou
 @JsonSerializable()
 
 class _SubscriptionItems implements SubscriptionItems {
-   _SubscriptionItems({required this.url, @JsonKey(name: 'data') required final  List<SubscriptionItem> data, required this.object, required this.has_more, required this.total_count}): _data = data;
+   _SubscriptionItems({required this.url, required final  List<SubscriptionItem> data, required this.object, required this.has_more, required this.total_count}): _data = data;
   factory _SubscriptionItems.fromJson(Map<String, dynamic> json) => _$SubscriptionItemsFromJson(json);
 
 @override final  String url;
  final  List<SubscriptionItem> _data;
-@override@JsonKey(name: 'data') List<SubscriptionItem> get data {
+@override List<SubscriptionItem> get data {
   if (_data is EqualUnmodifiableListView) return _data;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_data);
@@ -1836,7 +1836,7 @@ abstract mixin class _$SubscriptionItemsCopyWith<$Res> implements $SubscriptionI
   factory _$SubscriptionItemsCopyWith(_SubscriptionItems value, $Res Function(_SubscriptionItems) _then) = __$SubscriptionItemsCopyWithImpl;
 @override @useResult
 $Res call({
- String url,@JsonKey(name: 'data') List<SubscriptionItem> data, String object, bool has_more, int total_count
+ String url, List<SubscriptionItem> data, String object, bool has_more, int total_count
 });
 
 
@@ -1871,8 +1871,8 @@ as int,
 /// @nodoc
 mixin _$Subscription {
 
- String get id; String? get object; bool get cancel_at_period_end;@JsonKey(name: 'current_period_end')@NullableTimestampConverter() DateTime? get current_period_end;@JsonKey(name: 'current_period_start')@NullableTimestampConverter() DateTime? get current_period_start; String? get default_payment_method; SubscriptionItems get items; SubscriptionMetadata get metadata; String? get pending_setup_intent; Map<String, dynamic>? get pending_update; String get status; double? get application_fee_percent;@JsonKey(name: 'billing_cycle_anchor')@NullableTimestampConverter() DateTime? get billing_cycle_anchor; Map<String, dynamic>? get billing_thresholds;@JsonKey(name: 'cancel_at')@NullableTimestampConverter() DateTime? get cancel_at;@JsonKey(name: 'canceled_at')@NullableTimestampConverter() DateTime? get canceled_at; String? get collection_method;@JsonKey(name: 'created')@TimestampConverter() DateTime get created; int? get days_until_due; String? get default_source;@JsonKey(name: 'default_tax_rates') List<dynamic> get default_tax_rates; Map<String, dynamic>? get discount;@JsonKey(name: 'ended_at')@NullableTimestampConverter() DateTime? get ended_at; bool get livemode; String? get latest_invoice; String? get next_pending_invoice_item_invoice; Map<String, dynamic>? get pause_collection; Map<String, dynamic>? get pending_invoice_item_interval;@JsonKey(name: 'start_date')@NullableTimestampConverter() DateTime? get start_date; Map<String, dynamic>? get transfer_data;@JsonKey(name: 'trial_end')@NullableTimestampConverter() DateTime? get trial_end;@JsonKey(name: 'trial_start')@NullableTimestampConverter() DateTime? get trial_start; Map<String, dynamic>? get schedule; String? get customer; String? get plan;// JSON string
-@JsonKey(name: 'updated_at')@NullableTimestampConverter() DateTime? get updated_at;@JsonKey(name: 'last_synced_at')@NullableTimestampConverter() DateTime? get last_synced_at;
+ String get id; String? get object; bool get cancel_at_period_end;@NullableTimestampConverter() DateTime? get current_period_end;@NullableTimestampConverter() DateTime? get current_period_start; String? get default_payment_method; SubscriptionItems get items; SubscriptionMetadata get metadata; String? get pending_setup_intent; Map<String, dynamic>? get pending_update; String get status; double? get application_fee_percent;@NullableTimestampConverter() DateTime? get billing_cycle_anchor; Map<String, dynamic>? get billing_thresholds;@NullableTimestampConverter() DateTime? get cancel_at;@NullableTimestampConverter() DateTime? get canceled_at; String? get collection_method;@TimestampConverter() DateTime get created; int? get days_until_due; String? get default_source; List<dynamic> get default_tax_rates; Map<String, dynamic>? get discount;@NullableTimestampConverter() DateTime? get ended_at; bool get livemode; String? get latest_invoice; String? get next_pending_invoice_item_invoice; Map<String, dynamic>? get pause_collection; Map<String, dynamic>? get pending_invoice_item_interval;@NullableTimestampConverter() DateTime? get start_date; Map<String, dynamic>? get transfer_data;@NullableTimestampConverter() DateTime? get trial_end;@NullableTimestampConverter() DateTime? get trial_start; Map<String, dynamic>? get schedule; String? get customer; String? get plan;// JSON string
+@NullableTimestampConverter() DateTime? get updated_at;@NullableTimestampConverter() DateTime? get last_synced_at;
 /// Create a copy of Subscription
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1905,7 +1905,7 @@ abstract mixin class $SubscriptionCopyWith<$Res>  {
   factory $SubscriptionCopyWith(Subscription value, $Res Function(Subscription) _then) = _$SubscriptionCopyWithImpl;
 @useResult
 $Res call({
- String id, String? object, bool cancel_at_period_end,@JsonKey(name: 'current_period_end')@NullableTimestampConverter() DateTime? current_period_end,@JsonKey(name: 'current_period_start')@NullableTimestampConverter() DateTime? current_period_start, String? default_payment_method, SubscriptionItems items, SubscriptionMetadata metadata, String? pending_setup_intent, Map<String, dynamic>? pending_update, String status, double? application_fee_percent,@JsonKey(name: 'billing_cycle_anchor')@NullableTimestampConverter() DateTime? billing_cycle_anchor, Map<String, dynamic>? billing_thresholds,@JsonKey(name: 'cancel_at')@NullableTimestampConverter() DateTime? cancel_at,@JsonKey(name: 'canceled_at')@NullableTimestampConverter() DateTime? canceled_at, String? collection_method,@JsonKey(name: 'created')@TimestampConverter() DateTime created, int? days_until_due, String? default_source,@JsonKey(name: 'default_tax_rates') List<dynamic> default_tax_rates, Map<String, dynamic>? discount,@JsonKey(name: 'ended_at')@NullableTimestampConverter() DateTime? ended_at, bool livemode, String? latest_invoice, String? next_pending_invoice_item_invoice, Map<String, dynamic>? pause_collection, Map<String, dynamic>? pending_invoice_item_interval,@JsonKey(name: 'start_date')@NullableTimestampConverter() DateTime? start_date, Map<String, dynamic>? transfer_data,@JsonKey(name: 'trial_end')@NullableTimestampConverter() DateTime? trial_end,@JsonKey(name: 'trial_start')@NullableTimestampConverter() DateTime? trial_start, Map<String, dynamic>? schedule, String? customer, String? plan,@JsonKey(name: 'updated_at')@NullableTimestampConverter() DateTime? updated_at,@JsonKey(name: 'last_synced_at')@NullableTimestampConverter() DateTime? last_synced_at
+ String id, String? object, bool cancel_at_period_end,@NullableTimestampConverter() DateTime? current_period_end,@NullableTimestampConverter() DateTime? current_period_start, String? default_payment_method, SubscriptionItems items, SubscriptionMetadata metadata, String? pending_setup_intent, Map<String, dynamic>? pending_update, String status, double? application_fee_percent,@NullableTimestampConverter() DateTime? billing_cycle_anchor, Map<String, dynamic>? billing_thresholds,@NullableTimestampConverter() DateTime? cancel_at,@NullableTimestampConverter() DateTime? canceled_at, String? collection_method,@TimestampConverter() DateTime created, int? days_until_due, String? default_source, List<dynamic> default_tax_rates, Map<String, dynamic>? discount,@NullableTimestampConverter() DateTime? ended_at, bool livemode, String? latest_invoice, String? next_pending_invoice_item_invoice, Map<String, dynamic>? pause_collection, Map<String, dynamic>? pending_invoice_item_interval,@NullableTimestampConverter() DateTime? start_date, Map<String, dynamic>? transfer_data,@NullableTimestampConverter() DateTime? trial_end,@NullableTimestampConverter() DateTime? trial_start, Map<String, dynamic>? schedule, String? customer, String? plan,@NullableTimestampConverter() DateTime? updated_at,@NullableTimestampConverter() DateTime? last_synced_at
 });
 
 
@@ -2064,7 +2064,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? object,  bool cancel_at_period_end, @JsonKey(name: 'current_period_end')@NullableTimestampConverter()  DateTime? current_period_end, @JsonKey(name: 'current_period_start')@NullableTimestampConverter()  DateTime? current_period_start,  String? default_payment_method,  SubscriptionItems items,  SubscriptionMetadata metadata,  String? pending_setup_intent,  Map<String, dynamic>? pending_update,  String status,  double? application_fee_percent, @JsonKey(name: 'billing_cycle_anchor')@NullableTimestampConverter()  DateTime? billing_cycle_anchor,  Map<String, dynamic>? billing_thresholds, @JsonKey(name: 'cancel_at')@NullableTimestampConverter()  DateTime? cancel_at, @JsonKey(name: 'canceled_at')@NullableTimestampConverter()  DateTime? canceled_at,  String? collection_method, @JsonKey(name: 'created')@TimestampConverter()  DateTime created,  int? days_until_due,  String? default_source, @JsonKey(name: 'default_tax_rates')  List<dynamic> default_tax_rates,  Map<String, dynamic>? discount, @JsonKey(name: 'ended_at')@NullableTimestampConverter()  DateTime? ended_at,  bool livemode,  String? latest_invoice,  String? next_pending_invoice_item_invoice,  Map<String, dynamic>? pause_collection,  Map<String, dynamic>? pending_invoice_item_interval, @JsonKey(name: 'start_date')@NullableTimestampConverter()  DateTime? start_date,  Map<String, dynamic>? transfer_data, @JsonKey(name: 'trial_end')@NullableTimestampConverter()  DateTime? trial_end, @JsonKey(name: 'trial_start')@NullableTimestampConverter()  DateTime? trial_start,  Map<String, dynamic>? schedule,  String? customer,  String? plan, @JsonKey(name: 'updated_at')@NullableTimestampConverter()  DateTime? updated_at, @JsonKey(name: 'last_synced_at')@NullableTimestampConverter()  DateTime? last_synced_at)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? object,  bool cancel_at_period_end, @NullableTimestampConverter()  DateTime? current_period_end, @NullableTimestampConverter()  DateTime? current_period_start,  String? default_payment_method,  SubscriptionItems items,  SubscriptionMetadata metadata,  String? pending_setup_intent,  Map<String, dynamic>? pending_update,  String status,  double? application_fee_percent, @NullableTimestampConverter()  DateTime? billing_cycle_anchor,  Map<String, dynamic>? billing_thresholds, @NullableTimestampConverter()  DateTime? cancel_at, @NullableTimestampConverter()  DateTime? canceled_at,  String? collection_method, @TimestampConverter()  DateTime created,  int? days_until_due,  String? default_source,  List<dynamic> default_tax_rates,  Map<String, dynamic>? discount, @NullableTimestampConverter()  DateTime? ended_at,  bool livemode,  String? latest_invoice,  String? next_pending_invoice_item_invoice,  Map<String, dynamic>? pause_collection,  Map<String, dynamic>? pending_invoice_item_interval, @NullableTimestampConverter()  DateTime? start_date,  Map<String, dynamic>? transfer_data, @NullableTimestampConverter()  DateTime? trial_end, @NullableTimestampConverter()  DateTime? trial_start,  Map<String, dynamic>? schedule,  String? customer,  String? plan, @NullableTimestampConverter()  DateTime? updated_at, @NullableTimestampConverter()  DateTime? last_synced_at)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Subscription() when $default != null:
 return $default(_that.id,_that.object,_that.cancel_at_period_end,_that.current_period_end,_that.current_period_start,_that.default_payment_method,_that.items,_that.metadata,_that.pending_setup_intent,_that.pending_update,_that.status,_that.application_fee_percent,_that.billing_cycle_anchor,_that.billing_thresholds,_that.cancel_at,_that.canceled_at,_that.collection_method,_that.created,_that.days_until_due,_that.default_source,_that.default_tax_rates,_that.discount,_that.ended_at,_that.livemode,_that.latest_invoice,_that.next_pending_invoice_item_invoice,_that.pause_collection,_that.pending_invoice_item_interval,_that.start_date,_that.transfer_data,_that.trial_end,_that.trial_start,_that.schedule,_that.customer,_that.plan,_that.updated_at,_that.last_synced_at);case _:
@@ -2085,7 +2085,7 @@ return $default(_that.id,_that.object,_that.cancel_at_period_end,_that.current_p
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? object,  bool cancel_at_period_end, @JsonKey(name: 'current_period_end')@NullableTimestampConverter()  DateTime? current_period_end, @JsonKey(name: 'current_period_start')@NullableTimestampConverter()  DateTime? current_period_start,  String? default_payment_method,  SubscriptionItems items,  SubscriptionMetadata metadata,  String? pending_setup_intent,  Map<String, dynamic>? pending_update,  String status,  double? application_fee_percent, @JsonKey(name: 'billing_cycle_anchor')@NullableTimestampConverter()  DateTime? billing_cycle_anchor,  Map<String, dynamic>? billing_thresholds, @JsonKey(name: 'cancel_at')@NullableTimestampConverter()  DateTime? cancel_at, @JsonKey(name: 'canceled_at')@NullableTimestampConverter()  DateTime? canceled_at,  String? collection_method, @JsonKey(name: 'created')@TimestampConverter()  DateTime created,  int? days_until_due,  String? default_source, @JsonKey(name: 'default_tax_rates')  List<dynamic> default_tax_rates,  Map<String, dynamic>? discount, @JsonKey(name: 'ended_at')@NullableTimestampConverter()  DateTime? ended_at,  bool livemode,  String? latest_invoice,  String? next_pending_invoice_item_invoice,  Map<String, dynamic>? pause_collection,  Map<String, dynamic>? pending_invoice_item_interval, @JsonKey(name: 'start_date')@NullableTimestampConverter()  DateTime? start_date,  Map<String, dynamic>? transfer_data, @JsonKey(name: 'trial_end')@NullableTimestampConverter()  DateTime? trial_end, @JsonKey(name: 'trial_start')@NullableTimestampConverter()  DateTime? trial_start,  Map<String, dynamic>? schedule,  String? customer,  String? plan, @JsonKey(name: 'updated_at')@NullableTimestampConverter()  DateTime? updated_at, @JsonKey(name: 'last_synced_at')@NullableTimestampConverter()  DateTime? last_synced_at)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? object,  bool cancel_at_period_end, @NullableTimestampConverter()  DateTime? current_period_end, @NullableTimestampConverter()  DateTime? current_period_start,  String? default_payment_method,  SubscriptionItems items,  SubscriptionMetadata metadata,  String? pending_setup_intent,  Map<String, dynamic>? pending_update,  String status,  double? application_fee_percent, @NullableTimestampConverter()  DateTime? billing_cycle_anchor,  Map<String, dynamic>? billing_thresholds, @NullableTimestampConverter()  DateTime? cancel_at, @NullableTimestampConverter()  DateTime? canceled_at,  String? collection_method, @TimestampConverter()  DateTime created,  int? days_until_due,  String? default_source,  List<dynamic> default_tax_rates,  Map<String, dynamic>? discount, @NullableTimestampConverter()  DateTime? ended_at,  bool livemode,  String? latest_invoice,  String? next_pending_invoice_item_invoice,  Map<String, dynamic>? pause_collection,  Map<String, dynamic>? pending_invoice_item_interval, @NullableTimestampConverter()  DateTime? start_date,  Map<String, dynamic>? transfer_data, @NullableTimestampConverter()  DateTime? trial_end, @NullableTimestampConverter()  DateTime? trial_start,  Map<String, dynamic>? schedule,  String? customer,  String? plan, @NullableTimestampConverter()  DateTime? updated_at, @NullableTimestampConverter()  DateTime? last_synced_at)  $default,) {final _that = this;
 switch (_that) {
 case _Subscription():
 return $default(_that.id,_that.object,_that.cancel_at_period_end,_that.current_period_end,_that.current_period_start,_that.default_payment_method,_that.items,_that.metadata,_that.pending_setup_intent,_that.pending_update,_that.status,_that.application_fee_percent,_that.billing_cycle_anchor,_that.billing_thresholds,_that.cancel_at,_that.canceled_at,_that.collection_method,_that.created,_that.days_until_due,_that.default_source,_that.default_tax_rates,_that.discount,_that.ended_at,_that.livemode,_that.latest_invoice,_that.next_pending_invoice_item_invoice,_that.pause_collection,_that.pending_invoice_item_interval,_that.start_date,_that.transfer_data,_that.trial_end,_that.trial_start,_that.schedule,_that.customer,_that.plan,_that.updated_at,_that.last_synced_at);case _:
@@ -2105,7 +2105,7 @@ return $default(_that.id,_that.object,_that.cancel_at_period_end,_that.current_p
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? object,  bool cancel_at_period_end, @JsonKey(name: 'current_period_end')@NullableTimestampConverter()  DateTime? current_period_end, @JsonKey(name: 'current_period_start')@NullableTimestampConverter()  DateTime? current_period_start,  String? default_payment_method,  SubscriptionItems items,  SubscriptionMetadata metadata,  String? pending_setup_intent,  Map<String, dynamic>? pending_update,  String status,  double? application_fee_percent, @JsonKey(name: 'billing_cycle_anchor')@NullableTimestampConverter()  DateTime? billing_cycle_anchor,  Map<String, dynamic>? billing_thresholds, @JsonKey(name: 'cancel_at')@NullableTimestampConverter()  DateTime? cancel_at, @JsonKey(name: 'canceled_at')@NullableTimestampConverter()  DateTime? canceled_at,  String? collection_method, @JsonKey(name: 'created')@TimestampConverter()  DateTime created,  int? days_until_due,  String? default_source, @JsonKey(name: 'default_tax_rates')  List<dynamic> default_tax_rates,  Map<String, dynamic>? discount, @JsonKey(name: 'ended_at')@NullableTimestampConverter()  DateTime? ended_at,  bool livemode,  String? latest_invoice,  String? next_pending_invoice_item_invoice,  Map<String, dynamic>? pause_collection,  Map<String, dynamic>? pending_invoice_item_interval, @JsonKey(name: 'start_date')@NullableTimestampConverter()  DateTime? start_date,  Map<String, dynamic>? transfer_data, @JsonKey(name: 'trial_end')@NullableTimestampConverter()  DateTime? trial_end, @JsonKey(name: 'trial_start')@NullableTimestampConverter()  DateTime? trial_start,  Map<String, dynamic>? schedule,  String? customer,  String? plan, @JsonKey(name: 'updated_at')@NullableTimestampConverter()  DateTime? updated_at, @JsonKey(name: 'last_synced_at')@NullableTimestampConverter()  DateTime? last_synced_at)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? object,  bool cancel_at_period_end, @NullableTimestampConverter()  DateTime? current_period_end, @NullableTimestampConverter()  DateTime? current_period_start,  String? default_payment_method,  SubscriptionItems items,  SubscriptionMetadata metadata,  String? pending_setup_intent,  Map<String, dynamic>? pending_update,  String status,  double? application_fee_percent, @NullableTimestampConverter()  DateTime? billing_cycle_anchor,  Map<String, dynamic>? billing_thresholds, @NullableTimestampConverter()  DateTime? cancel_at, @NullableTimestampConverter()  DateTime? canceled_at,  String? collection_method, @TimestampConverter()  DateTime created,  int? days_until_due,  String? default_source,  List<dynamic> default_tax_rates,  Map<String, dynamic>? discount, @NullableTimestampConverter()  DateTime? ended_at,  bool livemode,  String? latest_invoice,  String? next_pending_invoice_item_invoice,  Map<String, dynamic>? pause_collection,  Map<String, dynamic>? pending_invoice_item_interval, @NullableTimestampConverter()  DateTime? start_date,  Map<String, dynamic>? transfer_data, @NullableTimestampConverter()  DateTime? trial_end, @NullableTimestampConverter()  DateTime? trial_start,  Map<String, dynamic>? schedule,  String? customer,  String? plan, @NullableTimestampConverter()  DateTime? updated_at, @NullableTimestampConverter()  DateTime? last_synced_at)?  $default,) {final _that = this;
 switch (_that) {
 case _Subscription() when $default != null:
 return $default(_that.id,_that.object,_that.cancel_at_period_end,_that.current_period_end,_that.current_period_start,_that.default_payment_method,_that.items,_that.metadata,_that.pending_setup_intent,_that.pending_update,_that.status,_that.application_fee_percent,_that.billing_cycle_anchor,_that.billing_thresholds,_that.cancel_at,_that.canceled_at,_that.collection_method,_that.created,_that.days_until_due,_that.default_source,_that.default_tax_rates,_that.discount,_that.ended_at,_that.livemode,_that.latest_invoice,_that.next_pending_invoice_item_invoice,_that.pause_collection,_that.pending_invoice_item_interval,_that.start_date,_that.transfer_data,_that.trial_end,_that.trial_start,_that.schedule,_that.customer,_that.plan,_that.updated_at,_that.last_synced_at);case _:
@@ -2120,14 +2120,14 @@ return $default(_that.id,_that.object,_that.cancel_at_period_end,_that.current_p
 @JsonSerializable()
 
 class _Subscription implements Subscription {
-   _Subscription({required this.id, this.object, required this.cancel_at_period_end, @JsonKey(name: 'current_period_end')@NullableTimestampConverter() this.current_period_end, @JsonKey(name: 'current_period_start')@NullableTimestampConverter() this.current_period_start, this.default_payment_method, required this.items, required this.metadata, this.pending_setup_intent, final  Map<String, dynamic>? pending_update, required this.status, this.application_fee_percent, @JsonKey(name: 'billing_cycle_anchor')@NullableTimestampConverter() this.billing_cycle_anchor, final  Map<String, dynamic>? billing_thresholds, @JsonKey(name: 'cancel_at')@NullableTimestampConverter() this.cancel_at, @JsonKey(name: 'canceled_at')@NullableTimestampConverter() this.canceled_at, this.collection_method, @JsonKey(name: 'created')@TimestampConverter() required this.created, this.days_until_due, this.default_source, @JsonKey(name: 'default_tax_rates') final  List<dynamic> default_tax_rates = const [], final  Map<String, dynamic>? discount, @JsonKey(name: 'ended_at')@NullableTimestampConverter() this.ended_at, required this.livemode, this.latest_invoice, this.next_pending_invoice_item_invoice, final  Map<String, dynamic>? pause_collection, final  Map<String, dynamic>? pending_invoice_item_interval, @JsonKey(name: 'start_date')@NullableTimestampConverter() this.start_date, final  Map<String, dynamic>? transfer_data, @JsonKey(name: 'trial_end')@NullableTimestampConverter() this.trial_end, @JsonKey(name: 'trial_start')@NullableTimestampConverter() this.trial_start, final  Map<String, dynamic>? schedule, this.customer, this.plan, @JsonKey(name: 'updated_at')@NullableTimestampConverter() this.updated_at, @JsonKey(name: 'last_synced_at')@NullableTimestampConverter() this.last_synced_at}): _pending_update = pending_update,_billing_thresholds = billing_thresholds,_default_tax_rates = default_tax_rates,_discount = discount,_pause_collection = pause_collection,_pending_invoice_item_interval = pending_invoice_item_interval,_transfer_data = transfer_data,_schedule = schedule;
+   _Subscription({required this.id, this.object, required this.cancel_at_period_end, @NullableTimestampConverter() this.current_period_end, @NullableTimestampConverter() this.current_period_start, this.default_payment_method, required this.items, required this.metadata, this.pending_setup_intent, final  Map<String, dynamic>? pending_update, required this.status, this.application_fee_percent, @NullableTimestampConverter() this.billing_cycle_anchor, final  Map<String, dynamic>? billing_thresholds, @NullableTimestampConverter() this.cancel_at, @NullableTimestampConverter() this.canceled_at, this.collection_method, @TimestampConverter() required this.created, this.days_until_due, this.default_source, final  List<dynamic> default_tax_rates = const [], final  Map<String, dynamic>? discount, @NullableTimestampConverter() this.ended_at, required this.livemode, this.latest_invoice, this.next_pending_invoice_item_invoice, final  Map<String, dynamic>? pause_collection, final  Map<String, dynamic>? pending_invoice_item_interval, @NullableTimestampConverter() this.start_date, final  Map<String, dynamic>? transfer_data, @NullableTimestampConverter() this.trial_end, @NullableTimestampConverter() this.trial_start, final  Map<String, dynamic>? schedule, this.customer, this.plan, @NullableTimestampConverter() this.updated_at, @NullableTimestampConverter() this.last_synced_at}): _pending_update = pending_update,_billing_thresholds = billing_thresholds,_default_tax_rates = default_tax_rates,_discount = discount,_pause_collection = pause_collection,_pending_invoice_item_interval = pending_invoice_item_interval,_transfer_data = transfer_data,_schedule = schedule;
   factory _Subscription.fromJson(Map<String, dynamic> json) => _$SubscriptionFromJson(json);
 
 @override final  String id;
 @override final  String? object;
 @override final  bool cancel_at_period_end;
-@override@JsonKey(name: 'current_period_end')@NullableTimestampConverter() final  DateTime? current_period_end;
-@override@JsonKey(name: 'current_period_start')@NullableTimestampConverter() final  DateTime? current_period_start;
+@override@NullableTimestampConverter() final  DateTime? current_period_end;
+@override@NullableTimestampConverter() final  DateTime? current_period_start;
 @override final  String? default_payment_method;
 @override final  SubscriptionItems items;
 @override final  SubscriptionMetadata metadata;
@@ -2143,7 +2143,7 @@ class _Subscription implements Subscription {
 
 @override final  String status;
 @override final  double? application_fee_percent;
-@override@JsonKey(name: 'billing_cycle_anchor')@NullableTimestampConverter() final  DateTime? billing_cycle_anchor;
+@override@NullableTimestampConverter() final  DateTime? billing_cycle_anchor;
  final  Map<String, dynamic>? _billing_thresholds;
 @override Map<String, dynamic>? get billing_thresholds {
   final value = _billing_thresholds;
@@ -2153,14 +2153,14 @@ class _Subscription implements Subscription {
   return EqualUnmodifiableMapView(value);
 }
 
-@override@JsonKey(name: 'cancel_at')@NullableTimestampConverter() final  DateTime? cancel_at;
-@override@JsonKey(name: 'canceled_at')@NullableTimestampConverter() final  DateTime? canceled_at;
+@override@NullableTimestampConverter() final  DateTime? cancel_at;
+@override@NullableTimestampConverter() final  DateTime? canceled_at;
 @override final  String? collection_method;
-@override@JsonKey(name: 'created')@TimestampConverter() final  DateTime created;
+@override@TimestampConverter() final  DateTime created;
 @override final  int? days_until_due;
 @override final  String? default_source;
  final  List<dynamic> _default_tax_rates;
-@override@JsonKey(name: 'default_tax_rates') List<dynamic> get default_tax_rates {
+@override@JsonKey() List<dynamic> get default_tax_rates {
   if (_default_tax_rates is EqualUnmodifiableListView) return _default_tax_rates;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_default_tax_rates);
@@ -2175,7 +2175,7 @@ class _Subscription implements Subscription {
   return EqualUnmodifiableMapView(value);
 }
 
-@override@JsonKey(name: 'ended_at')@NullableTimestampConverter() final  DateTime? ended_at;
+@override@NullableTimestampConverter() final  DateTime? ended_at;
 @override final  bool livemode;
 @override final  String? latest_invoice;
 @override final  String? next_pending_invoice_item_invoice;
@@ -2197,7 +2197,7 @@ class _Subscription implements Subscription {
   return EqualUnmodifiableMapView(value);
 }
 
-@override@JsonKey(name: 'start_date')@NullableTimestampConverter() final  DateTime? start_date;
+@override@NullableTimestampConverter() final  DateTime? start_date;
  final  Map<String, dynamic>? _transfer_data;
 @override Map<String, dynamic>? get transfer_data {
   final value = _transfer_data;
@@ -2207,8 +2207,8 @@ class _Subscription implements Subscription {
   return EqualUnmodifiableMapView(value);
 }
 
-@override@JsonKey(name: 'trial_end')@NullableTimestampConverter() final  DateTime? trial_end;
-@override@JsonKey(name: 'trial_start')@NullableTimestampConverter() final  DateTime? trial_start;
+@override@NullableTimestampConverter() final  DateTime? trial_end;
+@override@NullableTimestampConverter() final  DateTime? trial_start;
  final  Map<String, dynamic>? _schedule;
 @override Map<String, dynamic>? get schedule {
   final value = _schedule;
@@ -2221,8 +2221,8 @@ class _Subscription implements Subscription {
 @override final  String? customer;
 @override final  String? plan;
 // JSON string
-@override@JsonKey(name: 'updated_at')@NullableTimestampConverter() final  DateTime? updated_at;
-@override@JsonKey(name: 'last_synced_at')@NullableTimestampConverter() final  DateTime? last_synced_at;
+@override@NullableTimestampConverter() final  DateTime? updated_at;
+@override@NullableTimestampConverter() final  DateTime? last_synced_at;
 
 /// Create a copy of Subscription
 /// with the given fields replaced by the non-null parameter values.
@@ -2257,7 +2257,7 @@ abstract mixin class _$SubscriptionCopyWith<$Res> implements $SubscriptionCopyWi
   factory _$SubscriptionCopyWith(_Subscription value, $Res Function(_Subscription) _then) = __$SubscriptionCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? object, bool cancel_at_period_end,@JsonKey(name: 'current_period_end')@NullableTimestampConverter() DateTime? current_period_end,@JsonKey(name: 'current_period_start')@NullableTimestampConverter() DateTime? current_period_start, String? default_payment_method, SubscriptionItems items, SubscriptionMetadata metadata, String? pending_setup_intent, Map<String, dynamic>? pending_update, String status, double? application_fee_percent,@JsonKey(name: 'billing_cycle_anchor')@NullableTimestampConverter() DateTime? billing_cycle_anchor, Map<String, dynamic>? billing_thresholds,@JsonKey(name: 'cancel_at')@NullableTimestampConverter() DateTime? cancel_at,@JsonKey(name: 'canceled_at')@NullableTimestampConverter() DateTime? canceled_at, String? collection_method,@JsonKey(name: 'created')@TimestampConverter() DateTime created, int? days_until_due, String? default_source,@JsonKey(name: 'default_tax_rates') List<dynamic> default_tax_rates, Map<String, dynamic>? discount,@JsonKey(name: 'ended_at')@NullableTimestampConverter() DateTime? ended_at, bool livemode, String? latest_invoice, String? next_pending_invoice_item_invoice, Map<String, dynamic>? pause_collection, Map<String, dynamic>? pending_invoice_item_interval,@JsonKey(name: 'start_date')@NullableTimestampConverter() DateTime? start_date, Map<String, dynamic>? transfer_data,@JsonKey(name: 'trial_end')@NullableTimestampConverter() DateTime? trial_end,@JsonKey(name: 'trial_start')@NullableTimestampConverter() DateTime? trial_start, Map<String, dynamic>? schedule, String? customer, String? plan,@JsonKey(name: 'updated_at')@NullableTimestampConverter() DateTime? updated_at,@JsonKey(name: 'last_synced_at')@NullableTimestampConverter() DateTime? last_synced_at
+ String id, String? object, bool cancel_at_period_end,@NullableTimestampConverter() DateTime? current_period_end,@NullableTimestampConverter() DateTime? current_period_start, String? default_payment_method, SubscriptionItems items, SubscriptionMetadata metadata, String? pending_setup_intent, Map<String, dynamic>? pending_update, String status, double? application_fee_percent,@NullableTimestampConverter() DateTime? billing_cycle_anchor, Map<String, dynamic>? billing_thresholds,@NullableTimestampConverter() DateTime? cancel_at,@NullableTimestampConverter() DateTime? canceled_at, String? collection_method,@TimestampConverter() DateTime created, int? days_until_due, String? default_source, List<dynamic> default_tax_rates, Map<String, dynamic>? discount,@NullableTimestampConverter() DateTime? ended_at, bool livemode, String? latest_invoice, String? next_pending_invoice_item_invoice, Map<String, dynamic>? pause_collection, Map<String, dynamic>? pending_invoice_item_interval,@NullableTimestampConverter() DateTime? start_date, Map<String, dynamic>? transfer_data,@NullableTimestampConverter() DateTime? trial_end,@NullableTimestampConverter() DateTime? trial_start, Map<String, dynamic>? schedule, String? customer, String? plan,@NullableTimestampConverter() DateTime? updated_at,@NullableTimestampConverter() DateTime? last_synced_at
 });
 
 

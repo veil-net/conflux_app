@@ -90,13 +90,6 @@ class AuthPage extends HookConsumerWidget {
           Uri.parse('https://auth.veilnet.app/?platform=android'),
         );
       }
-      if (context.mounted) {
-        DialogManager.showDialog(
-          context,
-          'Please sign in with your email and password via VeilNet Authentication Portal',
-          DialogType.info,
-        );
-      }
     }
 
     return Scaffold(
