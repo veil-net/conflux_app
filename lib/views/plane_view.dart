@@ -10,7 +10,7 @@ class PlaneView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return CustomScrollView(
       slivers: [
-        SliverFloatingHeader(
+        PinnedHeaderSliver(
           child: PlaneSearchCard()
         ),
         PlaneList(),

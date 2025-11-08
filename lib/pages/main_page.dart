@@ -1,4 +1,5 @@
 import 'package:conflux/components/app_background.dart';
+import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_navigation_bar.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
 import 'package:conflux/views/home_view.dart';
@@ -14,6 +15,9 @@ class MainPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pageController = ref.watch(pageControllerProvider);
     return Scaffold(
+      appBar: MediaQuery.of(context).orientation == Orientation.landscape ? AppBar(
+        title: Text('VeilNet Conflux'),
+      ) : null,
       body: SafeArea(
         child: Stack(
           children: [
@@ -29,7 +33,19 @@ class MainPage extends HookConsumerWidget {
           ],
         ),
       ),
-      bottomNavigationBar: AppNavigationBar(),
+      bottomNavigationBar: MediaQuery.of(context).orientation == Orientation.portrait ? AppNavigationBar() : null,
+      drawer: MediaQuery.of(context).orientation == Orientation.landscape ? Drawer(
+        child: Column(
+          children: [
+            AppButton(
+              label: 'Home',
+              onPressed: () async {
+                ref.read(pageControllerProvider).jumpToPage(0);
+              },
+            ),
+          ],
+        ),
+      ) : null,
     );
   }
 }
