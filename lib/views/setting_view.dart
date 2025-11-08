@@ -14,8 +14,13 @@ class SettingView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(
+        SliverFillRemaining(
           child: Wrap(
+            alignment: WrapAlignment.center,
+            runAlignment:
+                MediaQuery.of(context).orientation == Orientation.portrait
+                ? WrapAlignment.start
+                : WrapAlignment.center,
             children: [
               AppInfoCard(),
               GeneralSettingsCard(),

@@ -8,39 +8,42 @@ class AppInfoCard extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return AppCard(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Image.asset(
-              'assets/images/Logo_H.png',
-            ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(
-                'Version',
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 500),
+      child: AppCard(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Image.asset(
+                'assets/images/Logo_H.png',
               ),
-              trailing: Text(
-                'Beta',
-                style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(
+                  'Version',
+                  style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                ),
+                trailing: Text(
+                  'Beta',
+                  style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                ),
               ),
-            ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(
-                'Support',
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(
+                  'Support',
+                  style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                ),
+                trailing: Text(
+                  'support@veilnet.org',
+                  style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                ),
               ),
-              trailing: Text(
-                'support@veilnet.org',
-                style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    ).animate().slideY(duration: 500.milliseconds, curve: Curves.easeInOut);
+      ).animate().slideY(duration: 500.milliseconds, curve: Curves.easeInOut),
+    );
   }
 }

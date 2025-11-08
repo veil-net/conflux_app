@@ -29,7 +29,7 @@ class SelectedPlane extends HookConsumerWidget {
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).orientation == Orientation.portrait
                 ? constraints.maxWidth
-                : constraints.maxWidth * 0.5,
+                : 1000 < constraints.maxWidth ? 1000 : constraints.maxWidth,
           ),
           child: AppCard(
             child: selectedPlane.when(
@@ -232,7 +232,54 @@ class SelectedPlane extends HookConsumerWidget {
                 }
               },
               error: (error, stackTrace) => Text('Error: $error'),
-              loading: () => SizedBox.shrink(),
+              loading: () => Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 16,
+                  children: [
+                    Icon(
+                      Icons.info,
+                      size: 32,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'VeilNet Planes',
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                          ),
+                          TextSpan(
+                            text:
+                                ' are regional decentralised networks, which will secure and masquade your traffic to the internet.\n\n',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: Colors.grey),
+                          ),
+                          TextSpan(
+                            text: 'Select a Plane to get started',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                          ),
+                        ],
+                      ),
+                      textAlign: TextAlign.justify,
+                    ),
+                    AppButton(
+                      label: 'Select a Plane',
+                      onPressed: () async {
+                        ref.read(pageControllerProvider).jumpToPage(1);
+                      },
+                      expand: true,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ).animate().slideX(duration: 500.milliseconds, curve: Curves.easeInOut),
         );

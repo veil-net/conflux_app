@@ -27,46 +27,38 @@ class PlaneList extends HookConsumerWidget {
         }
 
         if (filteredData.isEmpty) {
-          return SliverFillRemaining(
-            child: Center(
-              child: Text(
-                'No planes found',
-                style: TextStyle(color: Colors.grey),
-              ),
+          return Center(
+            child: Text(
+              'No planes found',
+              style: TextStyle(color: Colors.grey),
             ),
           );
         }
 
-        return SliverToBoxAdapter(
-          child: Wrap(
-            children: [
-              for (var planeDetails in filteredData)
-                PlaneTile(planeDetails: planeDetails),
-            ],
-          ),
+        return Wrap(
+          children: [
+            for (var planeDetails in filteredData)
+              PlaneTile(planeDetails: planeDetails),
+          ],
         );
       },
       error: (error, stackTrace) {
         log('Error loading planes: $error');
-        return SliverFillRemaining(
-          child: Center(
-            child: TextButton(
-              onPressed: () {
-                ref.invalidate(planesDetailsProvider);
-              },
-              child: Text(
-                'Failed to load planes, retry',
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.error,
-                ),
+        return Center(
+          child: TextButton(
+            onPressed: () {
+              ref.invalidate(planesDetailsProvider);
+            },
+            child: Text(
+              'Failed to load planes, retry',
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: Theme.of(context).colorScheme.error,
               ),
             ),
           ),
         );
       },
-      loading: () => SliverFillRemaining(
-        child: Center(child: CircularProgressIndicator()),
-      ),
+      loading: () => Center(child: CircularProgressIndicator()),
     );
   }
 }

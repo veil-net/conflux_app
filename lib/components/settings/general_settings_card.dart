@@ -12,72 +12,54 @@ class GeneralSettingsCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final darkMode = ref.watch(darkModeProvider);
     final developerMode = ref.watch(developerModeProvider);
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).orientation == Orientation.portrait
-                ? constraints.maxWidth
-                : constraints.maxWidth * 0.5,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 500),
+      child: AppCard(
+        child: ExpansionTile(
+          tilePadding: EdgeInsets.symmetric(horizontal: 16),
+          childrenPadding: EdgeInsets.symmetric(horizontal: 16),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          initiallyExpanded: true,
+          title: Text(
+            'General',
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
-          child: AppCard(
-            child: ExpansionTile(
-              tilePadding: EdgeInsets.symmetric(horizontal: 16),
-              childrenPadding: EdgeInsets.symmetric(horizontal: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              initiallyExpanded: true,
+          children: [
+            SwitchListTile.adaptive(
+              dense: true,
               title: Text(
-                'General',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
+                'Dark Mode',
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
-              children: [
-                SwitchListTile.adaptive(
-                  dense: true,
-                  title: Text(
-                    'Dark Mode',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                  value: darkMode,
-                  onChanged: (value) async {
-                    await ref
-                        .read(darkModeProvider.notifier)
-                        .setDarkMode(value);
-                  },
-                ),
-                SwitchListTile.adaptive(
-                  dense: true,
-                  title: Text(
-                    'Developer Mode',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-
-                  value: developerMode,
-                  onChanged: (value) async {
-                    if (value) {
-                      DialogManager.showDialog(
-                        context,
-                        'Developer Mode enables options for developers to manage Veilnet Private Planes and Conflux nodes.\n\nIf you are using VeilNet as VPN service, you do not need to enable this option.',
-                        DialogType.warning,
-                      );
-                    }
-                    await ref
-                        .read(developerModeProvider.notifier)
-                        .setDeveloperMode(value);
-                  },
-                ),
-              ],
+              value: darkMode,
+              onChanged: (value) async {
+                await ref.read(darkModeProvider.notifier).setDarkMode(value);
+              },
             ),
-          ).animate().slideX(duration: 500.milliseconds, curve: Curves.easeInOut),
-        );
-      },
+            SwitchListTile.adaptive(
+              dense: true,
+              title: Text(
+                'Developer Mode',
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+      
+              value: developerMode,
+              onChanged: (value) async {
+                if (value) {
+                  DialogManager.showDialog(
+                    context,
+                    'Developer Mode enables options for developers to manage Veilnet Private Planes and Conflux nodes.\n\nIf you are using VeilNet as VPN service, you do not need to enable this option.',
+                    DialogType.warning,
+                  );
+                }
+                await ref
+                    .read(developerModeProvider.notifier)
+                    .setDeveloperMode(value);
+              },
+            ),
+          ],
+        ),
+      ).animate().slideX(duration: 500.milliseconds, curve: Curves.easeInOut),
     );
   }
 }

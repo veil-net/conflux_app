@@ -52,67 +52,59 @@ class AccountManagement extends HookConsumerWidget {
       launchUrl(Uri.parse('https://auth.veilnet.app/reset-password'));
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).orientation == Orientation.portrait
-                ? constraints.maxWidth
-                : constraints.maxWidth * 0.5,
-          ),
-          child: AppCard(
-            child: ExpansionTile(
-              tilePadding: EdgeInsets.symmetric(horizontal: 16),
-              childrenPadding: EdgeInsets.symmetric(horizontal: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 500),
+      child: AppCard(
+              child: ExpansionTile(
+                tilePadding: EdgeInsets.symmetric(horizontal: 16),
+                childrenPadding: EdgeInsets.symmetric(horizontal: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                initiallyExpanded: true,
+                title: Text(
+                  'Account Management',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
+                children: [
+                  ListTile(
+                    dense: true,
+                    onTap: resetPassword,
+                    title: Text(
+                      'Change Password',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    trailing: Icon(Icons.open_in_new),
+                  ),
+                  ListTile(
+                    dense: true,
+                    onTap: manageAccount,
+                    title: Text(
+                      'Manage Account',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    trailing: Icon(Icons.open_in_new),
+                  ),
+                  ListTile(
+                    dense: true,
+                    onTap: switchAccount,
+                    title: Text(
+                      'Switch Account',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    trailing: Icon(Icons.open_in_new),
+                  ),
+                ],
               ),
-              initiallyExpanded: true,
-              title: Text(
-                'Account Management',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-              ),
-              children: [
-                ListTile(
-                  dense: true,
-                  onTap: resetPassword,
-                  title: Text(
-                    'Change Password',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                  trailing: Icon(Icons.open_in_new),
-                ),
-                ListTile(
-                  dense: true,
-                  onTap: manageAccount,
-                  title: Text(
-                    'Manage Account',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                  trailing: Icon(Icons.open_in_new),
-                ),
-                ListTile(
-                  dense: true,
-                  onTap: switchAccount,
-                  title: Text(
-                    'Switch Account',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                  trailing: Icon(Icons.open_in_new),
-                ),
-              ],
-            ),
-          ),
-        ).animate().slideX(duration: 500.milliseconds, curve: Curves.easeInOut);
-      },
+            ).animate().slideX(duration: 500.milliseconds, curve: Curves.easeInOut),
     );
   }
 }

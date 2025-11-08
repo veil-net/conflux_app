@@ -14,7 +14,7 @@ class ConfluxCard extends HookConsumerWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: constraints.maxWidth),
+          constraints: BoxConstraints(maxWidth: 1000 < constraints.maxWidth ? 1000 : constraints.maxWidth),
           child:
               AppCard(
                 child: ExpansionTile(

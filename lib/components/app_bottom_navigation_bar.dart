@@ -4,8 +4,8 @@ import 'package:conflux/providers/page_controller_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AppNavigationBar extends HookConsumerWidget {
-  const AppNavigationBar({super.key});
+class AppBottomNavigationBar extends HookConsumerWidget {
+  const AppBottomNavigationBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,7 +29,9 @@ class AppNavigationBar extends HookConsumerWidget {
           child: NavigationBar(
             elevation: 5,
             selectedIndex: currentIndex,
-            backgroundColor: Theme.of(context).colorScheme.surface.withAlpha(200),
+            backgroundColor: Theme.of(
+              context,
+            ).colorScheme.surface.withAlpha(200),
             onDestinationSelected: (index) {
               ref.read(currentPageProvider.notifier).setPage(index);
               pageController.jumpToPage(index);

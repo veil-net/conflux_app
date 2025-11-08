@@ -1,3 +1,4 @@
+import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/components/app_text_input.dart';
 import 'package:conflux/components/profile/service_tier_chip.dart';
@@ -74,99 +75,107 @@ class GreetingTile extends HookConsumerWidget {
       }
     }
 
-    return Wrap(
-      children: [
-        LayoutBuilder(
-          builder: (context, constraints) {
-            return ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth:
-                    MediaQuery.of(context).orientation == Orientation.portrait
-                    ? constraints.maxWidth
-                    : constraints.maxWidth * 0.5,
-              ),
-              child: ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                subtitle: Row(
-                  spacing: 4,
-                  children: [
-                    Icon(
-                      Icons.person,
-                      color: Theme.of(context).colorScheme.secondary,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 1000),
+      child: AppCard(
+        child: Wrap(
+          children: [
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth:
+                        MediaQuery.of(context).orientation == Orientation.portrait
+                        ? constraints.maxWidth
+                        : constraints.maxWidth * 0.5,
+                  ),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                    subtitle: Row(
+                      spacing: 4,
+                      children: [
+                        Icon(
+                          Icons.person,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                        Text(
+                          userProfile.value?.email ?? 'Email not set',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      userProfile.value?.email ?? 'Email not set',
+                    title: userProfile.value?.display_name != null
+                        ? Text(
+                            'Hi, ${userProfile.value!.display_name!}',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          )
+                        : AppTextInput(
+                            label: 'Display Name',
+                            hint: 'Set your display name',
+                            controller: displayName,
+                            keyboardType: TextInputType.text,
+                            prefixIcon: Icons.person,
+                            obscureText: false,
+                            readOnly: false,
+                            enable: true,
+                          ),
+                    trailing: userProfile.value?.display_name != null
+                        ? ServiceTierChip()
+                        : TextButton(
+                            onPressed: () {
+                              setDsiplayName();
+                            },
+                            child: Text('Set Display Name'),
+                          ),
+                  ),
+                );
+              },
+            ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth:
+                        MediaQuery.of(context).orientation == Orientation.portrait
+                        ? constraints.maxWidth
+                        : constraints.maxWidth * 0.5,
+                  ),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                    title: Text(
+                      switch (serviceTier.value) {
+                        1 =>
+                          'Unlimited ${confluxRifts.value?.length ?? 0}/3 devices',
+                        2 =>
+                          'Unlimited ${confluxRifts.value?.length ?? 0}/10 devices',
+                        _ =>
+                          '${((userProfile.value?.mp ?? 0) / 60).toInt()} minutes',
+                      },
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.secondary,
                       ),
                     ),
-                  ],
-                ),
-                title: userProfile.value?.display_name != null
-                    ? Text(
-                        'Hi, ${userProfile.value!.display_name!}',
-                        style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                      )
-                    : AppTextInput(
-                        label: 'Display Name',
-                        hint: 'Set your display name',
-                        controller: displayName,
-                        keyboardType: TextInputType.text,
-                        prefixIcon: Icons.person,
-                        obscureText: false,
-                        readOnly: false,
-                        enable: true,
+                    subtitle: Text(
+                      'access to VeilNet Public Plane',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
                       ),
-                trailing: userProfile.value?.display_name != null
-                    ? ServiceTierChip()
-                    : TextButton(
-                        onPressed: () {
-                          setDsiplayName();
-                        },
-                        child: Text('Set Display Name'),
-                      ),
-              ),
-            );
-          },
-        ),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            return ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth:
-                    MediaQuery.of(context).orientation == Orientation.portrait
-                    ? constraints.maxWidth
-                    : constraints.maxWidth * 0.5,
-              ),
-              child: ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                title: Text(
-                  switch (serviceTier.value) {
-                    1 =>
-                      'Unlimited ${confluxRifts.value?.length ?? 0}/3 devices',
-                    2 =>
-                      'Unlimited ${confluxRifts.value?.length ?? 0}/10 devices',
-                    _ =>
-                      '${((userProfile.value?.mp ?? 0) / 60).toInt()} minutes',
-                  },
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    trailing: IconButton(
+                      onPressed: signOut,
+                      icon: Icon(Icons.logout),
+                    ),
                   ),
-                ),
-                subtitle: Text(
-                  'access to VeilNet Public Plane',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                trailing: IconButton(onPressed: signOut, icon: Icon(Icons.logout))
-              ),
-            );
-          },
+                );
+              },
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

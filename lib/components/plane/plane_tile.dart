@@ -23,7 +23,7 @@ class PlaneTile extends HookConsumerWidget {
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).orientation == Orientation.portrait
                 ? constraints.maxWidth
-                : constraints.maxWidth * 0.5,
+                : 500 < constraints.maxWidth * 0.5 ? 500 : constraints.maxWidth * 0.5,
           ),
           child: AppCard(
             child: ListTile(
