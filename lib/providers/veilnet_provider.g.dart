@@ -85,7 +85,7 @@ final class VeilNetProvider extends $NotifierProvider<VeilNet, VeilNetState> {
   }
 }
 
-String _$veilNetHash() => r'd4c6b15fc3a5a1f2c1ab1a34def62f4908702177';
+String _$veilNetHash() => r'6ad16aeb0598eafffde01c560483c59dd4ddba26';
 
 abstract class _$VeilNet extends $Notifier<VeilNetState> {
   VeilNetState build();

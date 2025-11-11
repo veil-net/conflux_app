@@ -75,6 +75,14 @@ class ConfluxStateTile extends HookConsumerWidget {
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
             ),
+            VeilNetState.loading => ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: CircularProgressIndicator(),
+              title: Text(
+                'Loading conflux state...',
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+            ),
             VeilNetState.error => ListTile(
               contentPadding: EdgeInsets.zero,
               leading: Icon(Icons.error, color: Theme.of(context).colorScheme.error),

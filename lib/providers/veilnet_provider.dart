@@ -71,7 +71,14 @@ class ConfluxService extends _$ConfluxService {
   }
 }
 
-enum VeilNetState { connected, disconnected, connecting, disconnecting, error }
+enum VeilNetState {
+  connected,
+  disconnected,
+  connecting,
+  disconnecting,
+  error,
+  loading,
+}
 
 @riverpod
 class VeilNet extends _$VeilNet {
@@ -164,6 +171,7 @@ class VeilNet extends _$VeilNet {
             },
             loading: () {
               _confluxDetails = null;
+              _actualState = VeilNetState.loading;
             },
           );
         }
@@ -176,6 +184,7 @@ class VeilNet extends _$VeilNet {
       },
       loading: () {
         _confluxDetails = null;
+        _actualState = VeilNetState.loading;
       },
     );
     // Return the current state, unless there is an error in which case return the error state

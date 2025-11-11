@@ -23,40 +23,49 @@ class PlaneTile extends HookConsumerWidget {
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).orientation == Orientation.portrait
                 ? constraints.maxWidth
-                : 500 < constraints.maxWidth * 0.5 ? 500 : constraints.maxWidth * 0.5,
+                : 500 < constraints.maxWidth * 0.5
+                ? 500
+                : constraints.maxWidth * 0.5,
           ),
-          child: AppCard(
-            child: ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
-              leading: SizedBox(
-                width: 40,
-                height: 30,
-                child: CountryFlag.fromCountryCode(planeDetails.region),
-              ),
-              title: Text(
-                planeDetails.name,
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
-              ),
-              subtitle: Text(
-                planeDetails.subnet,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.secondary,
+          child:
+              AppCard(
+                child: ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                  leading: SizedBox(
+                    width: 40,
+                    height: 30,
+                    child: CountryFlag.fromCountryCode(planeDetails.region),
+                  ),
+                  title: Text(
+                    planeDetails.name,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  subtitle: Text(
+                    planeDetails.subnet,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                  trailing: AppButton(
+                    outline: false,
+                    expand: false,
+                    label: 'Select',
+                    onPressed: veilNetState == VeilNetState.disconnected
+                        ? () async {
+                            await ref
+                                .read(selectedPlaneDetailsProvider.notifier)
+                                .setSelectedPlane(planeDetails);
+                            ref.read(pageControllerProvider).jumpToPage(0);
+                          }
+                        : null,
+                  ),
                 ),
+              ).animate().slideY(
+                duration: 250.milliseconds,
+                curve: Curves.easeInOut,
               ),
-              trailing: AppButton(
-                outline: true,
-                label: 'Select',
-                onPressed: veilNetState == VeilNetState.disconnected
-                    ? () async {
-                        await ref
-                            .read(selectedPlaneDetailsProvider.notifier)
-                            .setSelectedPlane(planeDetails);
-                        ref.read(pageControllerProvider).jumpToPage(0);
-                      }
-                    : null,
-              ),
-            ),
-          ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
         );
       },
     );

@@ -66,6 +66,17 @@ class AppStatusBackground extends HookConsumerWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
+          VeilNetState.loading => LinearGradient(
+            colors: [
+              Colors.grey.withAlpha(50),
+              Colors.transparent,
+              Colors.transparent,
+              Colors.transparent,
+              Colors.transparent,
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         },
       ),
     );

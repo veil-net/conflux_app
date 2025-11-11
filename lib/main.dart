@@ -128,10 +128,10 @@ final router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => const MainPage(),
-      redirect: (context, state) async {
+      redirect: (context, state) {
         try {
-          final session = supabase.auth.currentSession;
-          if (session == null) {
+          final user = supabase.auth.currentUser;
+          if (user == null) {
             return '/auth';
           }
           return null;
@@ -143,10 +143,10 @@ final router = GoRouter(
     GoRoute(
       path: '/auth',
       builder: (context, state) => const AuthPage(),
-      redirect: (context, state) async {
+      redirect: (context, state) {
         try {
-          final session = supabase.auth.currentSession;
-          if (session == null) {
+          final user = supabase.auth.currentUser;
+          if (user == null) {
             return null;
           }
           return '/';

@@ -234,7 +234,7 @@ final class SelectedPlaneDetailsProvider
 }
 
 String _$selectedPlaneDetailsHash() =>
-    r'0f10821e7c33c1a9bb0bc01d4eb68ce32d52cecb';
+    r'37562c30281d95eddd8d72dffc945ae5858a1137';
 
 abstract class _$SelectedPlaneDetails extends $AsyncNotifier<PlaneDetails?> {
   FutureOr<PlaneDetails?> build();
