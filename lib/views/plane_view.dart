@@ -13,7 +13,7 @@ class PlaneView extends HookConsumerWidget {
     if (Platform.isAndroid || Platform.isIOS) {
       return CustomScrollView(
         slivers: [
-          PinnedHeaderSliver(child: PlaneSearchCard()),
+          SliverFloatingHeader(child: PlaneSearchCard()),
           SliverToBoxAdapter(child: PlaneList()),
         ],
       );
