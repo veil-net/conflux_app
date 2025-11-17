@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:conflux/pages/auth_callback_page.dart';
 import 'package:conflux/pages/auth_page.dart';
 import 'package:conflux/pages/main_page.dart';
+import 'package:conflux/pages/notification_page.dart';
+import 'package:conflux/pages/organisation_page.dart';
 import 'package:conflux/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -152,6 +154,36 @@ final router = GoRouter(
           return '/';
         } catch (e) {
           return null;
+        }
+      },
+    ),
+    GoRoute(
+      path: '/notification',
+      builder: (context, state) => NotificationPage(),
+      redirect: (context, state) {
+        try {
+          final user = supabase.auth.currentUser;
+          if (user == null) {
+            return '/auth';
+          }
+          return null;
+        } catch (e) {
+          return '/auth';
+        }
+      },
+    ),
+    GoRoute(
+      path: '/organisation',
+      builder: (context, state) => OrganisationPage(),
+      redirect: (context, state) {
+        try {
+          final user = supabase.auth.currentUser;
+          if (user == null) {
+            return '/auth';
+          }
+          return null;
+        } catch (e) {
+          return '/auth';
         }
       },
     ),

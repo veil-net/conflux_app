@@ -10,12 +10,14 @@ part 'organisation_provider.g.dart';
 @riverpod
 class Organisations extends _$Organisations {
   @override
-  Future<List<Organisation>> build() async {
-    return await supabase
+  Stream<List<Organisation>> build() {
+    ref.keepAlive();
+    return supabase
         .from('organisations')
-        .select('*')
-        .then(
-          (value) => value.map((data) => Organisation.fromJson(data)).toList(),
+        .stream(primaryKey: ['id'])
+        .map(
+          (event) =>
+              event.map((data) => Organisation.fromJson(data)).toList(),
         );
   }
 

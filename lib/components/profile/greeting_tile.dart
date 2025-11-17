@@ -93,20 +93,12 @@ class GreetingTile extends HookConsumerWidget {
                   ),
                   child: ListTile(
                     contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                    subtitle: Row(
-                      spacing: 4,
-                      children: [
-                        Icon(
-                          Icons.person,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                        Text(
-                          userProfile.value?.email ?? 'Email not set',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                        ),
-                      ],
+                    leading: Icon(Icons.person),
+                    subtitle: Text(
+                      userProfile.value?.email ?? 'Email not set',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
                     ),
                     title: userProfile.value?.display_name != null
                         ? Text(
@@ -152,9 +144,9 @@ class GreetingTile extends HookConsumerWidget {
                     title: Text(
                       switch (serviceTier.value) {
                         1 =>
-                          'Unlimited ${confluxRifts.value?.length ?? 0}/3 devices',
+                          'Unlimited for ${confluxRifts.value?.length ?? 0}/3 devices',
                         2 =>
-                          'Unlimited ${confluxRifts.value?.length ?? 0}/10 devices',
+                          'Unlimited for ${confluxRifts.value?.length ?? 0}/10 devices',
                         _ =>
                           '${((userProfile.value?.mp ?? 0) / 60).toInt()} minutes',
                       },

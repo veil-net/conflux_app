@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:conflux/components/app_sub_navigation_bar.dart';
 import 'package:conflux/components/conflux/conflux_card.dart';
 import 'package:conflux/components/conflux/conflux_summary_card.dart';
 import 'package:conflux/components/plane/selected_plane.dart';
@@ -16,10 +17,14 @@ class HomeView extends HookConsumerWidget {
       return CustomScrollView(
         slivers: [
           PinnedHeaderSliver(child: ConfluxCard()),
+          SliverFloatingHeader(child: GreetingTile()),
           SliverFillRemaining(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [GreetingTile(), SelectedPlane()],
+              children: [
+                AppSubNavigationBar(),
+                SelectedPlane(),
+              ],
             ),
           ),
           SliverToBoxAdapter(child: ConfluxSummaryCard()),
@@ -34,7 +39,12 @@ class HomeView extends HookConsumerWidget {
           SliverFillRemaining(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [GreetingTile(), ConfluxSummaryCard(), SelectedPlane()],
+              children: [
+                GreetingTile(),
+                AppSubNavigationBar(),
+                ConfluxSummaryCard(),
+                SelectedPlane(),
+              ],
             ),
           ),
         ],
