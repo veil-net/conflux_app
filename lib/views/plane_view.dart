@@ -20,11 +20,13 @@ class PlaneView extends HookConsumerWidget {
     }
 
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-      return CustomScrollView(
-        slivers: [
-          PinnedHeaderSliver(child: PlaneSearchCard()),
-          SliverToBoxAdapter(child: PlaneList()),
-        ],
+      return Center(
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 1000),
+            child: Column(children: [PlaneSearchCard(), PlaneList()]),
+          ),
+        ),
       );
     }
 
