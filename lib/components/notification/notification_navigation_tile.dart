@@ -1,6 +1,7 @@
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/providers/notification_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,11 +21,7 @@ class NotificationNavigationTile extends HookConsumerWidget {
       builder: (context, constraints) {
         return ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).orientation == Orientation.portrait
-                ? constraints.maxWidth
-                : 500 < constraints.maxWidth * 0.5
-                ? 500
-                : constraints.maxWidth * 0.5,
+            maxWidth: constraints.maxWidth * 0.5 < 500 ? 500 : constraints.maxWidth * 0.5,
           ),
           child: AppCard(
             child: ListTile(
@@ -38,7 +35,7 @@ class NotificationNavigationTile extends HookConsumerWidget {
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
               subtitle: Text(
-                'View all notifications from VeilNet',
+                'Messages regarding the VeilNet status.',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.secondary,
                 ),
@@ -48,7 +45,7 @@ class NotificationNavigationTile extends HookConsumerWidget {
                 context.push("/notification");
               },
             ),
-          ),
+          ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
         );
       },
     );

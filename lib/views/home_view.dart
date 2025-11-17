@@ -16,12 +16,12 @@ class HomeView extends HookConsumerWidget {
     if (Platform.isAndroid || Platform.isIOS) {
       return CustomScrollView(
         slivers: [
-          PinnedHeaderSliver(child: ConfluxCard()),
-          SliverFloatingHeader(child: GreetingTile()),
+          SliverFloatingHeader(child: ConfluxCard()),
           SliverFillRemaining(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                GreetingTile(),
                 AppSubNavigationBar(),
                 SelectedPlane(),
               ],

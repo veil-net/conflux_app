@@ -73,34 +73,36 @@ class TeamInvitationTile extends HookConsumerWidget {
     }
 
     if (sentInvitation.value) {
-      return ListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text(
-          'You have invited ${teamInvitation.invited_user_email} to join the team ${teamInvitation.team_name}',
-          style: TextStyle(color: Theme.of(context).colorScheme.primary),
-        ),
-        trailing: isLoading.value
-            ? const CircularProgressIndicator.adaptive()
-            : teamInvitation.status == 'pending'
-            ? IconButton(
-                onPressed: cancelInvitation,
-                icon: Icon(Icons.cancel, color: Colors.red),
-              )
-            : Chip(
-                label: Text(
-                  teamInvitation.status,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.secondary,
+      return AppCard(
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+          title: Text(
+            'You have invited ${teamInvitation.invited_user_email} to join the team ${teamInvitation.team_name}',
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+          ),
+          trailing: isLoading.value
+              ? const CircularProgressIndicator.adaptive()
+              : teamInvitation.status == 'pending'
+              ? IconButton(
+                  onPressed: cancelInvitation,
+                  icon: Icon(Icons.cancel, color: Colors.red),
+                )
+              : Chip(
+                  label: Text(
+                    teamInvitation.status,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
                 ),
-              ),
+        ),
       );
     }
 
     if (receivedInvitation.value) {
       return AppCard(
         child: ListTile(
-          contentPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.symmetric(horizontal: 16),
           title: Text(
             '${teamInvitation.user_email} has invited you to join ${teamInvitation.team_name}',
             style: TextStyle(color: Theme.of(context).colorScheme.secondary),
@@ -126,7 +128,7 @@ class TeamInvitationTile extends HookConsumerWidget {
                   label: Text(
                     teamInvitation.status,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),

@@ -14,16 +14,12 @@ class OrganisationTile extends HookConsumerWidget {
       builder: (context, constraints) {
         return ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).orientation == Orientation.portrait
-                ? constraints.maxWidth
-                : 500 < constraints.maxWidth * 0.5
-                ? 500
-                : constraints.maxWidth * 0.5,
+            maxWidth:500,
           ),
           child: AppCard(
             child: ExpansionTile(
               tilePadding: EdgeInsets.symmetric(horizontal: 16),
-              childrenPadding: EdgeInsets.symmetric(horizontal: 16),
+              childrenPadding: EdgeInsets.all(16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
@@ -31,6 +27,10 @@ class OrganisationTile extends HookConsumerWidget {
               title: Text(
                 organisation.name,
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+              subtitle: Text(
+                organisation.email ?? 'No email',
+                style: TextStyle(color: Theme.of(context).colorScheme.secondary),
               ),
               children: [
                 teams.when(

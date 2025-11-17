@@ -25,7 +25,9 @@ class ConfluxStateTile extends HookConsumerWidget {
                       },
                       child: Text(
                         'Failed to load conflux details, retry',
-                        style: TextStyle(color: Theme.of(context).colorScheme.error),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ),
                     )
                   : ListTile(
@@ -33,7 +35,9 @@ class ConfluxStateTile extends HookConsumerWidget {
                       leading: SizedBox(
                         width: 40,
                         height: 30,
-                        child: CountryFlag.fromCountryCode(confluxDetails.region),
+                        child: CountryFlag.fromCountryCode(
+                          confluxDetails.region,
+                        ),
                       ),
                       title: Text(
                         confluxDetails.tag ?? 'No tag',
@@ -46,6 +50,10 @@ class ConfluxStateTile extends HookConsumerWidget {
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.secondary,
                         ),
+                      ),
+                      trailing: Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
                       ),
                     ),
             VeilNetState.disconnected => ListTile(
@@ -85,7 +93,10 @@ class ConfluxStateTile extends HookConsumerWidget {
             ),
             VeilNetState.error => ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.error, color: Theme.of(context).colorScheme.error),
+              leading: Icon(
+                Icons.error,
+                color: Theme.of(context).colorScheme.error,
+              ),
               title: TextButton(
                 onPressed: () {
                   ref.invalidate(veilNetProvider);

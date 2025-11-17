@@ -13,18 +13,14 @@ class NotificationTile extends HookConsumerWidget {
       builder: (context, constraints) {
         return ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).orientation == Orientation.portrait
-                ? constraints.maxWidth
-                : 500 < constraints.maxWidth * 0.5
-                ? 500
-                : constraints.maxWidth * 0.5,
+            maxWidth: 1000,
           ),
           child: Padding(
             padding: const EdgeInsets.all(4),
             child: AppCard(
               child: ExpansionTile(
                 tilePadding: EdgeInsets.symmetric(horizontal: 16),
-                childrenPadding: EdgeInsets.symmetric(horizontal: 16),
+                childrenPadding: EdgeInsets.all(16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -34,7 +30,8 @@ class NotificationTile extends HookConsumerWidget {
                   'error' => Icon(Icons.error, color: Colors.red),
                   _ => Icon(Icons.info, color: Colors.blue),
                 },
-                title: Text(notification.title),
+                title: Text(notification.title, style: TextStyle(color: Theme.of(context).colorScheme.primary),),
+                subtitle: Text(notification.created_at.toLocal().toString(), style: TextStyle(color: Theme.of(context).colorScheme.secondary),),
                 children: [Text(notification.message)],
               ),
             ),

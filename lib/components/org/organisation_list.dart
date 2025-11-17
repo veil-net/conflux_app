@@ -46,7 +46,7 @@ class OrganisationList extends HookConsumerWidget {
             loading: () => Center(child: LinearProgressIndicator()),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.all(16),
             child: AppButton(
               expand: true,
               outline: true,

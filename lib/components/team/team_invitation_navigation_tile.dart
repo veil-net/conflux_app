@@ -18,9 +18,7 @@ class TeamInvitationNavigationTile extends HookConsumerWidget {
       builder: (context, constraints) {
         return ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).orientation == Orientation.portrait
-                ? constraints.maxWidth
-                : 500 < constraints.maxWidth * 0.5
+            maxWidth: constraints.maxWidth * 0.5 < 500
                 ? 500
                 : constraints.maxWidth * 0.5,
           ),
@@ -32,7 +30,9 @@ class TeamInvitationNavigationTile extends HookConsumerWidget {
                     label: Text(
                       teamInvitations.value
                               ?.where(
-                                (element) => element.invited_user == user?.id && element.status == 'pending',
+                                (element) =>
+                                    element.invited_user == user?.id &&
+                                    element.status == 'pending',
                               )
                               .length
                               .toString() ??
@@ -41,7 +41,9 @@ class TeamInvitationNavigationTile extends HookConsumerWidget {
                     isLabelVisible:
                         teamInvitations.value
                             ?.where(
-                              (element) => element.invited_user == user?.id && element.status == 'pending',
+                              (element) =>
+                                  element.invited_user == user?.id &&
+                                  element.status == 'pending',
                             )
                             .isNotEmpty ??
                         false,
