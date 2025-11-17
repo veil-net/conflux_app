@@ -9,6 +9,7 @@ import 'package:conflux/providers/service_tier_provider.dart';
 import 'package:conflux/providers/user_profile_provider.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:country_flags/country_flags.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -154,7 +155,7 @@ class SelectedPlane extends HookConsumerWidget {
                                       if (userProfile.mp < 0) {
                                         launchUrl(
                                           Uri.parse(
-                                            'https://auth.veilnet.app/subscription?refresh_token=${ref.read(currentSessionProvider)?.refreshToken}',
+                                            'https://auth.veilnet.app/subscribe?refresh_token=${ref.read(currentSessionProvider)?.refreshToken}',
                                           ),
                                         );
                                       }
@@ -179,7 +180,15 @@ class SelectedPlane extends HookConsumerWidget {
                                   await ref
                                       .read(veilNetProvider.notifier)
                                       .connect(plane);
-                                } catch (e) {
+                                } on DioException catch (e) {
+                                  if (context.mounted) {
+                                    DialogManager.showDialog(
+                                      context,
+                                      'Failed to connect to VeilNet: ${e.response?.data['detail']}',
+                                      DialogType.error,
+                                    );
+                                  }
+                                } on Exception catch (e) {
                                   if (context.mounted) {
                                     DialogManager.showDialog(
                                       context,

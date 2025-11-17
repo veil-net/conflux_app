@@ -18,9 +18,7 @@ class ServiceTierChip extends HookConsumerWidget {
           case 1:
             return SubscriptionTierChip(label: 'Plus');
           case 2:
-            return Chip(
-              label: SubscriptionTierChip(label: 'Max'),
-            );
+            return SubscriptionTierChip(label: 'Max');
           default:
             return SubscriptionTierChip(label: 'Unknown');
         }
