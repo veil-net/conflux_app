@@ -2,6 +2,7 @@ import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/components/app_text_input.dart';
+import 'package:conflux/main.dart';
 import 'package:conflux/providers/current_session_provider.dart';
 import 'package:conflux/providers/plane_details_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
@@ -20,6 +21,26 @@ class PlaneSearchCard extends HookConsumerWidget {
     final planeNameTextController = useTextEditingController();
     final planePublicity = ref.watch(planePublicityProvider);
     final developerMode = ref.watch(developerModeProvider);
+
+    Future<void> managePrivatePlanes() async {
+      try {
+        final session = supabase.auth.currentSession;
+        if (session != null) {
+          launchUrl(
+            Uri.parse(
+              'https://auth.veilnet.app/plane#refresh_token=${session.refreshToken}',
+            ),
+          );
+        } else {
+          launchUrl(Uri.parse('https://auth.veilnet.app/plane'));
+        }
+      } catch (e) {
+        if (context.mounted) {
+          DialogManager.showDialog(context, e.toString(), DialogType.error);
+        }
+      }
+    }
+
     return AppCard(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -89,16 +110,7 @@ class PlaneSearchCard extends HookConsumerWidget {
             if (developerMode)
               AppButton(
                 label: 'manage Private Planes',
-                onPressed: () async {
-                  final session = ref.watch(currentSessionProvider);
-                  if (session != null) {
-                    await launchUrl(
-                      Uri.parse(
-                        'https://auth.veilnet.app/plane?refresh_token=${session.refreshToken}',
-                      ),
-                    );
-                  }
-                },
+                onPressed: managePrivatePlanes,
                 expand: true,
                 outline: true,
               ),

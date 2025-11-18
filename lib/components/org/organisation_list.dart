@@ -1,6 +1,7 @@
 import 'package:conflux/components/app_button.dart';
+import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/components/org/organisation_tile.dart';
-import 'package:conflux/providers/current_session_provider.dart';
+import 'package:conflux/main.dart';
 import 'package:conflux/providers/organisation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,7 +12,21 @@ class OrganisationList extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final organisations = ref.watch(organisationsProvider);
-    final session = ref.watch(currentSessionProvider);
+
+    Future<void> manageOrganisations() async {
+      try {
+        final session = supabase.auth.currentSession;
+        if (session != null) {
+          launchUrl(Uri.parse('https://auth.veilnet.app/organisation#refresh_token=${session.refreshToken}'));
+        } else {
+          launchUrl(Uri.parse('https://auth.veilnet.app/organisation'));
+        }
+      } catch (e) {
+        if (context.mounted) {
+          DialogManager.showDialog(context, e.toString(), DialogType.error);
+        }
+      }
+    }
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 1000),
       child: ExpansionTile(
@@ -51,13 +66,7 @@ class OrganisationList extends HookConsumerWidget {
               expand: true,
               outline: true,
               label: 'Manage Organisations & Teams',
-              onPressed: () async {
-                await launchUrl(
-                  Uri.parse(
-                    'https://auth.veilnet.app/organisation?refresh_token=${session?.refreshToken}',
-                  ),
-                );
-              },
+              onPressed: manageOrganisations,
             ),
           ),
         ],

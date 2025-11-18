@@ -1,7 +1,8 @@
 import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
+import 'package:conflux/components/app_dialog_manager.dart';
+import 'package:conflux/main.dart';
 import 'package:conflux/providers/conflux_details_provider.dart';
-import 'package:conflux/providers/current_session_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,6 +14,29 @@ class ConfluxSummaryCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final developerMode = ref.watch(developerModeProvider);
+
+    Future<void> manageConflux() async {
+      try {
+        final session = supabase.auth.currentSession;
+        if (session != null) {
+          launchUrl(
+            Uri.parse(
+              'https://auth.veilnet.app/deploy#refresh_token=${session.refreshToken}',
+            ),
+          );
+        } else {
+          launchUrl(
+            Uri.parse(
+              'https://auth.veilnet.app/deploy',
+            ),
+          );
+        }
+      } catch (e) {
+        if (context.mounted) {
+          DialogManager.showDialog(context, e.toString(), DialogType.error);
+        }
+      }
+    }
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 1000),
@@ -29,16 +53,7 @@ class ConfluxSummaryCard extends HookConsumerWidget {
               if (developerMode)
                 AppButton(
                   label: 'Manage Conflux',
-                  onPressed: () async {
-                    final session = ref.watch(currentSessionProvider);
-                    if (session != null) {
-                      launchUrl(
-                        Uri.parse(
-                          'https://auth.veilnet.app/deploy?refresh_token=${session.refreshToken}',
-                        ),
-                      );
-                    }
-                  },
+                  onPressed: manageConflux,
                   expand: true,
                   outline: true,
                 ),

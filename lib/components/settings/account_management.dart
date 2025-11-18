@@ -44,13 +44,33 @@ class AccountManagement extends HookConsumerWidget {
     }
 
     Future<void> manageAccount() async {
-      launchUrl(
-        Uri.parse('https://auth.veilnet.app/subscribe?refresh_token=${session?.refreshToken}'),
-      );
+      try {
+        final session = supabase.auth.currentSession;
+        if (session != null) {
+          launchUrl(Uri.parse('https://auth.veilnet.app/subscribe#refresh_token=${session.refreshToken}'));
+        } else {
+          launchUrl(Uri.parse('https://auth.veilnet.app/subscribe'));
+        }
+      } catch (e) {
+        if (context.mounted) {
+          DialogManager.showDialog(context, e.toString(), DialogType.error);
+        }
+      }
     }
 
     Future<void> resetPassword() async {
-      launchUrl(Uri.parse('https://auth.veilnet.app/reset-password'));
+      try {
+        final session = supabase.auth.currentSession;
+        if (session != null) {
+          launchUrl(Uri.parse('https://auth.veilnet.app/reset-password#refresh_token=${session.refreshToken}'));
+        } else {
+          launchUrl(Uri.parse('https://auth.veilnet.app/reset-password'));
+        }
+      } catch (e) {
+        if (context.mounted) {
+          DialogManager.showDialog(context, e.toString(), DialogType.error);
+        }
+      }
     }
 
     return ConstrainedBox(

@@ -190,7 +190,10 @@ final router = GoRouter(
     GoRoute(
       path: '/callback',
       builder: (context, state) {
-        final refreshToken = state.uri.queryParameters['refresh_token'] ?? '';
+        final refreshToken =
+            state.uri.queryParameters['refresh_token'] ??
+            Uri.splitQueryString(state.uri.fragment)['refresh_token'] ??
+            '';
         return AuthCallbackPage(refreshToken: refreshToken);
       },
     ),

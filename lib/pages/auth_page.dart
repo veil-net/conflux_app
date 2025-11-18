@@ -22,7 +22,7 @@ class AuthPage extends HookConsumerWidget {
     Future<void> signIn() async {
       if (Platform.isWindows) {
         await launchUrl(
-          Uri.parse('https://auth.veilnet.app/?platform=windows'),
+          Uri.parse('https://auth.veilnet.app/#platform=windows'),
         );
         final Completer authResult = Completer<bool>();
         var authServer = await HttpServer.bind(
@@ -88,7 +88,7 @@ class AuthPage extends HookConsumerWidget {
       }
       if (Platform.isAndroid) {
         await launchUrl(
-          Uri.parse('https://auth.veilnet.app/?platform=android'),
+          Uri.parse('https://auth.veilnet.app/#platform=android'),
         );
       }
     }

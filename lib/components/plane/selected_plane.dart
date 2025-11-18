@@ -2,7 +2,6 @@ import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/main.dart';
-import 'package:conflux/providers/current_session_provider.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
 import 'package:conflux/providers/plane_details_provider.dart';
 import 'package:conflux/providers/service_tier_provider.dart';
@@ -153,9 +152,19 @@ class SelectedPlane extends HookConsumerWidget {
                                   switch (serviceTier) {
                                     case 0:
                                       if (userProfile.mp < 0) {
+                                        final session =
+                                            supabase.auth.currentSession;
+                                        if (session != null) {
+                                          launchUrl(
+                                            Uri.parse(
+                                              'https://auth.veilnet.app/subscribe#refresh_token=${session?.refreshToken}',
+                                            ),
+                                          );
+                                        }
+                                      } else {
                                         launchUrl(
                                           Uri.parse(
-                                            'https://auth.veilnet.app/subscribe?refresh_token=${ref.read(currentSessionProvider)?.refreshToken}',
+                                            'https://auth.veilnet.app/subscribe',
                                           ),
                                         );
                                       }
