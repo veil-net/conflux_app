@@ -1,7 +1,6 @@
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/main.dart';
-import 'package:conflux/providers/current_session_provider.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -16,7 +15,6 @@ class AccountManagement extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final veilnetState = ref.watch(veilNetProvider);
-    final session = ref.watch(currentSessionProvider);
     Future<void> switchAccount() async {
       if (veilnetState != VeilNetState.disconnected) {
         if (context.mounted) {

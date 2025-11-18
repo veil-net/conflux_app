@@ -157,7 +157,7 @@ class SelectedPlane extends HookConsumerWidget {
                                         if (session != null) {
                                           launchUrl(
                                             Uri.parse(
-                                              'https://auth.veilnet.app/subscribe#refresh_token=${session?.refreshToken}',
+                                              'https://auth.veilnet.app/subscribe#refresh_token=${session.refreshToken}',
                                             ),
                                           );
                                         }
