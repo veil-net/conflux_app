@@ -161,12 +161,6 @@ class SelectedPlane extends HookConsumerWidget {
                                             ),
                                           );
                                         }
-                                      } else {
-                                        launchUrl(
-                                          Uri.parse(
-                                            'https://auth.veilnet.app/subscribe',
-                                          ),
-                                        );
                                       }
                                       break;
                                     case 1:
