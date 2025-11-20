@@ -2,6 +2,7 @@ import 'package:conflux/components/app_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppInfoCard extends HookConsumerWidget {
   const AppInfoCard({super.key});
@@ -35,18 +36,33 @@ class AppInfoCard extends HookConsumerWidget {
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
+                leading: Icon(Icons.email),
                 title: Text(
-                  'Support',
+                  'Email Support',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
+                onTap: () => launchUrl(Uri.parse('mailto:support@veilnet.org')),
                 trailing: Text(
                   'support@veilnet.org',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                onTap: () =>
+                    launchUrl(Uri.parse('https://discord.gg/WqJYddHr')),
+                leading: Icon(Icons.discord),
+                title: Text(
+                  'Discord Support',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                trailing: Icon(Icons.open_in_new),
               ),
             ],
           ),
