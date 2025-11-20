@@ -56,11 +56,11 @@ const planeDetailsProvider = PlaneDetailsFamily._();
 final class PlaneDetailsProvider
     extends
         $FunctionalProvider<
-          AsyncValue<PlaneDetails>,
-          PlaneDetails,
-          FutureOr<PlaneDetails>
+          AsyncValue<PlaneDetails?>,
+          PlaneDetails?,
+          FutureOr<PlaneDetails?>
         >
-    with $FutureModifier<PlaneDetails>, $FutureProvider<PlaneDetails> {
+    with $FutureModifier<PlaneDetails?>, $FutureProvider<PlaneDetails?> {
   const PlaneDetailsProvider._({
     required PlaneDetailsFamily super.from,
     required String super.argument,
@@ -84,12 +84,12 @@ final class PlaneDetailsProvider
 
   @$internal
   @override
-  $FutureProviderElement<PlaneDetails> $createElement(
+  $FutureProviderElement<PlaneDetails?> $createElement(
     $ProviderPointer pointer,
   ) => $FutureProviderElement(pointer);
 
   @override
-  FutureOr<PlaneDetails> create(Ref ref) {
+  FutureOr<PlaneDetails?> create(Ref ref) {
     final argument = this.argument as String;
     return planeDetails(ref, argument);
   }
@@ -105,10 +105,10 @@ final class PlaneDetailsProvider
   }
 }
 
-String _$planeDetailsHash() => r'd30725cd966014e5b59ca52fa366d367f53875de';
+String _$planeDetailsHash() => r'1e9a87b1b4d24a16b45da5d53a29e912675c8fb7';
 
 final class PlaneDetailsFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<PlaneDetails>, String> {
+    with $FunctionalFamilyOverride<FutureOr<PlaneDetails?>, String> {
   const PlaneDetailsFamily._()
     : super(
         retry: null,

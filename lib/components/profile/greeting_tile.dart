@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/components/app_text_input.dart';
@@ -19,10 +21,18 @@ class GreetingTile extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userProfile = ref.watch(userProfileProvider);
+    final userMP = ref.watch(userMPProvider);
     final displayName = useTextEditingController();
     final serviceTier = ref.watch(serviceTierProvider);
     final confluxRifts = ref.watch(confluxRiftsProvider);
     final veilnetState = ref.watch(veilNetProvider);
+
+    useEffect(() {
+      final timer = Timer.periodic(Duration(seconds: 5), (timer) {
+        ref.invalidate(userMPProvider);
+      });
+      return () => timer.cancel();
+    }, []);
 
     Future<void> setDsiplayName() async {
       if (displayName.text.isEmpty) {
@@ -148,7 +158,7 @@ class GreetingTile extends HookConsumerWidget {
                         2 =>
                           'Unlimited for ${confluxRifts.value?.length ?? 0}/10 devices',
                         _ =>
-                          '${((userProfile.value?.mp ?? 0) / 60).toInt()} minutes',
+                          '${((userMP.value ?? 0) / 60).toInt()} minutes',
                       },
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.secondary,

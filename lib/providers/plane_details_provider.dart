@@ -17,9 +17,12 @@ Future<List<PlaneDetails>> planesDetails(Ref ref) async {
 }
 
 @riverpod
-Future<PlaneDetails> planeDetails(Ref ref, String id) async {
+Future<PlaneDetails?> planeDetails(Ref ref, String id) async {
   ref.keepAlive();
-  ref.watch(planeProvider(id));
+  final plane = await ref.watch(planeProvider(id).future);
+  if (plane == null) {
+    return null;
+  }
   final planeDetails = await supabase
       .from('plane_details')
       .select('*')
@@ -49,7 +52,6 @@ Future<List<PlaneDetails>> publicPlaneDetails(Ref ref) async {
       .eq('public', true);
   return planeDetails.map((data) => PlaneDetails.fromJson(data)).toList();
 }
-
 
 @riverpod
 class SelectedPlaneDetails extends _$SelectedPlaneDetails {
