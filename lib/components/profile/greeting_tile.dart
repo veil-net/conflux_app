@@ -110,31 +110,49 @@ class GreetingTile extends HookConsumerWidget {
                         color: Theme.of(context).colorScheme.secondary,
                       ),
                     ),
-                    title: userProfile.value?.display_name != null
-                        ? Text(
-                            'Hi, ${userProfile.value!.display_name!}',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
+                    title: userProfile.when(
+                      data: (data) => data.display_name != null
+                          ? Text(
+                              'Hi, ${data.display_name!}',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            )
+                          : AppTextInput(
+                              label: 'Display Name',
+                              hint: 'Set your display name',
+                              controller: displayName,
+                              keyboardType: TextInputType.text,
+                              prefixIcon: Icons.person,
+                              obscureText: false,
+                              readOnly: false,
+                              enable: true,
                             ),
-                          )
-                        : AppTextInput(
-                            label: 'Display Name',
-                            hint: 'Set your display name',
-                            controller: displayName,
-                            keyboardType: TextInputType.text,
-                            prefixIcon: Icons.person,
-                            obscureText: false,
-                            readOnly: false,
-                            enable: true,
-                          ),
-                    trailing: userProfile.value?.display_name != null
-                        ? ServiceTierChip()
-                        : TextButton(
-                            onPressed: () {
-                              setDsiplayName();
-                            },
-                            child: Text('Set Display Name'),
-                          ),
+                      error: (error, stackTrace) => Text(
+                        'Failed to load user profile',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
+                      loading: () => const LinearProgressIndicator(),
+                    ),
+                    trailing: userProfile.when(
+                      data: (data) => data.display_name != null
+                          ? ServiceTierChip()
+                          : TextButton(
+                              onPressed: () {
+                                setDsiplayName();
+                              },
+                              child: Text('Set Display Name'),
+                            ),
+                      error: (error, stackTrace) => IconButton(
+                        onPressed: () {
+                          ref.invalidate(userProfileProvider);
+                        },
+                        icon: const Icon(Icons.refresh, color: Colors.red),
+                      ),
+                      loading: () => const SizedBox.shrink(),
+                    ),
                   ),
                 );
               },
@@ -157,8 +175,7 @@ class GreetingTile extends HookConsumerWidget {
                           'Unlimited for ${confluxRifts.value?.length ?? 0}/3 devices',
                         2 =>
                           'Unlimited for ${confluxRifts.value?.length ?? 0}/10 devices',
-                        _ =>
-                          '${((userMP.value ?? 0) / 60).toInt()} minutes',
+                        _ => '${((userMP.value ?? 0) / 60).toInt()} minutes',
                       },
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.secondary,

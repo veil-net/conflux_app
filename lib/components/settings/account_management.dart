@@ -24,6 +24,7 @@ class AccountManagement extends HookConsumerWidget {
             DialogType.error,
           );
         }
+        return;
       }
       try {
         await supabase.auth.signOut();

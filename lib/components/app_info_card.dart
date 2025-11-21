@@ -36,6 +36,18 @@ class AppInfoCard extends HookConsumerWidget {
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
+                leading: Icon(Icons.book),
+                title: Text(
+                  'Documentation',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                onTap: () => launchUrl(Uri.parse('https://veilnet.net/docs')),
+                trailing: Icon(Icons.open_in_new),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
                 leading: Icon(Icons.email),
                 title: Text(
                   'Email Support',

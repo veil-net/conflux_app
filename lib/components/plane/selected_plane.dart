@@ -45,23 +45,18 @@ class SelectedPlane extends HookConsumerWidget {
                         children: [
                           TextSpan(
                             text: 'VeilNet Planes',
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(
+                            style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                           ),
                           TextSpan(
                             text:
                                 ' are regional decentralised networks, which will secure and masquade your traffic to the internet.\n\n',
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(color: Colors.grey),
+                            style: TextStyle(color: Colors.grey),
                           ),
                           TextSpan(
                             text: 'Select a Plane to get started',
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
                           ),
                         ],
                       ),
