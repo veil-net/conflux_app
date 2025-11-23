@@ -59,24 +59,6 @@ class MainActivity : FlutterActivity() {
                         }
                     }
 
-                    "metrics" -> {
-                        val name = call.argument<String>("name")
-                        if (name == null) {
-                            result.error(
-                                "Missing argument",
-                                "Metrics name is missing",
-                                null
-                            )
-                        } else {
-                            val metric = VeilNet.metrics(name)
-                            if (metric == null) {
-                                result.error("Invalid argument", "Metrics name is invalid", null)
-                            } else {
-                                result.success(metric)
-                            }
-                        }
-                    }
-
                     else -> result.notImplemented()
                 }
             }

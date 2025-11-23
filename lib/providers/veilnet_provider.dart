@@ -9,7 +9,6 @@ import 'package:conflux/providers/api_provider.dart';
 import 'package:conflux/providers/conflux_details_provider.dart';
 import 'package:conflux/providers/device_info_provider.dart';
 import 'package:conflux/providers/preference_provider.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -306,50 +305,6 @@ class VeilNet extends _$VeilNet {
         }
       }
     });
-  }
-
-  Future<int?> getMetrics(String name) async {
-    switch (Platform.operatingSystem) {
-      case "windows":
-        final dio = Dio();
-        final response = await dio.get('http://localhost:1993/metrics/$name');
-        return response.data['metrics'];
-      case "android":
-        try {
-          final metrics = await _vpnChannel.invokeMethod<int>('metrics', {
-            "name": name,
-          });
-          return metrics;
-        } on Exception {
-          return null;
-        }
-      default:
-        return null;
-    }
-  }
-
-  Future<int?> numTethers() async {
-    return await getMetrics('num_tethers');
-  }
-
-  Future<int?> numStreams() async {
-    return await getMetrics('num_streams');
-  }
-
-  Future<int?> numRoutes() async {
-    return await getMetrics('num_routes');
-  }
-
-  Future<int?> numRelays() async {
-    return await getMetrics('num_relays');
-  }
-
-  Future<int?> numIngressers() async {
-    return await getMetrics('num_ingressers');
-  }
-
-  Future<int?> numEgressers() async {
-    return await getMetrics('num_egressers');
   }
 
   ConfluxDetails? get confluxDetails => _confluxDetails;
