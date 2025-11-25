@@ -1,5 +1,6 @@
 import 'package:conflux/main.dart';
 import 'package:conflux/models/veil.dart';
+import 'package:conflux/providers/current_user_provider.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -8,6 +9,7 @@ part 'veil_provider.g.dart';
 @riverpod
 Stream<List<Veil>> veils(Ref ref) {
   ref.keepAlive();
+  ref.watch(currentUserProvider);
   return supabase
       .from('veils')
       .stream(primaryKey: ['id'])

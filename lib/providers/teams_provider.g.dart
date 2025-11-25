@@ -45,7 +45,7 @@ final class TeamsProvider
   }
 }
 
-String _$teamsHash() => r'12e209166bae6c94095f8b4ef82595ac7171aca1';
+String _$teamsHash() => r'87d8fd999f99973428ad246c70e1ec955ac866b3';
 
 @ProviderFor(ownedTeams)
 const ownedTeamsProvider = OwnedTeamsProvider._();

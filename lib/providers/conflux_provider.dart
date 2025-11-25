@@ -1,6 +1,7 @@
 import 'package:conflux/main.dart';
 import 'package:conflux/models/conflux.dart';
 import 'package:conflux/providers/api_provider.dart';
+import 'package:conflux/providers/current_user_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -11,6 +12,7 @@ class Confluxes extends _$Confluxes {
   @override
   Stream<List<Conflux>> build() {
     ref.keepAlive();
+    ref.watch(currentUserProvider);
     return supabase
         .from('confluxes')
         .stream(primaryKey: ['id'])

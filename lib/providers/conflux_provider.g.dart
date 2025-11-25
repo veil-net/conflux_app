@@ -33,7 +33,7 @@ final class ConfluxesProvider
   Confluxes create() => Confluxes();
 }
 
-String _$confluxesHash() => r'b35a6a44f80d42ff7c42a64a42d3f4152c77446f';
+String _$confluxesHash() => r'ee8c328ed9b06f26a1c61d4dfcab665e5bdf30bd';
 
 abstract class _$Confluxes extends $StreamNotifier<List<Conflux>> {
   Stream<List<Conflux>> build();

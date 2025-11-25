@@ -1,6 +1,3 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:conflux/pages/auth_callback_page.dart';
 import 'package:conflux/pages/auth_page.dart';
 import 'package:conflux/pages/main_page.dart';
@@ -11,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -24,92 +20,6 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  try {
-    switch (Platform.operatingSystem) {
-      case 'windows':
-        final byteData = await rootBundle.load(
-          'assets/bin/windows/veilnet-conflux.exe',
-        );
-        final tempDir = await getTemporaryDirectory();
-        final executable = File('${tempDir.path}/veilnet-conflux.exe');
-        await executable.writeAsBytes(byteData.buffer.asUint8List());
-        final process = await Process.start(executable.path, ['status']);
-        final exitCode = await process.exitCode;
-        if (exitCode != 0) {
-          log('Veilnet Conflux not running, installing...');
-          var process = await Process.start(executable.path, ['remove']);
-          var exitCode = await process.exitCode;
-          if (exitCode != 0) {
-            log('Failed to remove Veilnet Conflux: $exitCode');
-          }
-          process = await Process.start(executable.path, ['install']);
-          exitCode = await process.exitCode;
-          if (exitCode != 0) {
-            log('Failed to install Veilnet Conflux: $exitCode');
-          }
-          log('Veilnet Conflux installed');
-        } else {
-          log('Veilnet Conflux already running');
-        }
-        break;
-      case 'linux':
-        final byteData = await rootBundle.load(
-          'assets/bin/linux/veilnet-conflux',
-        );
-        final tempDir = await getTemporaryDirectory();
-        final executable = File('${tempDir.path}/veilnet-conflux');
-        await executable.writeAsBytes(byteData.buffer.asUint8List());
-        final process = await Process.start(executable.path, ['status']);
-        final exitCode = await process.exitCode;
-        if (exitCode != 0) {
-          log('Veilnet Conflux not running, installing...');
-          var process = await Process.start(executable.path, ['remove']);
-          var exitCode = await process.exitCode;
-          if (exitCode != 0) {
-            log('Failed to remove Veilnet Conflux: $exitCode');
-          }
-          process = await Process.start(executable.path, ['install']);
-          exitCode = await process.exitCode;
-          if (exitCode != 0) {
-            log('Failed to install Veilnet Conflux: $exitCode');
-          }
-          log('Veilnet Conflux installed');
-        } else {
-          log('Veilnet Conflux already running');
-        }
-        break;
-      case 'macos':
-        final byteData = await rootBundle.load(
-          'assets/bin/macos/veilnet-conflux',
-        );
-        final tempDir = await getTemporaryDirectory();
-        final executable = File('${tempDir.path}/veilnet-conflux');
-        await executable.writeAsBytes(byteData.buffer.asUint8List());
-        final process = await Process.start(executable.path, ['status']);
-        final exitCode = await process.exitCode;
-        if (exitCode != 0) {
-          log('Veilnet Conflux not running, installing...');
-          var process = await Process.start(executable.path, ['remove']);
-          var exitCode = await process.exitCode;
-          if (exitCode != 0) {
-            log('Failed to remove Veilnet Conflux: $exitCode');
-          }
-          process = await Process.start(executable.path, ['install']);
-          exitCode = await process.exitCode;
-          if (exitCode != 0) {
-            log('Failed to install Veilnet Conflux: $exitCode');
-          }
-          log('Veilnet Conflux installed');
-        } else {
-          log('Veilnet Conflux already running');
-        }
-        break;
-      default:
-        break;
-    }
-  } catch (e) {
-    log('Error starting Veilnet Conflux: $e');
-  }
   runApp(const ProviderScope(child: MyApp()));
 }
 

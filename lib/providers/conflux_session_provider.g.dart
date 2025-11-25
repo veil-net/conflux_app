@@ -48,7 +48,7 @@ final class ConfluxSessionsProvider
   }
 }
 
-String _$confluxSessionsHash() => r'a9cc4893b98ed1d89f01c96d9d56cd4f62e3b1f6';
+String _$confluxSessionsHash() => r'02ad25a3c83e1c565a011327a87a232641e9c592';
 
 @ProviderFor(confluxSession)
 const confluxSessionProvider = ConfluxSessionFamily._();

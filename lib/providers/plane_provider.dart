@@ -12,6 +12,7 @@ class Planes extends _$Planes {
   @override
   Stream<List<Plane>> build() {
     ref.keepAlive();
+    ref.watch(currentUserProvider);
     return supabase
         .from('planes')
         .stream(primaryKey: ['id'])

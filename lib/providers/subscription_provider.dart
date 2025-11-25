@@ -1,6 +1,7 @@
 import 'package:conflux/main.dart';
 import 'package:conflux/models/subscription.dart';
 import 'package:conflux/providers/api_provider.dart';
+import 'package:conflux/providers/current_user_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -11,6 +12,7 @@ class Subscriptions extends _$Subscriptions {
   @override
   Stream<List<Subscription>> build() {
     ref.keepAlive();
+    ref.watch(currentUserProvider);
     return supabase
         .schema('stripe')
         .from('subscriptions')

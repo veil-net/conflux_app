@@ -8,6 +8,7 @@ part 'teams_provider.g.dart';
 @riverpod
 Stream<List<Team>> teams(Ref ref) {
   ref.keepAlive();
+  ref.watch(currentUserProvider);
   return supabase
       .from('teams')
       .stream(primaryKey: ['id'])

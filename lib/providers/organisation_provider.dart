@@ -12,6 +12,7 @@ class Organisations extends _$Organisations {
   @override
   Stream<List<Organisation>> build() {
     ref.keepAlive();
+    ref.watch(currentUserProvider);
     return supabase
         .from('organisations')
         .stream(primaryKey: ['id'])

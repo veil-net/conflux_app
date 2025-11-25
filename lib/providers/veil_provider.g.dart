@@ -45,7 +45,7 @@ final class VeilsProvider
   }
 }
 
-String _$veilsHash() => r'900bde7f33f715136df630538f19af996fc7add0';
+String _$veilsHash() => r'a6e1c0cc53dc72c795cb6fd086efac307d692fcf';
 
 @ProviderFor(veil)
 const veilProvider = VeilFamily._();

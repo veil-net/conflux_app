@@ -44,6 +44,7 @@ class HomeView extends HookConsumerWidget {
                     GreetingTile(),
                     ConstrainedBox(constraints: BoxConstraints(maxWidth: 500), child: AppSubNavigationBar()),
                     ConstrainedBox(constraints: BoxConstraints(maxWidth: 500), child: ConfluxSummaryCard()),
+                    SelectedPlane(),
                   ],
                 ),
               ),

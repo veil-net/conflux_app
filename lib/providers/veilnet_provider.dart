@@ -25,7 +25,33 @@ class ConfluxService extends _$ConfluxService {
   Future<ConfluxService> build() async {
     ref.keepAlive();
     final tempDir = await getTemporaryDirectory();
-    _executable = File('${tempDir.path}/veilnet-conflux.exe');
+    switch (Platform.operatingSystem) {
+      case "windows":
+        final binary = await rootBundle.load('assets/bin/windows/veilnet-conflux.exe');
+        _executable = File('${tempDir.path}/veilnet-conflux.exe');
+        _executable.writeAsBytesSync(binary.buffer.asUint8List());
+        _initialized = true;
+        log('Initialized Veilnet Conflux for Windows');
+        break;
+      case "linux":
+        final binary = await rootBundle.load('assets/bin/linux/veilnet-conflux');
+        _executable = File('${tempDir.path}/veilnet-conflux');
+        _executable.writeAsBytesSync(binary.buffer.asUint8List());
+        _initialized = true;
+        log('Initialized Veilnet Conflux for Linux');
+        break;
+      case "macos":
+        final binary = await rootBundle.load('assets/bin/macos/veilnet-conflux');
+        _executable = File('${tempDir.path}/veilnet-conflux');
+        _executable.writeAsBytesSync(binary.buffer.asUint8List());
+        _initialized = true;
+        log('Initialized Veilnet Conflux for macOS');
+        break;
+      default:
+        log('Unsupported platform: ${Platform.operatingSystem}');
+        _initialized = false;
+        break;
+    }
     _initialized = true;
     return this;
   }
@@ -34,7 +60,6 @@ class ConfluxService extends _$ConfluxService {
     if (!_initialized) {
       throw Exception('Veilnet is not initialized');
     }
-    await Process.start(_executable.path, ['start']);
     final arguments = ['up', '-t', anchorToken.toString()];
     final process = await Process.start(_executable.path, arguments);
     exitCode = await process.exitCode;
@@ -48,20 +73,7 @@ class ConfluxService extends _$ConfluxService {
     if (!_initialized) {
       throw Exception('Veilnet is not initialized');
     }
-    final process = await Process.start(_executable.path, ['stop']);
-    final exitCode = await process.exitCode;
-    if (exitCode != 0) {
-      final stderr = await process.stderr.transform(utf8.decoder).join();
-      throw Exception(stderr);
-    }
-  }
-
-  Future<void> reinstall() async {
-    if (!_initialized) {
-      throw Exception('Veilnet is not initialized');
-    }
-    await Process.start(_executable.path, ['remove']);
-    final process = await Process.start(_executable.path, ['install']);
+    final process = await Process.start(_executable.path, ['down']);
     final exitCode = await process.exitCode;
     if (exitCode != 0) {
       final stderr = await process.stderr.transform(utf8.decoder).join();

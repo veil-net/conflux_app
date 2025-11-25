@@ -33,7 +33,7 @@ final class PlanesProvider
   Planes create() => Planes();
 }
 
-String _$planesHash() => r'e698eb074612b436a032f990acadc3286b842906';
+String _$planesHash() => r'1486387b9a225d77ac2b3de3e81531a26a2be2a7';
 
 abstract class _$Planes extends $StreamNotifier<List<Plane>> {
   Stream<List<Plane>> build();
