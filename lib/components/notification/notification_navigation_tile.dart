@@ -21,31 +21,40 @@ class NotificationNavigationTile extends HookConsumerWidget {
       builder: (context, constraints) {
         return ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: constraints.maxWidth * 0.5 < 500 ? 500 : constraints.maxWidth * 0.5,
+            maxWidth: constraints.maxWidth * 0.5 < 500
+                ? 500
+                : constraints.maxWidth * 0.5,
           ),
-          child: AppCard(
-            child: ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
-              leading: Badge(
-                label: Text(numNotifications.value.toString()),
-                child: Icon(Icons.notifications),
-              ),
-              title: Text(
-                'Notifications',
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
-              ),
-              subtitle: Text(
-                'Messages regarding the VeilNet status.',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.secondary,
+          child:
+              AppCard(
+                child: ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                  leading: Badge(
+                    label: Text(numNotifications.value.toString()),
+                    isLabelVisible: numNotifications.value > 0,
+                    child: Icon(Icons.notifications),
+                  ),
+                  title: Text(
+                    'Notifications',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'Messages regarding the VeilNet status.',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    context.push("/notification");
+                  },
                 ),
+              ).animate().slideY(
+                duration: 250.milliseconds,
+                curve: Curves.easeInOut,
               ),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                context.push("/notification");
-              },
-            ),
-          ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
         );
       },
     );
