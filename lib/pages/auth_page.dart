@@ -20,7 +20,7 @@ class AuthPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Future<void> signIn() async {
-      if (Platform.isWindows) {
+      if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
         await launchUrl(
           Uri.parse('https://auth.veilnet.app/#platform=windows'),
         );
@@ -29,6 +29,7 @@ class AuthPage extends HookConsumerWidget {
           InternetAddress.loopbackIPv4,
           3000,
         );
+        log('Auth server started on http://127.0.0.1:3000');
         authServer.listen((request) async {
           request.response.headers.add('Access-Control-Allow-Origin', '*');
           request.response.headers.add(
