@@ -50,7 +50,7 @@ final class TeamMembersProvider
   }
 }
 
-String _$teamMembersHash() => r'eb075d52cb02b04a511fb33e3eb7b268a19399d6';
+String _$teamMembersHash() => r'1fab2e31fad70d418b75e03b7b268c5788747aff';
 
 final class TeamMembersFamily extends $Family
     with

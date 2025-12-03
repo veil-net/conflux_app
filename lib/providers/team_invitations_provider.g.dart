@@ -33,7 +33,7 @@ final class TeamInvitationsProvider
   TeamInvitations create() => TeamInvitations();
 }
 
-String _$teamInvitationsHash() => r'cdcf5fee02058ec0db80abc00d38cbcbdf9b0b3e';
+String _$teamInvitationsHash() => r'852a57e6f7495ae9e0e408e4551fb5eef0f3223c';
 
 abstract class _$TeamInvitations extends $StreamNotifier<List<TeamInvitation>> {
   Stream<List<TeamInvitation>> build();

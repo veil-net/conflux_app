@@ -48,4 +48,4 @@ final class NotificationsProvider
   }
 }
 
-String _$notificationsHash() => r'8b3c61e056201c98136ce5781028a2d9dc69dcd4';
+String _$notificationsHash() => r'4ffe86e88b75393a2d6f3818fc7ccb9b2964ade5';

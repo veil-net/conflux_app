@@ -64,7 +64,7 @@ final class ConfluxDetailsProvider
   }
 }
 
-String _$confluxDetailsHash() => r'd8606e2c3a3ed87ddc4630d580e433d9d560379b';
+String _$confluxDetailsHash() => r'b467c6872402193a82964ff09e55bc5d137c4907';
 
 final class ConfluxDetailsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ConfluxDetails?>, String> {
@@ -124,7 +124,7 @@ final class ConfluxRiftsDetailsProvider
 }
 
 String _$confluxRiftsDetailsHash() =>
-    r'a2873c38d1a6ce276904958b25bc22051e9943b1';
+    r'987fc8c3f7cde37f5321800392fb9f4247f51ef4';
 
 @ProviderFor(confluxPortalsDetails)
 const confluxPortalsDetailsProvider = ConfluxPortalsDetailsProvider._();
@@ -166,4 +166,4 @@ final class ConfluxPortalsDetailsProvider
 }
 
 String _$confluxPortalsDetailsHash() =>
-    r'7f9db6b33ef1082db39596b82713a5eba634dbf9';
+    r'3abc964fb7238d1855f067e03a46d2823cc197c8';

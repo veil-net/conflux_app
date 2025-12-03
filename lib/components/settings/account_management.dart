@@ -1,6 +1,6 @@
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
-import 'package:conflux/main.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -27,6 +27,7 @@ class AccountManagement extends HookConsumerWidget {
         return;
       }
       try {
+        final supabase = ref.read(supabaseClientProvider);
         await supabase.auth.signOut();
         if (context.mounted) {
           context.go('/auth');
@@ -44,6 +45,7 @@ class AccountManagement extends HookConsumerWidget {
 
     Future<void> manageAccount() async {
       try {
+        final supabase = ref.read(supabaseClientProvider);
         final session = supabase.auth.currentSession;
         if (session != null) {
           launchUrl(Uri.parse('https://auth.veilnet.app/subscribe#refresh_token=${session.refreshToken}'));
@@ -59,6 +61,7 @@ class AccountManagement extends HookConsumerWidget {
 
     Future<void> resetPassword() async {
       try {
+        final supabase = ref.read(supabaseClientProvider);
         final session = supabase.auth.currentSession;
         if (session != null) {
           launchUrl(Uri.parse('https://auth.veilnet.app/reset-password#refresh_token=${session.refreshToken}'));

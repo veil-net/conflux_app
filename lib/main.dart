@@ -1,114 +1,48 @@
-import 'package:conflux/pages/auth_callback_page.dart';
-import 'package:conflux/pages/auth_page.dart';
-import 'package:conflux/pages/main_page.dart';
-import 'package:conflux/pages/notification_page.dart';
-import 'package:conflux/pages/organisation_page.dart';
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:conflux/providers/applinks_provider.dart';
+import 'package:conflux/providers/router_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:win32_registry/win32_registry.dart';
+
+Future<void> register(String scheme) async {
+  String appPath = Platform.resolvedExecutable;
+
+  String protocolRegKey = 'Software\\Classes\\$scheme';
+  RegistryValue protocolRegValue = RegistryValue.string('URL Protocol', '');
+  String protocolCmdRegKey = 'shell\\open\\command';
+  RegistryValue protocolCmdRegValue = RegistryValue.string(
+    '',
+    '"$appPath" "%1"',
+  );
+
+  final regKey = Registry.currentUser.createKey(protocolRegKey);
+  regKey.createValue(protocolRegValue);
+  regKey.createKey(protocolCmdRegKey).createValue(protocolCmdRegValue);
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Supabase.initialize(
-    url: 'https://nabcgmuuviyfakyrhakv.supabase.co',
-    anonKey: 'sb_publishable_c757oKzF-QNBms8a7TLWeQ_tOEm9Q3t',
-  );
+
+  if (Platform.isWindows) {
+    await register('conflux');
+  }
+  
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await Supabase.initialize(
+    url: 'https://nabcgmuuviyfakyrhakv.supabase.co',
+    anonKey: 'sb_publishable_c757oKzF-QNBms8a7TLWeQ_tOEm9Q3t',
+  );
   runApp(const ProviderScope(child: MyApp()));
 }
-
-final supabase = Supabase.instance.client;
-
-class AuthStateListenable extends ChangeNotifier {
-  AuthStateListenable() {
-    supabase.auth.onAuthStateChange.listen((event) {
-      notifyListeners();
-    });
-  }
-}
-
-final router = GoRouter(
-  initialLocation: '/auth',
-  refreshListenable: AuthStateListenable(),
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const MainPage(),
-      redirect: (context, state) {
-        try {
-          final user = supabase.auth.currentUser;
-          if (user == null) {
-            return '/auth';
-          }
-          return null;
-        } catch (e) {
-          return '/auth';
-        }
-      },
-    ),
-    GoRoute(
-      path: '/auth',
-      builder: (context, state) => const AuthPage(),
-      redirect: (context, state) {
-        try {
-          final user = supabase.auth.currentUser;
-          if (user == null) {
-            return null;
-          }
-          return '/';
-        } catch (e) {
-          return null;
-        }
-      },
-    ),
-    GoRoute(
-      path: '/notification',
-      builder: (context, state) => NotificationPage(),
-      redirect: (context, state) {
-        try {
-          final user = supabase.auth.currentUser;
-          if (user == null) {
-            return '/auth';
-          }
-          return null;
-        } catch (e) {
-          return '/auth';
-        }
-      },
-    ),
-    GoRoute(
-      path: '/organisation',
-      builder: (context, state) => OrganisationPage(),
-      redirect: (context, state) {
-        try {
-          final user = supabase.auth.currentUser;
-          if (user == null) {
-            return '/auth';
-          }
-          return null;
-        } catch (e) {
-          return '/auth';
-        }
-      },
-    ),
-    GoRoute(
-      path: '/callback',
-      builder: (context, state) {
-        final refreshToken =
-            state.uri.queryParameters['refresh_token'] ??
-            Uri.splitQueryString(state.uri.fragment)['refresh_token'] ??
-            '';
-        return AuthCallbackPage(refreshToken: refreshToken);
-      },
-    ),
-  ],
-);
 
 class MyApp extends HookConsumerWidget {
   const MyApp({super.key});
@@ -117,6 +51,11 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final darkMode = ref.watch(darkModeProvider);
+    final router = ref.read(routerProvider);
+    final appLinks = ref.read(appLinksProvider);
+    appLinks.uriLinkStream.listen((uri) {
+      log(uri.toString());
+    });
     return MaterialApp.router(
       title: 'VeilNet Console',
       theme: ThemeData(

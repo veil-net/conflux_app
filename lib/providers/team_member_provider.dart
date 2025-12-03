@@ -1,7 +1,7 @@
-import 'package:conflux/main.dart';
 import 'package:conflux/models/team_member.dart';
 import 'package:conflux/providers/api_provider.dart';
 import 'package:conflux/providers/current_user_provider.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -13,6 +13,7 @@ class TeamMembers extends _$TeamMembers {
   Stream<List<TeamMember>> build(String team_id) {
     ref.keepAlive();
     ref.watch(currentUserProvider);
+    final supabase = ref.read(supabaseClientProvider);
     return supabase
         .from('team_members')
         .stream(primaryKey: ['id'])

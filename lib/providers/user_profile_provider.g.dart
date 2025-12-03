@@ -46,7 +46,7 @@ final class UserProfileProvider
   }
 }
 
-String _$userProfileHash() => r'a9a47c86f2eca78835d9f9ddbaa8de4f5a9ed3f6';
+String _$userProfileHash() => r'7c1c8a00b85a8764d3d55a4907a4c90401606f7e';
 
 @ProviderFor(userMP)
 const userMPProvider = UserMPProvider._();
@@ -79,4 +79,4 @@ final class UserMPProvider
   }
 }
 
-String _$userMPHash() => r'6c4654d947be8e4e1b88b90eba33efba43f94fc4';
+String _$userMPHash() => r'9501523d1c6443ff85fafa8df30be3a072cd35fb';

@@ -1,5 +1,5 @@
 import 'package:conflux/components/app_background.dart';
-import 'package:conflux/main.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -15,6 +15,7 @@ class AuthCallbackPage extends HookConsumerWidget {
     useEffect(() {
       Future.microtask(() async {
         try {
+          final supabase = ref.read(supabaseClientProvider);
           await supabase.auth.setSession(refreshToken);
           if (context.mounted) {
             context.go('/');

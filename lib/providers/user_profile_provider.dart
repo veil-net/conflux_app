@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:conflux/main.dart';
 import 'package:conflux/models/user_profile.dart';
 import 'package:conflux/providers/current_user_provider.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_profile_provider.g.dart';
@@ -11,7 +11,7 @@ part 'user_profile_provider.g.dart';
 Future<UserProfile> userProfile(Ref ref) async {
   ref.keepAlive();
   final user = ref.watch(currentUserProvider);
-
+  final supabase = ref.read(supabaseClientProvider);
   if (user == null) {
     throw Exception('User not found');
   }
@@ -32,6 +32,7 @@ Future<int> userMP(Ref ref) async {
   if (user == null) {
     throw Exception('User not found');
   }
+  final supabase = ref.read(supabaseClientProvider);
   final profile = await supabase
       .from('profiles')
       .select('mp')

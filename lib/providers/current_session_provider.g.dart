@@ -41,7 +41,7 @@ final class CurrentSessionProvider
   }
 }
 
-String _$currentSessionHash() => r'bd9351e609c52a48eacbec51a63799571ecda7b2';
+String _$currentSessionHash() => r'4d2614e61f1af96e8f8b81e3fd14f01dfb436bfb';
 
 abstract class _$CurrentSession extends $Notifier<Session?> {
   Session? build();

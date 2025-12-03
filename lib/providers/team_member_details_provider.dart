@@ -1,5 +1,5 @@
-import 'package:conflux/main.dart';
 import 'package:conflux/models/team_memeber_details.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:conflux/providers/team_member_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -12,6 +12,7 @@ Future<List<TeamMemberDetails>> teamMemberDetails(
 ) async {
   ref.keepAlive();
   ref.watch(teamMembersProvider(team_id));
+  final supabase = ref.read(supabaseClientProvider);
   final teamMemberDetails = await supabase
       .from('team_member_details')
       .select('*')

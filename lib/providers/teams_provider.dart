@@ -1,6 +1,6 @@
-import 'package:conflux/main.dart';
 import 'package:conflux/models/team.dart';
 import 'package:conflux/providers/current_user_provider.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'teams_provider.g.dart';
@@ -9,6 +9,7 @@ part 'teams_provider.g.dart';
 Stream<List<Team>> teams(Ref ref) {
   ref.keepAlive();
   ref.watch(currentUserProvider);
+  final supabase = ref.read(supabaseClientProvider);
   return supabase
       .from('teams')
       .stream(primaryKey: ['id'])
@@ -22,6 +23,7 @@ Stream<List<Team>> ownedTeams(Ref ref) {
   if (user == null) {
     throw Exception('User not found');
   }
+  final supabase = ref.read(supabaseClientProvider);
   return supabase
       .from('teams')
       .stream(primaryKey: ['id'])

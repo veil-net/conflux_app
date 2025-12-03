@@ -48,7 +48,7 @@ final class PlanesDetailsProvider
   }
 }
 
-String _$planesDetailsHash() => r'3cd1b91147e0613d8581bd370d4219ade7e3b266';
+String _$planesDetailsHash() => r'3f301a7704884c9b8cb585e06f19344a6a1f33ca';
 
 @ProviderFor(planeDetails)
 const planeDetailsProvider = PlaneDetailsFamily._();
@@ -105,7 +105,7 @@ final class PlaneDetailsProvider
   }
 }
 
-String _$planeDetailsHash() => r'1e9a87b1b4d24a16b45da5d53a29e912675c8fb7';
+String _$planeDetailsHash() => r'2020f9a767bcac6d8e28fa4929f3a4b74fb5d411';
 
 final class PlaneDetailsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<PlaneDetails?>, String> {
@@ -165,7 +165,7 @@ final class PrivatePlaneDetailsProvider
 }
 
 String _$privatePlaneDetailsHash() =>
-    r'07d1fe458577b05fac97a03172f18faa1deb16af';
+    r'1cc60142b311ca0c6c10743705c36682f16e5bb6';
 
 @ProviderFor(publicPlaneDetails)
 const publicPlaneDetailsProvider = PublicPlaneDetailsProvider._();
@@ -207,7 +207,7 @@ final class PublicPlaneDetailsProvider
 }
 
 String _$publicPlaneDetailsHash() =>
-    r'bcb31983f0609bfa614446d5fb12d18c263ef512';
+    r'58dc7ecac70902bc50bfe5c5379beba6e01331ab';
 
 @ProviderFor(SelectedPlaneDetails)
 const selectedPlaneDetailsProvider = SelectedPlaneDetailsProvider._();

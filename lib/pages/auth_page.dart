@@ -6,7 +6,7 @@ import 'package:conflux/components/app_background.dart';
 import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
-import 'package:conflux/main.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
@@ -53,6 +53,7 @@ class AuthPage extends HookConsumerWidget {
               final refreshToken =
                   request.uri.queryParameters['refresh_token'] ?? '';
               try {
+                final supabase = ref.read(supabaseClientProvider);
                 await supabase.auth.setSession(refreshToken);
                 authResult.complete(true);
                 request.response.statusCode = 200;

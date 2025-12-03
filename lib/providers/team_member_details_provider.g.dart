@@ -66,7 +66,7 @@ final class TeamMemberDetailsProvider
   }
 }
 
-String _$teamMemberDetailsHash() => r'a03bcb414d60164421ea5e3c04d9e175cab0f323';
+String _$teamMemberDetailsHash() => r'a6a3a27c0320b00146f80ea62d07e9c2db5a5cfc';
 
 final class TeamMemberDetailsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<TeamMemberDetails>>, String> {
