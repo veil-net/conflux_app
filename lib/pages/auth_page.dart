@@ -27,31 +27,33 @@ class AuthPage extends HookConsumerWidget {
     }, [user]);
 
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(child: AppBackground()),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Positioned.fill(child: AppBackground()),
 
-          Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 500),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                spacing: 16,
-                children: [
-                  Hero(
-                    tag: 'logo',
-                    child: Image.asset('assets/images/Logo_H.png'),
-                  ).animate().slideY(
-                    duration: 250.milliseconds,
-                    curve: Curves.easeInOut,
-                  ),
-                  SignInUpForm(),
-                  SocialSignInForm(),
-                ],
+            Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 500),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 16,
+                  children: [
+                    Hero(
+                      tag: 'logo',
+                      child: Image.asset('assets/images/Logo_H.png'),
+                    ).animate().slideY(
+                      duration: 250.milliseconds,
+                      curve: Curves.easeInOut,
+                    ),
+                    SignInUpForm(),
+                    SocialSignInForm(),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -8,6 +8,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum FormType { signIn, signUp }
 
@@ -17,44 +18,48 @@ class SignInUpForm extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formType = useState<FormType>(FormType.signIn);
-    return AppCard(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          spacing: 16,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: SegmentedButton<FormType>(
-                style: SegmentedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+    return AnimatedSize(
+      duration: 250.milliseconds,
+      curve: Curves.easeInOut,
+      child: AppCard(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            spacing: 16,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: SegmentedButton<FormType>(
+                  style: SegmentedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
+                  showSelectedIcon: false,
+                  segments: const [
+                    ButtonSegment<FormType>(
+                      value: FormType.signIn,
+                      label: Text('Sign In'),
+                    ),
+                    ButtonSegment<FormType>(
+                      value: FormType.signUp,
+                      label: Text('Sign Up'),
+                    ),
+                  ],
+                  selected: {formType.value},
+                  onSelectionChanged: (Set<FormType> selected) {
+                    formType.value = selected.first;
+                  },
                 ),
-                showSelectedIcon: false,
-                segments: const [
-                  ButtonSegment<FormType>(
-                    value: FormType.signIn,
-                    label: Text('Sign In'),
-                  ),
-                  ButtonSegment<FormType>(
-                    value: FormType.signUp,
-                    label: Text('Sign Up'),
-                  ),
-                ],
-                selected: {formType.value},
-                onSelectionChanged: (Set<FormType> selected) {
-                  formType.value = selected.first;
-                },
               ),
-            ),
-            if (formType.value == FormType.signIn) SignInForm(),
-            if (formType.value == FormType.signUp) SignUpForm(),
-          ],
+              if (formType.value == FormType.signIn) SignInForm(),
+              if (formType.value == FormType.signUp) SignUpForm(),
+            ],
+          ),
         ),
-      ),
-    ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut);
+      ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
+    );
   }
 }
 
@@ -134,6 +139,12 @@ class SignInForm extends HookConsumerWidget {
             },
           ),
           AppButton(label: 'Sign In', onPressed: signIn, expand: true),
+          TextButton(
+            onPressed: () {
+              launchUrl(Uri.parse('https://auth.veilnet.app/reset-password'));
+            },
+            child: Text('Forgot Password?'),
+          ),
         ],
       ),
     );
@@ -219,6 +230,10 @@ class SignUpForm extends HookConsumerWidget {
         spacing: 16,
         mainAxisSize: MainAxisSize.min,
         children: [
+          if (tokenSent.value)
+            Text(
+              'If a account already exists with this email, you will not receive a verification token to continue.',
+            ),
           AppTextInput(
             label: 'Email',
             controller: email,
@@ -317,6 +332,13 @@ class SignUpForm extends HookConsumerWidget {
               expand: true,
               outline: true,
             ),
+
+          TextButton(
+            onPressed: () {
+              launchUrl(Uri.parse('https://auth.veilnet.app/reset-password'));
+            },
+            child: Text('Forgot Password?'),
+          ),
         ],
       ),
     );
