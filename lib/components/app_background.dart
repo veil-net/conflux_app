@@ -47,7 +47,7 @@ class AppBackground extends HookConsumerWidget {
     );
 
     // Generate nodes (will be stable across rebuilds)
-    final nodes = useMemoized(() => _generateNodes(100), []);
+    final nodes = useMemoized(() => _generateNodes(50), []);
 
     return RepaintBoundary(
       child: CustomPaint(

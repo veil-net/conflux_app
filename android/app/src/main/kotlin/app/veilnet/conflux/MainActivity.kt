@@ -1,6 +1,5 @@
 package app.veilnet.conflux
 
-import android.app.Activity
 import android.content.Intent
 import android.net.VpnService
 import androidx.core.content.ContextCompat
@@ -39,7 +38,7 @@ class MainActivity : FlutterActivity() {
                                 startActivityForResult(vpnIntent, 1001)
                                 result.success(true)
                             } else {
-                                val veilnetIntent = Intent(context, VeilNet::class.java)
+                                val veilnetIntent = Intent(context, VeilNetVPNService::class.java)
                                 veilnetIntent.putExtra("guardian", guardian)
                                 veilnetIntent.putExtra("token", token)
                                 ContextCompat.startForegroundService(this, veilnetIntent)
@@ -52,7 +51,7 @@ class MainActivity : FlutterActivity() {
 
                     "stop" -> {
                         try {
-                            VeilNet.stop()
+                            VeilNetVPNService.stop()
                             result.success(true)
                         } catch (e: Exception) {
                             result.error("Fail to stop", e.message, null)
@@ -68,7 +67,7 @@ class MainActivity : FlutterActivity() {
         when (requestCode) {
             1001 -> {
                 if (resultCode == RESULT_OK) {
-                    val veilnetIntent = Intent(context, VeilNet::class.java)
+                    val veilnetIntent = Intent(context, VeilNetVPNService::class.java)
                     veilnetIntent.putExtra("guardian", guardian)
                     veilnetIntent.putExtra("token", token)
                     ContextCompat.startForegroundService(this, veilnetIntent)

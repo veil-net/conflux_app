@@ -66,7 +66,7 @@ class AppInfoCard extends HookConsumerWidget {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 onTap: () =>
-                    launchUrl(Uri.parse('https://discord.gg/WqJYddHr')),
+                    launchUrl(Uri.parse('https://discord.gg/yKCZCZutDR')),
                 leading: Icon(Icons.discord),
                 title: Text(
                   'Discord Support',
