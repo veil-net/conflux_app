@@ -35,11 +35,6 @@ class SelectedPlane extends HookConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   spacing: 16,
                   children: [
-                    Icon(
-                      Icons.info,
-                      size: 32,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
                     RichText(
                       text: TextSpan(
                         children: [
@@ -51,7 +46,7 @@ class SelectedPlane extends HookConsumerWidget {
                           ),
                           TextSpan(
                             text:
-                                ' are regional decentralised networks, which will secure and masquade your traffic to the internet.\n\n',
+                                ' are decentralised networks that secure and masquade your traffic to the internet.\n\n',
                             style: TextStyle(color: Colors.grey),
                           ),
                           TextSpan(

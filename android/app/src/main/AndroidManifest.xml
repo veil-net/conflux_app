@@ -40,7 +40,8 @@
 
                 <data
                     android:host="auth"
-                    android:scheme="veilnet" />
+                    android:pathPrefix="/callback"
+                    android:scheme="conflux" />
             </intent-filter>
 
         </activity>
