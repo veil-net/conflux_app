@@ -4,6 +4,7 @@ import 'package:conflux/models/plane_details.dart';
 import 'package:conflux/providers/conflux_provider.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
 import 'package:conflux/providers/plane_details_provider.dart';
+import 'package:conflux/providers/settings_provider.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class PlaneTile extends HookConsumerWidget {
               .length ??
           0,
     );
+    final developerMode = ref.watch(developerModeProvider);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -48,12 +50,14 @@ class PlaneTile extends HookConsumerWidget {
                 planeDetails.name,
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
-              subtitle: Text(
-                "You have ${numberOfPortals.value} Portals on this plane",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-              ),
+              subtitle: developerMode
+                  ? Text(
+                      "You have ${numberOfPortals.value} Portals on this plane",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    )
+                  : null,
               trailing: AppButton(
                 outline: false,
                 expand: false,
