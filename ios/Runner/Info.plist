@@ -47,5 +47,23 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<!-- Custom URL scheme sample -->
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+			<!-- Your scheme -->
+			<key>CFBundleURLSchemes</key>
+			<array>			
+				<string>conflux</string>
+			</array>
+			<!-- Optional URL to distinguish your app from others
+				in case of conflicting scheme name -->
+			<key>CFBundleURLName</key>
+			<string>auth</string>		
+			</dict>
+		</array>
+		<!-- END Custom URL scheme sample -->
+		<key>FlutterDeepLinkingEnabled</key>
+		<false/>
 	</dict>
 </plist>

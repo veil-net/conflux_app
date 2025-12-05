@@ -1,9 +1,9 @@
 import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
-import 'package:conflux/main.dart';
 import 'package:conflux/providers/conflux_details_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,6 +17,7 @@ class ConfluxSummaryCard extends HookConsumerWidget {
 
     Future<void> manageConflux() async {
       try {
+        final supabase = ref.read(supabaseClientProvider);
         final session = supabase.auth.currentSession;
         if (session != null) {
           launchUrl(

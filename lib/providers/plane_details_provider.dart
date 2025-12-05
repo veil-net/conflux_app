@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:conflux/main.dart';
 import 'package:conflux/models/plane_details.dart';
 import 'package:conflux/providers/plane_provider.dart';
 import 'package:conflux/providers/preference_provider.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'plane_details_provider.g.dart';
@@ -12,6 +12,7 @@ part 'plane_details_provider.g.dart';
 Future<List<PlaneDetails>> planesDetails(Ref ref) async {
   ref.keepAlive();
   ref.watch(planesProvider);
+  final supabase = ref.read(supabaseClientProvider);
   final planeDetails = await supabase.from('plane_details').select('*');
   return planeDetails.map((data) => PlaneDetails.fromJson(data)).toList();
 }
@@ -23,6 +24,7 @@ Future<PlaneDetails?> planeDetails(Ref ref, String id) async {
   if (plane == null) {
     return null;
   }
+  final supabase = ref.read(supabaseClientProvider);
   final planeDetails = await supabase
       .from('plane_details')
       .select('*')
@@ -35,6 +37,7 @@ Future<PlaneDetails?> planeDetails(Ref ref, String id) async {
 Future<List<PlaneDetails>> privatePlaneDetails(Ref ref) async {
   ref.keepAlive();
   ref.watch(privatePlanesProvider);
+  final supabase = ref.read(supabaseClientProvider);
   final planeDetails = await supabase
       .from('plane_details')
       .select('*')
@@ -46,6 +49,7 @@ Future<List<PlaneDetails>> privatePlaneDetails(Ref ref) async {
 Future<List<PlaneDetails>> publicPlaneDetails(Ref ref) async {
   ref.keepAlive();
   ref.watch(publicPlanesProvider);
+  final supabase = ref.read(supabaseClientProvider);
   final planeDetails = await supabase
       .from('plane_details')
       .select('*')

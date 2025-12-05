@@ -1,7 +1,7 @@
-import 'package:conflux/main.dart';
 import 'package:conflux/models/conflux_details.dart';
 import 'package:conflux/providers/conflux_provider.dart';
 import 'package:conflux/providers/conflux_session_provider.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'conflux_details_provider.g.dart';
@@ -18,6 +18,7 @@ Future<ConfluxDetails?> confluxDetails(Ref ref, String id) async {
   if (confluxSession == null) {
     return null;
   }
+  final supabase = ref.read(supabaseClientProvider);
 
   final result = await supabase
       .from('conflux_details')
@@ -31,6 +32,7 @@ Future<ConfluxDetails?> confluxDetails(Ref ref, String id) async {
 Future<List<ConfluxDetails>> confluxRiftsDetails(Ref ref) async {
   ref.keepAlive();
   ref.watch(confluxRiftsProvider);
+  final supabase = ref.read(supabaseClientProvider);
   final result = await supabase
       .from('conflux_details')
       .select('*')
@@ -42,6 +44,7 @@ Future<List<ConfluxDetails>> confluxRiftsDetails(Ref ref) async {
 Future<List<ConfluxDetails>> confluxPortalsDetails(Ref ref) async {
   ref.keepAlive();
   ref.watch(confluxPortalsProvider);
+  final supabase = ref.read(supabaseClientProvider);
   final result = await supabase
       .from('conflux_details')
       .select('*')

@@ -33,7 +33,7 @@ final class PlanesProvider
   Planes create() => Planes();
 }
 
-String _$planesHash() => r'1486387b9a225d77ac2b3de3e81531a26a2be2a7';
+String _$planesHash() => r'c29d566d76461740cba6db52605eaf7109fa0f8e';
 
 abstract class _$Planes extends $StreamNotifier<List<Plane>> {
   Stream<List<Plane>> build();
@@ -103,7 +103,7 @@ final class PlaneProvider
   }
 }
 
-String _$planeHash() => r'593c529874e659be2ecd65c248ad6f21ea6f78f1';
+String _$planeHash() => r'44482df3adffb2f506afb717352ede8c503c18ae';
 
 final class PlaneFamily extends $Family
     with $FunctionalFamilyOverride<Stream<Plane?>, String> {
@@ -159,7 +159,7 @@ final class OwnedPlanesProvider
   }
 }
 
-String _$ownedPlanesHash() => r'c1caac5db25cdf177434c4c5cb612cb11bb25e45';
+String _$ownedPlanesHash() => r'9790923f3f4588d15abfdb75a1be3b568bd347c8';
 
 @ProviderFor(privatePlanes)
 const privatePlanesProvider = PrivatePlanesProvider._();

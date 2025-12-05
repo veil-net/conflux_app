@@ -2,9 +2,9 @@ import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/components/app_text_input.dart';
-import 'package:conflux/main.dart';
 import 'package:conflux/providers/plane_details_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -23,6 +23,7 @@ class PlaneSearchCard extends HookConsumerWidget {
 
     Future<void> managePrivatePlanes() async {
       try {
+        final supabase = ref.read(supabaseClientProvider);
         final session = supabase.auth.currentSession;
         if (session != null) {
           launchUrl(
@@ -95,7 +96,7 @@ class PlaneSearchCard extends HookConsumerWidget {
                 showSelectedIcon: false,
                 segments: const [
                   ButtonSegment<bool?>(value: null, label: Text('All')),
-                  ButtonSegment<bool?>(value: true, label: Text('Public')),
+                  ButtonSegment<bool?>(value: true, label: Text('Community')),
                   ButtonSegment<bool?>(value: false, label: Text('Private')),
                 ],
                 selected: {planePublicity},

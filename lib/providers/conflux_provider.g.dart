@@ -33,7 +33,7 @@ final class ConfluxesProvider
   Confluxes create() => Confluxes();
 }
 
-String _$confluxesHash() => r'ee8c328ed9b06f26a1c61d4dfcab665e5bdf30bd';
+String _$confluxesHash() => r'fb240ea624007df53095f7ac060cf3b2c6090646';
 
 abstract class _$Confluxes extends $StreamNotifier<List<Conflux>> {
   Stream<List<Conflux>> build();
@@ -104,7 +104,7 @@ final class ConfluxByIDProvider
   }
 }
 
-String _$confluxByIDHash() => r'62f4be6e235150e05dd358962cf3559b2f1e9650';
+String _$confluxByIDHash() => r'28c7f26e6f2bf03ac58c43410be610a079ec19b2';
 
 final class ConfluxByIDFamily extends $Family
     with $FunctionalFamilyOverride<Stream<Conflux?>, String> {

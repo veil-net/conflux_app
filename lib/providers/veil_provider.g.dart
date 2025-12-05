@@ -45,7 +45,7 @@ final class VeilsProvider
   }
 }
 
-String _$veilsHash() => r'a6e1c0cc53dc72c795cb6fd086efac307d692fcf';
+String _$veilsHash() => r'968d0d11c7eef2bcb4e37704d70e6f54922d0436';
 
 @ProviderFor(veil)
 const veilProvider = VeilFamily._();
@@ -96,7 +96,7 @@ final class VeilProvider
   }
 }
 
-String _$veilHash() => r'a9a45ac29de2ee69068283a40b8fc0232c5b3818';
+String _$veilHash() => r'7685bd5332f04ba4331b7f9efd59d2c48af42238';
 
 final class VeilFamily extends $Family
     with $FunctionalFamilyOverride<Stream<Veil?>, String> {

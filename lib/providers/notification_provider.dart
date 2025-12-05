@@ -1,5 +1,5 @@
-import 'package:conflux/main.dart';
 import 'package:conflux/models/notification.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'notification_provider.g.dart';
@@ -7,6 +7,7 @@ part 'notification_provider.g.dart';
 @riverpod
 Stream<List<Notification>> notifications(Ref ref) {
   ref.keepAlive();
+  final supabase = ref.read(supabaseClientProvider);
   return supabase
       .from('notifications')
       .stream(primaryKey: ['id'])

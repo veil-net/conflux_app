@@ -48,7 +48,7 @@ final class ConfluxSessionsProvider
   }
 }
 
-String _$confluxSessionsHash() => r'02ad25a3c83e1c565a011327a87a232641e9c592';
+String _$confluxSessionsHash() => r'167848034ab3c2d4f775811bb9ff12adae7d3d6a';
 
 @ProviderFor(confluxSession)
 const confluxSessionProvider = ConfluxSessionFamily._();
@@ -105,7 +105,7 @@ final class ConfluxSessionProvider
   }
 }
 
-String _$confluxSessionHash() => r'2e027a1f43a837fb505b3dc49067fa73e1d2da7b';
+String _$confluxSessionHash() => r'f8bc8ab121caa830285be2620579ffa4faf3717e';
 
 final class ConfluxSessionFamily extends $Family
     with $FunctionalFamilyOverride<Stream<ConfluxSession?>, String> {

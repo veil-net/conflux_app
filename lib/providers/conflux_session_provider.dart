@@ -1,6 +1,6 @@
-import 'package:conflux/main.dart';
 import 'package:conflux/models/conflux_session.dart';
 import 'package:conflux/providers/current_user_provider.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'conflux_session_provider.g.dart';
@@ -9,6 +9,7 @@ part 'conflux_session_provider.g.dart';
 Stream<List<ConfluxSession>> confluxSessions(Ref ref) {
   ref.keepAlive();
   ref.watch(currentUserProvider);
+  final supabase = ref.read(supabaseClientProvider);
   return supabase
       .from('conflux_sessions')
       .stream(primaryKey: ['id'])
@@ -21,6 +22,7 @@ Stream<List<ConfluxSession>> confluxSessions(Ref ref) {
 @riverpod
 Stream<ConfluxSession?> confluxSession(Ref ref, String confluxId) {
   ref.keepAlive(); 
+  final supabase = ref.read(supabaseClientProvider);
   final confluxSession = supabase
       .from('conflux_sessions')
       .stream(primaryKey: ['id'])

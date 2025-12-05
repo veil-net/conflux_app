@@ -1,8 +1,8 @@
 import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/components/org/organisation_tile.dart';
-import 'package:conflux/main.dart';
 import 'package:conflux/providers/organisation_provider.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -15,6 +15,7 @@ class OrganisationList extends HookConsumerWidget {
 
     Future<void> manageOrganisations() async {
       try {
+        final supabase = ref.read(supabaseClientProvider);
         final session = supabase.auth.currentSession;
         if (session != null) {
           launchUrl(Uri.parse('https://auth.veilnet.app/organisation#refresh_token=${session.refreshToken}'));

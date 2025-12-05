@@ -33,7 +33,7 @@ final class OrganisationsProvider
   Organisations create() => Organisations();
 }
 
-String _$organisationsHash() => r'f6b62c830008a2a0e6533b094776a64f35f40a86';
+String _$organisationsHash() => r'0545aee4bc905a894bd25fb8d7b443f01af1dda1';
 
 abstract class _$Organisations extends $StreamNotifier<List<Organisation>> {
   Stream<List<Organisation>> build();

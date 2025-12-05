@@ -4,10 +4,10 @@ import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/components/app_text_input.dart';
 import 'package:conflux/components/profile/service_tier_chip.dart';
-import 'package:conflux/main.dart';
 import 'package:conflux/providers/api_provider.dart';
 import 'package:conflux/providers/conflux_provider.dart';
 import 'package:conflux/providers/service_tier_provider.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:conflux/providers/user_profile_provider.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:dio/dio.dart';
@@ -78,6 +78,7 @@ class GreetingTile extends HookConsumerWidget {
           }
           return;
         }
+        final supabase = ref.read(supabaseClientProvider);
         await supabase.auth.signOut();
       } catch (e) {
         if (context.mounted) {

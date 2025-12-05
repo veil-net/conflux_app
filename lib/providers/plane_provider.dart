@@ -1,7 +1,7 @@
-import 'package:conflux/main.dart';
 import 'package:conflux/models/plane.dart';
 import 'package:conflux/providers/api_provider.dart';
 import 'package:conflux/providers/current_user_provider.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -13,6 +13,7 @@ class Planes extends _$Planes {
   Stream<List<Plane>> build() {
     ref.keepAlive();
     ref.watch(currentUserProvider);
+    final supabase = ref.read(supabaseClientProvider);
     return supabase
         .from('planes')
         .stream(primaryKey: ['id'])
@@ -91,6 +92,7 @@ class Planes extends _$Planes {
 @riverpod
 Stream<Plane?> plane(Ref ref, String id) {
   ref.keepAlive();
+  final supabase = ref.read(supabaseClientProvider);
   return supabase
       .from('planes')
       .stream(primaryKey: ['id'])
@@ -109,6 +111,7 @@ Future<List<Plane>> ownedPlanes(Ref ref) async {
   if (user == null) {
     throw Exception('User not found');
   }
+  final supabase = ref.read(supabaseClientProvider);
   final planes = await supabase
       .from('planes')
       .select('*')

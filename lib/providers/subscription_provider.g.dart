@@ -33,7 +33,7 @@ final class SubscriptionsProvider
   Subscriptions create() => Subscriptions();
 }
 
-String _$subscriptionsHash() => r'a84a6bd380c487df08e889f3be4f4b76f7affce6';
+String _$subscriptionsHash() => r'638482ed4c1d3e449a99a79beaa27ab49168eb27';
 
 abstract class _$Subscriptions extends $StreamNotifier<List<Subscription>> {
   Stream<List<Subscription>> build();

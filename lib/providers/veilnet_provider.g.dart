@@ -33,7 +33,7 @@ final class ConfluxServiceProvider
   ConfluxService create() => ConfluxService();
 }
 
-String _$confluxServiceHash() => r'd8e2a0f0c3e8c4adc9e0b03b2a6939ddf9a9e734';
+String _$confluxServiceHash() => r'786c984c2dbc14969d73e21fe57845799d09e7dd';
 
 abstract class _$ConfluxService extends $AsyncNotifier<ConfluxService> {
   FutureOr<ConfluxService> build();

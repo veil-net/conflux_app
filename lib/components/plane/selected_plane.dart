@@ -1,10 +1,10 @@
 import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
-import 'package:conflux/main.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
 import 'package:conflux/providers/plane_details_provider.dart';
 import 'package:conflux/providers/service_tier_provider.dart';
+import 'package:conflux/providers/supabase_provider.dart';
 import 'package:conflux/providers/user_profile_provider.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:country_flags/country_flags.dart';
@@ -35,11 +35,6 @@ class SelectedPlane extends HookConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   spacing: 16,
                   children: [
-                    Icon(
-                      Icons.info,
-                      size: 32,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
                     RichText(
                       text: TextSpan(
                         children: [
@@ -51,7 +46,7 @@ class SelectedPlane extends HookConsumerWidget {
                           ),
                           TextSpan(
                             text:
-                                ' are regional decentralised networks, which will secure and masquade your traffic to the internet.\n\n',
+                                ' are decentralised networks that secure and masquade your traffic to the internet.\n\n',
                             style: TextStyle(color: Colors.grey),
                           ),
                           TextSpan(
@@ -133,6 +128,7 @@ class SelectedPlane extends HookConsumerWidget {
                         onPressed: plane.portals > 0
                             ? () async {
                                 try {
+                                  final supabase = ref.read(supabaseClientProvider);
                                   final resp = await supabase.rpc(
                                     'count_user_public_rifts',
                                     params: {'u': plane.user_id},

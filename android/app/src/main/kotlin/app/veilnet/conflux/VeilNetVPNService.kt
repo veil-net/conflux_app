@@ -5,8 +5,6 @@ import android.net.VpnService
 import android.os.ParcelFileDescriptor
 import android.util.Log
 import kotlinx.coroutines.*
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import veilnet.Anchor
 import veilnet.Veilnet.newAnchor
 import android.app.Notification
@@ -17,11 +15,11 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 
-class VeilNet : VpnService() {
+class VeilNetVPNService : VpnService() {
 
     companion object {
         @Volatile
-        private var instance: VeilNet? = null
+        private var instance: VeilNetVPNService? = null
         private const val SERVICE_NOTIFICATION_CHANNEL_ID = "VeilNetService"
         private const val SERVICE_NOTIFICATION_ID = 1
 
@@ -101,7 +99,7 @@ class VeilNet : VpnService() {
             }
 
             try {
-                anchor!!.start(guardian, token, false)
+                anchor!!.start(guardian, "nats.veilnet.app", 30422,token, false)
             } catch (e: Exception) {
                 Log.e("VeilNet", "Failed to start anchor")
                 stopSelf()
@@ -177,7 +175,7 @@ class VeilNet : VpnService() {
 
     private fun updateNotification(message: String) {
         val notification = buildNotification(message)
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(SERVICE_NOTIFICATION_ID, notification)
     }
 }
