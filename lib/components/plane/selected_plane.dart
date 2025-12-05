@@ -155,14 +155,14 @@ class SelectedPlane extends HookConsumerWidget {
                                       }
                                       break;
                                     case 1:
-                                      if (count >= 3) {
+                                      if (count >= 3 && userProfile.mp <= 0) {
                                         throw Exception(
                                           'You can not connect more than 3 devices at the same time.',
                                         );
                                       }
                                       break;
                                     case 2:
-                                      if (count >= 10) {
+                                      if (count >= 10 && userProfile.mp <= 0) {
                                         throw Exception(
                                           'You can not connect more than 10 devices at the same time.',
                                         );

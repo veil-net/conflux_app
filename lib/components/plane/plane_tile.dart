@@ -1,12 +1,14 @@
 import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/models/plane_details.dart';
+import 'package:conflux/providers/conflux_provider.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
 import 'package:conflux/providers/plane_details_provider.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PlaneTile extends HookConsumerWidget {
@@ -16,6 +18,13 @@ class PlaneTile extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final veilNetState = ref.watch(veilNetProvider);
+    final confluxPortals = ref.watch(confluxPortalsProvider);
+    final numberOfPortals = useState(
+      confluxPortals.value
+              ?.where((conflux) => conflux.plane_id == planeDetails.id)
+              .length ??
+          0,
+    );
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -27,45 +36,39 @@ class PlaneTile extends HookConsumerWidget {
                 ? 500
                 : constraints.maxWidth * 0.5,
           ),
-          child:
-              AppCard(
-                child: ListTile(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                  leading: SizedBox(
-                    width: 40,
-                    height: 30,
-                    child: CountryFlag.fromCountryCode(planeDetails.region),
-                  ),
-                  title: Text(
-                    planeDetails.name,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                  subtitle: Text(
-                    planeDetails.subnet,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                  trailing: AppButton(
-                    outline: false,
-                    expand: false,
-                    label: 'Select',
-                    onPressed: veilNetState == VeilNetState.disconnected
-                        ? () async {
-                            await ref
-                                .read(selectedPlaneDetailsProvider.notifier)
-                                .setSelectedPlane(planeDetails);
-                            ref.read(pageControllerProvider).jumpToPage(0);
-                          }
-                        : null,
-                  ),
-                ),
-              ).animate().slideY(
-                duration: 250.milliseconds,
-                curve: Curves.easeInOut,
+          child: AppCard(
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: 16),
+              leading: SizedBox(
+                width: 40,
+                height: 30,
+                child: CountryFlag.fromCountryCode(planeDetails.region),
               ),
+              title: Text(
+                planeDetails.name,
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+              subtitle: Text(
+                "You have ${numberOfPortals.value} Portals on this plane",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+              trailing: AppButton(
+                outline: false,
+                expand: false,
+                label: 'Select',
+                onPressed: veilNetState == VeilNetState.disconnected
+                    ? () async {
+                        await ref
+                            .read(selectedPlaneDetailsProvider.notifier)
+                            .setSelectedPlane(planeDetails);
+                        ref.read(pageControllerProvider).jumpToPage(0);
+                      }
+                    : null,
+              ),
+            ),
+          ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
         );
       },
     );

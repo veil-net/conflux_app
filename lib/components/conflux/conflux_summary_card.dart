@@ -5,6 +5,8 @@ import 'package:conflux/providers/conflux_details_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
 import 'package:conflux/providers/supabase_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -26,11 +28,7 @@ class ConfluxSummaryCard extends HookConsumerWidget {
             ),
           );
         } else {
-          launchUrl(
-            Uri.parse(
-              'https://auth.veilnet.app/deploy',
-            ),
-          );
+          launchUrl(Uri.parse('https://auth.veilnet.app/deploy'));
         }
       } catch (e) {
         if (context.mounted) {
@@ -62,7 +60,7 @@ class ConfluxSummaryCard extends HookConsumerWidget {
           ),
         ),
       ),
-    );
+    ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut);
   }
 }
 
@@ -72,16 +70,17 @@ class RiftSummaryTitle extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final confluxRifts = ref.watch(confluxRiftsDetailsProvider);
+    final numberOfOnlineRifts = useState(confluxRifts.value?.where((conflux) => conflux.signature != null).length ?? 0);
     return Flexible(
       child: ListTile(
         contentPadding: EdgeInsets.zero,
         leading: Icon(Icons.electric_bolt),
         title: Text(
-          '${confluxRifts.value?.where((conflux) => conflux.signature != null).length} / ${confluxRifts.value?.length}',
+          '${numberOfOnlineRifts.value} / ${confluxRifts.value?.length} Online',
           style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         ),
         subtitle: Text(
-          'Rifts',
+          'Your Rifts',
           style: TextStyle(color: Theme.of(context).colorScheme.primary),
         ),
       ),
@@ -95,16 +94,22 @@ class PortalSummaryTitle extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final confluxPortals = ref.watch(confluxPortalsDetailsProvider);
+    final numberOfOnlinePortals = useState(
+      confluxPortals.value
+              ?.where((conflux) => conflux.signature != null)
+              .length ??
+          0,
+    );
     return Flexible(
       child: ListTile(
         contentPadding: EdgeInsets.zero,
         leading: Icon(Icons.cyclone),
         title: Text(
-          '${confluxPortals.value?.where((conflux) => conflux.signature != null).length} / ${confluxPortals.value?.length}',
+          '${numberOfOnlinePortals.value} / ${confluxPortals.value?.length} Online',
           style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         ),
         subtitle: Text(
-          'Portals',
+          'Your Portals',
           style: TextStyle(color: Theme.of(context).colorScheme.primary),
         ),
       ),
