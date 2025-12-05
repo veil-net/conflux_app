@@ -101,10 +101,12 @@ class ConfluxService extends _$ConfluxService {
       throw Exception('Veilnet is not initialized');
     }
     
+    final arguments = ['down'];
     if (Platform.isMacOS) {
       // On macOS, use osascript to run with sudo privileges
       final escapedPath = _executable.path.replaceAll("'", "'\\''");
-      final command = "'$escapedPath' down";
+      final escapedArgs = arguments.map((arg) => arg.replaceAll("'", "'\\''")).join(' ');
+      final command = "'$escapedPath' $escapedArgs";
       
       final appleScript = 'do shell script "$command" with administrator privileges';
       final process = await Process.run('osascript', ['-e', appleScript]);
@@ -117,7 +119,7 @@ class ConfluxService extends _$ConfluxService {
       }
     } else {
       // For other platforms, run normally
-      final process = await Process.run(_executable.path, ['down']);
+      final process = await Process.run(_executable.path, arguments);
       final stderr = process.stderr.transform(utf8.decoder).join();
       final exitCode = process.exitCode;
       
