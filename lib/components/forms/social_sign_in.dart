@@ -16,7 +16,7 @@ class SocialSignInForm extends HookConsumerWidget {
       try {
         final supabase = ref.read(supabaseClientProvider);
         await supabase.auth.signInWithOAuth(
-          OAuthProvider.google,
+          provider,
           redirectTo: 'conflux://auth/callback',
         );
         if (context.mounted) {
