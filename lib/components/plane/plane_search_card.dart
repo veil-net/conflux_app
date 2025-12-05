@@ -96,7 +96,7 @@ class PlaneSearchCard extends HookConsumerWidget {
                 showSelectedIcon: false,
                 segments: const [
                   ButtonSegment<bool?>(value: null, label: Text('All')),
-                  ButtonSegment<bool?>(value: true, label: Text('Public')),
+                  ButtonSegment<bool?>(value: true, label: Text('Community')),
                   ButtonSegment<bool?>(value: false, label: Text('Private')),
                 ],
                 selected: {planePublicity},
