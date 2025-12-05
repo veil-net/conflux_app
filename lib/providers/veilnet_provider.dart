@@ -84,12 +84,11 @@ class ConfluxService extends _$ConfluxService {
       }
     } else {
       // For other platforms, run normally
-      final process = await Process.start(_executable.path, arguments);
-      final stderrFuture = process.stderr.transform(utf8.decoder).join();
-      final exitCode = await process.exitCode;
+      final process = await Process.run(_executable.path, arguments);
+      final stderr= process.stderr.transform(utf8.decoder).join();
+      final exitCode = process.exitCode;
       
       if (exitCode != 0) {
-        final stderr = await stderrFuture;
         throw Exception(stderr.isNotEmpty 
             ? stderr.trim() 
             : 'Process failed with exit code $exitCode');
@@ -118,12 +117,11 @@ class ConfluxService extends _$ConfluxService {
       }
     } else {
       // For other platforms, run normally
-      final process = await Process.start(_executable.path, ['down']);
-      final stderrFuture = process.stderr.transform(utf8.decoder).join();
-      final exitCode = await process.exitCode;
+      final process = await Process.run(_executable.path, ['down']);
+      final stderr = process.stderr.transform(utf8.decoder).join();
+      final exitCode = process.exitCode;
       
       if (exitCode != 0) {
-        final stderr = await stderrFuture;
         throw Exception(stderr.isNotEmpty 
             ? stderr.trim() 
             : 'Process failed with exit code $exitCode');
