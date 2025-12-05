@@ -37,6 +37,8 @@ class ConfluxService extends _$ConfluxService {
         final binary = await rootBundle.load('assets/bin/linux/veilnet-conflux');
         _executable = File('${tempDir.path}/veilnet-conflux');
         _executable.writeAsBytesSync(binary.buffer.asUint8List());
+        // Set execute permissions on Linux
+        await Process.run('chmod', ['+x', _executable.path]);
         _initialized = true;
         log('Initialized Veilnet Conflux for Linux');
         break;
@@ -44,6 +46,8 @@ class ConfluxService extends _$ConfluxService {
         final binary = await rootBundle.load('assets/bin/macos/veilnet-conflux');
         _executable = File('${tempDir.path}/veilnet-conflux');
         _executable.writeAsBytesSync(binary.buffer.asUint8List());
+        // Set execute permissions on macOS
+        await Process.run('chmod', ['+x', _executable.path]);
         _initialized = true;
         log('Initialized Veilnet Conflux for macOS');
         break;
@@ -61,11 +65,35 @@ class ConfluxService extends _$ConfluxService {
       throw Exception('Veilnet is not initialized');
     }
     final arguments = ['up', '-t', anchorToken.toString()];
-    final process = await Process.start(_executable.path, arguments);
-    exitCode = await process.exitCode;
-    if (exitCode != 0) {
-      final stderr = await process.stderr.transform(utf8.decoder).join();
-      throw Exception(stderr);
+    
+    if (Platform.isMacOS) {
+      // On macOS, use osascript to run with sudo privileges
+      // This will prompt the user for their password
+      final escapedPath = _executable.path.replaceAll("'", "'\\''");
+      final escapedArgs = arguments.map((arg) => arg.replaceAll("'", "'\\''")).join(' ');
+      final command = "'$escapedPath' $escapedArgs";
+      
+      final appleScript = 'do shell script "$command" with administrator privileges';
+      final process = await Process.run('osascript', ['-e', appleScript]);
+      
+      if (process.exitCode != 0) {
+        final errorMessage = process.stderr.toString().trim();
+        throw Exception(errorMessage.isNotEmpty 
+            ? errorMessage 
+            : 'Process failed with exit code ${process.exitCode}');
+      }
+    } else {
+      // For other platforms, run normally
+      final process = await Process.start(_executable.path, arguments);
+      final stderrFuture = process.stderr.transform(utf8.decoder).join();
+      final exitCode = await process.exitCode;
+      
+      if (exitCode != 0) {
+        final stderr = await stderrFuture;
+        throw Exception(stderr.isNotEmpty 
+            ? stderr.trim() 
+            : 'Process failed with exit code $exitCode');
+      }
     }
   }
 
@@ -73,11 +101,33 @@ class ConfluxService extends _$ConfluxService {
     if (!_initialized) {
       throw Exception('Veilnet is not initialized');
     }
-    final process = await Process.start(_executable.path, ['down']);
-    final exitCode = await process.exitCode;
-    if (exitCode != 0) {
-      final stderr = await process.stderr.transform(utf8.decoder).join();
-      throw Exception(stderr);
+    
+    if (Platform.isMacOS) {
+      // On macOS, use osascript to run with sudo privileges
+      final escapedPath = _executable.path.replaceAll("'", "'\\''");
+      final command = "'$escapedPath' down";
+      
+      final appleScript = 'do shell script "$command" with administrator privileges';
+      final process = await Process.run('osascript', ['-e', appleScript]);
+      
+      if (process.exitCode != 0) {
+        final errorMessage = process.stderr.toString().trim();
+        throw Exception(errorMessage.isNotEmpty 
+            ? errorMessage 
+            : 'Process failed with exit code ${process.exitCode}');
+      }
+    } else {
+      // For other platforms, run normally
+      final process = await Process.start(_executable.path, ['down']);
+      final stderrFuture = process.stderr.transform(utf8.decoder).join();
+      final exitCode = await process.exitCode;
+      
+      if (exitCode != 0) {
+        final stderr = await stderrFuture;
+        throw Exception(stderr.isNotEmpty 
+            ? stderr.trim() 
+            : 'Process failed with exit code $exitCode');
+      }
     }
   }
 }
