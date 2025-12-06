@@ -33,24 +33,17 @@ class HomeView extends HookConsumerWidget {
     }
 
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-      return Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ConfluxCard(),
-              ConstrainedBox(constraints: BoxConstraints(maxWidth: 1000),
-                child: Wrap(
-                  children: [
-                    GreetingTile(),
-                    ConstrainedBox(constraints: BoxConstraints(maxWidth: 500), child: AppSubNavigationBar()),
-                    ConstrainedBox(constraints: BoxConstraints(maxWidth: 500), child: ConfluxSummaryCard()),
-                    SelectedPlane(),
-                  ],
-                ),
-              ),
-            ],
+      return CustomScrollView(
+        slivers: [
+          SliverFloatingHeader(
+            snapMode: FloatingHeaderSnapMode.scroll,
+            child: ConfluxCard(),
           ),
-        ),
+          SliverToBoxAdapter(child: Center(child: GreetingTile())),
+          SliverToBoxAdapter(child: Center(child: AppSubNavigationBar())),
+          SliverToBoxAdapter(child: Center(child: SelectedPlane())),
+          SliverToBoxAdapter(child: Center(child: ConfluxSummaryCard())),
+        ],
       );
     }
 

@@ -41,82 +41,85 @@ class PlaneSearchCard extends HookConsumerWidget {
       }
     }
 
-    return AppCard(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          spacing: 16,
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              spacing: 16,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: AppTextInput(
-                    label: 'Search a Plane',
-                    hint: 'Search planes by name',
-                    controller: planeNameTextController,
-                    keyboardType: TextInputType.text,
-                    prefixIcon: FontAwesomeIcons.magnifyingGlass,
-                    obscureText: false,
-                    readOnly: false,
-                    enable: true,
-                    onChanged: (value) {
-                      ref
-                          .read(planeFilterProvider.notifier)
-                          .setPlaneFilter(value);
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 1000),
+      child: AppCard(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            spacing: 16,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                spacing: 16,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: AppTextInput(
+                      label: 'Search a Plane',
+                      hint: 'Search planes by name',
+                      controller: planeNameTextController,
+                      keyboardType: TextInputType.text,
+                      prefixIcon: FontAwesomeIcons.magnifyingGlass,
+                      obscureText: false,
+                      readOnly: false,
+                      enable: true,
+                      onChanged: (value) {
+                        ref
+                            .read(planeFilterProvider.notifier)
+                            .setPlaneFilter(value);
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      DialogManager.showDialog(
+                        context,
+                        'Each VeilNet Plane is a decentralized network of nodes that can be used to connect to the internet. '
+                        'Each Plane has a Geographic Region associated with it, which will determine the masquerade geographic location for your traffic.\n\n'
+                        'Terra is a special Plane that associated with any country, your traffic will be masqueraded as if it is coming from multiple countries at once. This may cause some websites or applications fail to work properly.',
+                        DialogType.info,
+                      );
                     },
+                    icon: Icon(Icons.info),
                   ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    DialogManager.showDialog(
-                      context,
-                      'Each VeilNet Plane is a decentralized network of nodes that can be used to connect to the internet. '
-                      'Each Plane has a Geographic Region associated with it, which will determine the masquerade geographic location for your traffic.\n\n'
-                      'Terra is a special Plane that associated with any country, your traffic will be masqueraded as if it is coming from multiple countries at once. This may cause some websites or applications fail to work properly.',
-                      DialogType.info,
-                    );
-                  },
-                  icon: Icon(Icons.info),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: SegmentedButton<bool?>(
-                style: SegmentedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                showSelectedIcon: false,
-                segments: const [
-                  ButtonSegment<bool?>(value: null, label: Text('All')),
-                  ButtonSegment<bool?>(value: true, label: Text('Community')),
-                  ButtonSegment<bool?>(value: false, label: Text('Private')),
                 ],
-                selected: {planePublicity},
-                onSelectionChanged: (Set<bool?> selected) {
-                  ref
-                      .read(planePublicityProvider.notifier)
-                      .setPublicity(selected.first);
-                },
               ),
-            ),
-            if (developerMode)
-              AppButton(
-                label: 'manage Private Planes',
-                onPressed: managePrivatePlanes,
-                expand: true,
-                outline: true,
+              SizedBox(
+                width: double.infinity,
+                child: SegmentedButton<bool?>(
+                  style: SegmentedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  showSelectedIcon: false,
+                  segments: const [
+                    ButtonSegment<bool?>(value: null, label: Text('All')),
+                    ButtonSegment<bool?>(value: true, label: Text('Community')),
+                    ButtonSegment<bool?>(value: false, label: Text('Private')),
+                  ],
+                  selected: {planePublicity},
+                  onSelectionChanged: (Set<bool?> selected) {
+                    ref
+                        .read(planePublicityProvider.notifier)
+                        .setPublicity(selected.first);
+                  },
+                ),
               ),
-          ],
+              if (developerMode)
+                AppButton(
+                  label: 'manage Private Planes',
+                  onPressed: managePrivatePlanes,
+                  expand: true,
+                  outline: true,
+                ),
+            ],
+          ),
         ),
-      ),
-    ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut);
+      ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
+    );
   }
 }

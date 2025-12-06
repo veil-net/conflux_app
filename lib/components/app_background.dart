@@ -1,7 +1,9 @@
-import 'dart:async';
 import 'dart:math';
+import 'dart:ui' as ui;
+import 'dart:ui';
 
-import 'package:conflux/providers/settings_provider.dart';
+import 'package:conflux/models/particle.dart';
+import 'package:conflux/providers/particle_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,255 +13,123 @@ class AppBackground extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final darkMode = ref.watch(darkModeProvider);
-    final theme = Theme.of(context);
-    final primaryColor = theme.colorScheme.primary; // Cyan
-    final secondaryColor = theme.colorScheme.secondary; // Purple
+    final primaryParticles = ref.watch(primaryParticlesProvider(50));
+    final secondaryParticles = ref.watch(secondaryParticlesProvider(50));
 
-    // Use continuous time that never resets - sin/cos are periodic so it loops seamlessly
-    final continuousTime = useState(0.0);
-    
-    // Pulse animation for connections
-    final pulseController = useAnimationController(
-      duration: const Duration(seconds: 1),
-    );
-  
-    useEffect(() {
-      pulseController.repeat(reverse: true);
-      
-      // Continuously increment time - since sin/cos are periodic, this creates seamless looping
-      final startTime = DateTime.now();
-      final timer = Stream.periodic(
-        const Duration(milliseconds: 16), // ~60fps
-      ).listen((_) {
-        final elapsed = DateTime.now().difference(startTime);
-        continuousTime.value = elapsed.inMilliseconds / 1000.0;
-      });
-      
-      return () => timer.cancel();
-    }, []);
-    
-    // Pulse animation value
-    final pulseValue = useAnimation(
-      Tween(begin: 0.3, end: 1.0).animate(
-        CurvedAnimation(parent: pulseController, curve: Curves.easeInOut),
-      ),
-    );
+    final controller = useAnimationController(
+      duration: const Duration(seconds: 100),
+    )..repeat();
 
-    // Generate nodes (will be stable across rebuilds)
-    final nodes = useMemoized(() => _generateNodes(50), []);
+    final animationValue = useAnimation(controller);
 
-    return RepaintBoundary(
-      child: CustomPaint(
-        painter: _NetworkBackgroundPainter(
-          darkMode: darkMode,
-          primaryColor: primaryColor,
-          secondaryColor: secondaryColor,
-          animationValue: continuousTime.value, // Continuously incrementing - sin/cos handle periodicity
-          pulseValue: pulseValue,
-          nodes: nodes,
+    return ImageFiltered(
+      imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+      child: RepaintBoundary(
+        child: CustomPaint(
+          painter: _AppBackgroundPainter(
+            context: context,
+            primaryParticles: primaryParticles,
+            secondaryParticles: secondaryParticles,
+            animationValue: animationValue,
+          ),
+          size: Size.infinite,
         ),
-        size: Size.infinite,
       ),
     );
   }
-
-  List<_NetworkNode> _generateNodes(int count) {
-    final random = Random();
-    return List.generate(count, (i) {
-      // Distribute nodes across screen with some variation
-      final baseX = (i % 10) / 10.0;
-      final baseY = (i ~/ 10) / (count / 10.0);
-      
-      return _NetworkNode(
-        baseX: baseX + (random.nextDouble() - 0.5) * 0.3,
-        baseY: baseY + (random.nextDouble() - 0.5) * 0.3,
-        amplitudeX: 0.15 + random.nextDouble() * 0.15,
-        amplitudeY: 0.15 + random.nextDouble() * 0.15,
-        speedX: 0.5 + random.nextDouble() * 1.0,
-        speedY: 0.5 + random.nextDouble() * 1.0,
-        phaseX: random.nextDouble() * 2 * pi,
-        phaseY: random.nextDouble() * 2 * pi,
-        size: 3.0 + random.nextDouble() * 4.0,
-        colorMix: random.nextDouble(), // 0 = cyan, 1 = purple
-      );
-    });
-  }
 }
 
-class _NetworkNode {
-  final double baseX;
-  final double baseY;
-  final double amplitudeX;
-  final double amplitudeY;
-  final double speedX;
-  final double speedY;
-  final double phaseX;
-  final double phaseY;
-  final double size;
-  final double colorMix; // 0.0 = cyan, 1.0 = purple
-
-  _NetworkNode({
-    required this.baseX,
-    required this.baseY,
-    required this.amplitudeX,
-    required this.amplitudeY,
-    required this.speedX,
-    required this.speedY,
-    required this.phaseX,
-    required this.phaseY,
-    required this.size,
-    required this.colorMix,
-  });
-
-  Offset getPosition(double time) {
-    return Offset(
-      baseX + amplitudeX * sin(time * speedX + phaseX),
-      baseY + amplitudeY * cos(time * speedY + phaseY),
-    );
-  }
-}
-
-class _NetworkBackgroundPainter extends CustomPainter {
-  final bool darkMode;
-  final Color primaryColor;
-  final Color secondaryColor;
+class _AppBackgroundPainter extends CustomPainter {
+  final BuildContext context;
+  final List<Particle> primaryParticles;
+  final List<Particle> secondaryParticles;
   final double animationValue;
-  final double pulseValue;
-  final List<_NetworkNode> nodes;
 
-  _NetworkBackgroundPainter({
-    required this.darkMode,
-    required this.primaryColor,
-    required this.secondaryColor,
+  _AppBackgroundPainter({
+    required this.context,
+    required this.primaryParticles,
+    required this.secondaryParticles,
     required this.animationValue,
-    required this.pulseValue,
-    required this.nodes,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Draw base background
-    final baseColor = darkMode ? const Color.fromARGB(255, 28, 25, 23) : Color.fromARGB(255, 245, 245, 244);
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), Paint()..color = baseColor);
+    final theta = animationValue * 2 * pi;
 
-    // Use continuous time directly - sin/cos are periodic so modulo 2π for seamless looping
-    final time = animationValue / 5;
-    final positions = nodes.map((node) => Offset(
-      node.getPosition(time).dx * size.width,
-      node.getPosition(time).dy * size.height,
-    )).toList();
+    // Store calculated positions to avoid recalculating
+    final primaryPositions = <Particle, Offset>{};
+    final secondaryPositions = <Particle, Offset>{};
 
-    // Connection distance threshold
-    final maxConnectionDistance = (size.width + size.height) / 2 * 0.15;
+    // Calculate and store primary particle positions
+    for (final particle in primaryParticles) {
+      final x =
+          (particle.x + cos(theta * particle.direction) * particle.radius_x) *
+          size.width;
+      final y =
+          (particle.y + sin(theta * particle.direction) * particle.radius_y) *
+          size.height;
+      primaryPositions[particle] = Offset(x, y);
+    }
 
-    // Draw connections between nearby nodes
-    final connections = <_Connection>[];
-    for (int i = 0; i < positions.length; i++) {
-      for (int j = i + 1; j < positions.length; j++) {
-        final distance = (positions[i] - positions[j]).distance;
-        if (distance < maxConnectionDistance) {
-          connections.add(_Connection(
-            from: positions[i],
-            to: positions[j],
-            distance: distance,
-            maxDistance: maxConnectionDistance,
-            fromNode: nodes[i],
-            toNode: nodes[j],
-          ));
+    // Calculate and store secondary particle positions
+    for (final particle in secondaryParticles) {
+      final x =
+          (particle.x + cos(theta * particle.direction) * particle.radius_x) *
+          size.width;
+      final y =
+          (particle.y + sin(theta * particle.direction) * particle.radius_y) *
+          size.height;
+      secondaryPositions[particle] = Offset(x, y);
+    }
+
+    final maxDistance = size.height > size.width ? size.width * 0.25 : size.height * 0.25;
+    final colorScheme = Theme.of(context).colorScheme;
+    for (final primaryParticle in primaryParticles) {
+      final primaryPos = primaryPositions[primaryParticle]!;
+      for (final secondaryParticle in secondaryParticles) {
+        final secondaryPos = secondaryPositions[secondaryParticle]!;
+        final distance = (primaryPos - secondaryPos).distance;
+
+        if (distance <= maxDistance) {
+          final shader = ui.Gradient.linear(primaryPos, secondaryPos, [
+            colorScheme.primary,
+            colorScheme.secondary,
+          ]);
+
+          final paint = Paint()
+            ..shader = shader
+            ..strokeWidth = 1.0;
+
+          canvas.drawLine(primaryPos, secondaryPos, paint);
         }
       }
     }
 
-    // Draw connections with gradient colors
-    for (final connection in connections) {
-      _drawConnection(canvas, connection, pulseValue);
+    // Draw primary particle circles
+    for (final particle in primaryParticles) {
+      final position = primaryPositions[particle]!;
+      final circleSize = (particle.size * 10).clamp(5.0, 10.0);
+
+      final paint = Paint()..color = Theme.of(context).colorScheme.primary;
+
+      canvas.drawCircle(position, circleSize, paint);
     }
 
-    // Draw nodes
-    for (int i = 0; i < nodes.length; i++) {
-      _drawNode(canvas, positions[i], nodes[i], pulseValue, size);
-    }
-  }
+    // Draw secondary particle circles
+    for (final particle in secondaryParticles) {
+      final position = secondaryPositions[particle]!;
+      final circleSize = (particle.size * 10).clamp(5.0, 10.0);
 
-  void _drawConnection(Canvas canvas, _Connection connection, double pulse) {
-    final distanceRatio = connection.distance / connection.maxDistance;
-    final opacity = (1.0 - distanceRatio) * pulse;
-    
-    // Mix colors based on node positions
-    final fromColorMix = connection.fromNode.colorMix;
-    final toColorMix = connection.toNode.colorMix;
-    final avgColorMix = (fromColorMix + toColorMix) / 2;
-    
-    // Opacity based on distance and pulse
-    final lineAlpha = (opacity * (darkMode ? 100 : 60)).round().clamp(0, 255);
-    
-    // Draw gradient along the line for smooth color flow
-    if (lineAlpha > 15) {
-      final gradientPaint = Paint()
-        ..shader = LinearGradient(
-          colors: [
-            primaryColor.withAlpha((lineAlpha * (1 - fromColorMix)).round()),
-            Color.lerp(primaryColor, secondaryColor, avgColorMix)!
-                .withAlpha((lineAlpha * 1.2).round().clamp(0, 255)),
-            secondaryColor.withAlpha((lineAlpha * (1 - toColorMix)).round()),
-          ],
-          stops: const [0.0, 0.5, 1.0],
-        ).createShader(
-          Rect.fromPoints(connection.from, connection.to),
-        )
-        ..strokeWidth = 1.0 + (pulse * 0.5)
-        ..style = PaintingStyle.stroke;
-      
-      canvas.drawLine(connection.from, connection.to, gradientPaint);
-    }
-  }
+      final paint = Paint()..color = Theme.of(context).colorScheme.secondary;
 
-  void _drawNode(Canvas canvas, Offset position, _NetworkNode node, double pulse, Size canvasSize) {
-    // Determine node color based on colorMix (blend between cyan and purple)
-    final nodeColor = Color.lerp(primaryColor, secondaryColor, node.colorMix)!;
-    
-    // Node opacity and glow
-    final nodeAlpha = darkMode ? 180 : 120;
-    final nodePaint = Paint()
-      ..color = nodeColor.withAlpha((nodeAlpha * pulse).round().clamp(0, 255));
-    
-    // Draw node with glow
-    final glowSize = node.size * (1.0 + pulse * 0.3);
-    final glowPaint = Paint()
-      ..color = nodeColor.withAlpha((nodeAlpha * 0.3 * pulse).round().clamp(0, 255))
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
-    
-    canvas.drawCircle(position, glowSize, glowPaint);
-    canvas.drawCircle(position, node.size, nodePaint);
-    
-    // Add inner highlight
-    final highlightPaint = Paint()
-      ..color = Colors.white.withAlpha((30 * pulse).round())
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2);
-    canvas.drawCircle(position, node.size * 0.5, highlightPaint);
+      canvas.drawCircle(position, circleSize, paint);
+    }
   }
 
   @override
-  bool shouldRepaint(covariant _NetworkBackgroundPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(covariant _AppBackgroundPainter oldDelegate) {
+    return oldDelegate.animationValue != animationValue ||
+        oldDelegate.primaryParticles != primaryParticles ||
+        oldDelegate.secondaryParticles != secondaryParticles;
   }
-}
-
-class _Connection {
-  final Offset from;
-  final Offset to;
-  final double distance;
-  final double maxDistance;
-  final _NetworkNode fromNode;
-  final _NetworkNode toNode;
-
-  _Connection({
-    required this.from,
-    required this.to,
-    required this.distance,
-    required this.maxDistance,
-    required this.fromNode,
-    required this.toNode,
-  });
 }

@@ -70,7 +70,17 @@ class RiftSummaryTitle extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final confluxRifts = ref.watch(confluxRiftsDetailsProvider);
-    final numberOfOnlineRifts = useState(confluxRifts.value?.where((conflux) => conflux.signature != null).length ?? 0);
+    final numberOfOnlineRifts = useState(0);
+
+    useEffect(() {
+      numberOfOnlineRifts.value =
+          confluxRifts.value
+              ?.where((conflux) => conflux.signature != null)
+              .length ??
+          0;
+      return null;
+    }, [confluxRifts.value]);
+    
     return Flexible(
       child: ListTile(
         contentPadding: EdgeInsets.zero,
@@ -94,12 +104,17 @@ class PortalSummaryTitle extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final confluxPortals = ref.watch(confluxPortalsDetailsProvider);
-    final numberOfOnlinePortals = useState(
-      confluxPortals.value
+    final numberOfOnlinePortals = useState(0);
+
+    useEffect(() {
+      numberOfOnlinePortals.value =
+          confluxPortals.value
               ?.where((conflux) => conflux.signature != null)
               .length ??
-          0,
-    );
+          0;
+      return null;
+    }, [confluxPortals.value]);
+
     return Flexible(
       child: ListTile(
         contentPadding: EdgeInsets.zero,

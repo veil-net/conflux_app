@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -11,22 +9,14 @@ class AppCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              border: Border.all(
-                color: Theme.of(context).colorScheme.primary,
-                width:0.1,
-              ),
-            ),
-            child: child,
-          ),
+      child: Card(
+        elevation: 3,
+        color: Theme.of(context).colorScheme.surface,
+        shadowColor: Theme.of(context).colorScheme.secondary.withAlpha(50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
+        child: child,
       ),
     );
   }

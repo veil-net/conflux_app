@@ -32,7 +32,7 @@ Future<void> main() async {
   if (Platform.isWindows) {
     await register('conflux');
   }
-  
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -47,7 +47,6 @@ Future<void> main() async {
 class MyApp extends HookConsumerWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final darkMode = ref.watch(darkModeProvider);

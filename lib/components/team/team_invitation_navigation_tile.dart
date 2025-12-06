@@ -17,11 +17,7 @@ class TeamInvitationNavigationTile extends HookConsumerWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: constraints.maxWidth * 0.5 < 500
-                ? 500
-                : constraints.maxWidth * 0.5,
-          ),
+          constraints: BoxConstraints(maxWidth: 500),
           child:
               AppCard(
                 child: ListTile(

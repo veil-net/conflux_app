@@ -17,10 +17,7 @@ class Confluxes extends _$Confluxes {
     return supabase
         .from('confluxes')
         .stream(primaryKey: ['id'])
-        .map(
-          (event) =>
-              event.map((data) => Conflux.fromJson(data)).toList(),
-        );
+        .map((event) => event.map((data) => Conflux.fromJson(data)).toList());
   }
 
   Future<void> createConflux(String name, String plane_id, String? tag) async {

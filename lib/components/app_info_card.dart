@@ -21,6 +21,7 @@ class AppInfoCard extends HookConsumerWidget {
                   .slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
               ListTile(
                 contentPadding: EdgeInsets.zero,
+                leading: Icon(Icons.info),
                 title: Text(
                   'Version',
                   style: TextStyle(
