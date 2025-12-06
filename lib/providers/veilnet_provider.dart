@@ -27,14 +27,18 @@ class ConfluxService extends _$ConfluxService {
     final tempDir = await getTemporaryDirectory();
     switch (Platform.operatingSystem) {
       case "windows":
-        final binary = await rootBundle.load('assets/bin/windows/veilnet-conflux.exe');
+        final binary = await rootBundle.load(
+          'assets/bin/windows/veilnet-conflux.exe',
+        );
         _executable = File('${tempDir.path}/veilnet-conflux.exe');
         _executable.writeAsBytesSync(binary.buffer.asUint8List());
         _initialized = true;
         log('Initialized Veilnet Conflux for Windows');
         break;
       case "linux":
-        final binary = await rootBundle.load('assets/bin/linux/veilnet-conflux');
+        final binary = await rootBundle.load(
+          'assets/bin/linux/veilnet-conflux',
+        );
         _executable = File('${tempDir.path}/veilnet-conflux');
         _executable.writeAsBytesSync(binary.buffer.asUint8List());
         // Set execute permissions on Linux
@@ -43,7 +47,9 @@ class ConfluxService extends _$ConfluxService {
         log('Initialized Veilnet Conflux for Linux');
         break;
       case "macos":
-        final binary = await rootBundle.load('assets/bin/macos/veilnet-conflux');
+        final binary = await rootBundle.load(
+          'assets/bin/macos/veilnet-conflux',
+        );
         _executable = File('${tempDir.path}/veilnet-conflux');
         _executable.writeAsBytesSync(binary.buffer.asUint8List());
         // Set execute permissions on macOS
@@ -65,33 +71,40 @@ class ConfluxService extends _$ConfluxService {
       throw Exception('Veilnet is not initialized');
     }
     final arguments = ['up', '-t', anchorToken.toString()];
-    
+
     if (Platform.isMacOS) {
       // On macOS, use osascript to run with sudo privileges
       // This will prompt the user for their password
       final escapedPath = _executable.path.replaceAll("'", "'\\''");
-      final escapedArgs = arguments.map((arg) => arg.replaceAll("'", "'\\''")).join(' ');
+      final escapedArgs = arguments
+          .map((arg) => arg.replaceAll("'", "'\\''"))
+          .join(' ');
       final command = "'$escapedPath' $escapedArgs";
-      
-      final appleScript = 'do shell script "$command" with administrator privileges';
+
+      final appleScript =
+          'do shell script "$command" with administrator privileges';
       final process = await Process.run('osascript', ['-e', appleScript]);
-      
+
       if (process.exitCode != 0) {
         final errorMessage = process.stderr.toString().trim();
-        throw Exception(errorMessage.isNotEmpty 
-            ? errorMessage 
-            : 'Process failed with exit code ${process.exitCode}');
+        throw Exception(
+          errorMessage.isNotEmpty
+              ? errorMessage
+              : 'Process failed with exit code ${process.exitCode}',
+        );
       }
     } else {
       // For other platforms, run normally
       final process = await Process.run(_executable.path, arguments);
-      final stderr= process.stderr.transform(utf8.decoder).join();
+      final stderr = process.stderr.transform(utf8.decoder).join();
       final exitCode = process.exitCode;
-      
+
       if (exitCode != 0) {
-        throw Exception(stderr.isNotEmpty 
-            ? stderr.trim() 
-            : 'Process failed with exit code $exitCode');
+        throw Exception(
+          stderr.isNotEmpty
+              ? stderr.trim()
+              : 'Process failed with exit code $exitCode',
+        );
       }
     }
   }
@@ -100,33 +113,40 @@ class ConfluxService extends _$ConfluxService {
     if (!_initialized) {
       throw Exception('Veilnet is not initialized');
     }
-    
+
     final arguments = ['down'];
     if (Platform.isMacOS) {
       // On macOS, use osascript to run with sudo privileges
       final escapedPath = _executable.path.replaceAll("'", "'\\''");
-      final escapedArgs = arguments.map((arg) => arg.replaceAll("'", "'\\''")).join(' ');
+      final escapedArgs = arguments
+          .map((arg) => arg.replaceAll("'", "'\\''"))
+          .join(' ');
       final command = "'$escapedPath' $escapedArgs";
-      
-      final appleScript = 'do shell script "$command" with administrator privileges';
+
+      final appleScript =
+          'do shell script "$command" with administrator privileges';
       final process = await Process.run('osascript', ['-e', appleScript]);
-      
+
       if (process.exitCode != 0) {
         final errorMessage = process.stderr.toString().trim();
-        throw Exception(errorMessage.isNotEmpty 
-            ? errorMessage 
-            : 'Process failed with exit code ${process.exitCode}');
+        throw Exception(
+          errorMessage.isNotEmpty
+              ? errorMessage
+              : 'Process failed with exit code ${process.exitCode}',
+        );
       }
     } else {
       // For other platforms, run normally
       final process = await Process.run(_executable.path, arguments);
       final stderr = process.stderr.transform(utf8.decoder).join();
       final exitCode = process.exitCode;
-      
+
       if (exitCode != 0) {
-        throw Exception(stderr.isNotEmpty 
-            ? stderr.trim() 
-            : 'Process failed with exit code $exitCode');
+        throw Exception(
+          stderr.isNotEmpty
+              ? stderr.trim()
+              : 'Process failed with exit code $exitCode',
+        );
       }
     }
   }
@@ -318,7 +338,7 @@ class VeilNet extends _$VeilNet {
       _intentState = VeilNetState.disconnecting;
       switch (Platform.operatingSystem) {
         case "windows":
-          ref.read(confluxServiceProvider.notifier).down();
+          await ref.read(confluxServiceProvider.notifier).down();
           break;
         case "linux":
           await ref.read(confluxServiceProvider.notifier).down();
