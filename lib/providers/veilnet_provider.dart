@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -96,7 +95,7 @@ class ConfluxService extends _$ConfluxService {
     } else {
       // For other platforms, run normally
       final process = await Process.run(_executable.path, arguments);
-      final stderr = process.stderr.transform(utf8.decoder).join();
+      final stderr = process.stderr.toString().trim();
       final exitCode = process.exitCode;
 
       if (exitCode != 0) {
@@ -138,7 +137,7 @@ class ConfluxService extends _$ConfluxService {
     } else {
       // For other platforms, run normally
       final process = await Process.run(_executable.path, arguments);
-      final stderr = process.stderr.transform(utf8.decoder).join();
+      final stderr = process.stderr.toString().trim();
       final exitCode = process.exitCode;
 
       if (exitCode != 0) {

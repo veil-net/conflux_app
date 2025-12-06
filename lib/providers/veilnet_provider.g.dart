@@ -33,7 +33,7 @@ final class ConfluxServiceProvider
   ConfluxService create() => ConfluxService();
 }
 
-String _$confluxServiceHash() => r'786c984c2dbc14969d73e21fe57845799d09e7dd';
+String _$confluxServiceHash() => r'6468b2831321afa6573feb04cbcde565b8268e8c';
 
 abstract class _$ConfluxService extends $AsyncNotifier<ConfluxService> {
   FutureOr<ConfluxService> build();
@@ -85,7 +85,7 @@ final class VeilNetProvider extends $NotifierProvider<VeilNet, VeilNetState> {
   }
 }
 
-String _$veilNetHash() => r'44f06eae4a08e71395d2af555c99f4c859f4f39b';
+String _$veilNetHash() => r'b0dad1a313ca8e2e356e00808abe09e2734418a9';
 
 abstract class _$VeilNet extends $Notifier<VeilNetState> {
   VeilNetState build();
