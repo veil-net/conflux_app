@@ -21,19 +21,20 @@ class SettingView extends HookConsumerWidget {
       );
     }
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-      return Center(
-        child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 1000),
-            child: Wrap(
-              children: [
-                AppInfoCard(),
-                GeneralSettingsCard(),
-                AccountManagement(),
-              ],
+      return CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Center(
+              child: Wrap(
+                children: [
+                  AppInfoCard(),
+                  GeneralSettingsCard(),
+                  AccountManagement(),
+                ],
+              ),
             ),
           ),
-        ),
+        ],
       );
     }
     return Center(child: Text('Unsupported platform'));
