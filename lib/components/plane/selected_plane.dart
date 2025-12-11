@@ -41,8 +41,8 @@ class SelectedPlane extends HookConsumerWidget {
                           TextSpan(
                             text: 'VeilNet Planes',
                             style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                           TextSpan(
                             text:
@@ -51,7 +51,9 @@ class SelectedPlane extends HookConsumerWidget {
                           ),
                           TextSpan(
                             text: 'Select a Plane to get started',
-                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                         ],
                       ),
@@ -128,21 +130,26 @@ class SelectedPlane extends HookConsumerWidget {
                         onPressed: plane.portals > 0
                             ? () async {
                                 try {
-                                  final supabase = ref.read(supabaseClientProvider);
+                                  final supabase = ref.read(
+                                    supabaseClientProvider,
+                                  );
                                   final resp = await supabase.rpc(
                                     'count_user_public_rifts',
                                     params: {'u': plane.user_id},
                                   );
                                   final count = (resp as num).toInt();
-                                  final serviceTier = await ref.read(
+                                  ref.invalidate(serviceTierProvider);
+                                  ref.invalidate(userProfileProvider);
+
+                                  final serviceTier = await ref.watch(
                                     serviceTierProvider.future,
                                   );
-                                  final userProfile = await ref.read(
+                                  final userProfile = await ref.watch(
                                     userProfileProvider.future,
                                   );
                                   switch (serviceTier) {
                                     case 0:
-                                      if (userProfile.mp < 0) {
+                                      if (userProfile.mp <= 0) {
                                         final session =
                                             supabase.auth.currentSession;
                                         if (session != null) {
@@ -151,21 +158,41 @@ class SelectedPlane extends HookConsumerWidget {
                                               'https://auth.veilnet.app/subscribe#refresh_token=${session.refreshToken}',
                                             ),
                                           );
+                                          if (context.mounted) {
+                                            DialogManager.showDialog(
+                                              context,
+                                              'Please upgrade your subscription or self host to earn credits.',
+                                              DialogType.info,
+                                            );
+                                          }
+                                          return;
                                         }
                                       }
                                       break;
                                     case 1:
-                                      if (count >= 3 && userProfile.mp <= 0) {
-                                        throw Exception(
-                                          'You can not connect more than 3 devices at the same time.',
-                                        );
+                                      if (count >= 3 &&
+                                          userProfile.mp <= 0) {
+                                        if (context.mounted) {
+                                          DialogManager.showDialog(
+                                            context,
+                                            'Your subscription does not allow you to connect more than 3 devices at the same time.',
+                                            DialogType.info,
+                                          );
+                                        }
+                                        return;
                                       }
                                       break;
                                     case 2:
-                                      if (count >= 10 && userProfile.mp <= 0) {
-                                        throw Exception(
-                                          'You can not connect more than 10 devices at the same time.',
-                                        );
+                                      if (count >= 10 &&
+                                          userProfile.mp <= 0) {
+                                        if (context.mounted) {
+                                          DialogManager.showDialog(
+                                            context,
+                                            'Your subscription does not allow you to connect more than 10 devices at the same time.',
+                                            DialogType.info,
+                                          );
+                                        }
+                                        return;
                                       }
                                       break;
                                     default:
