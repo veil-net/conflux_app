@@ -38,10 +38,7 @@ class MainActivity : FlutterActivity() {
                                 startActivityForResult(vpnIntent, 1001)
                                 result.success(true)
                             } else {
-                                val veilnetIntent = Intent(context, VeilNetVPNService::class.java)
-                                veilnetIntent.putExtra("guardian", guardian)
-                                veilnetIntent.putExtra("token", token)
-                                ContextCompat.startForegroundService(this, veilnetIntent)
+                                onActivityResult(1001, RESULT_OK, null)
                                 result.success(true)
                             }
                         } catch (e: Exception) {
@@ -51,7 +48,9 @@ class MainActivity : FlutterActivity() {
 
                     "stop" -> {
                         try {
-                            VeilNetVPNService.stop()
+                            val intent = Intent(context, VeilNetVPNService::class.java)
+                            intent.action = "Stop"
+                            ContextCompat.startForegroundService(this, intent)
                             result.success(true)
                         } catch (e: Exception) {
                             result.error("Fail to stop", e.message, null)
@@ -70,6 +69,7 @@ class MainActivity : FlutterActivity() {
                     val veilnetIntent = Intent(context, VeilNetVPNService::class.java)
                     veilnetIntent.putExtra("guardian", guardian)
                     veilnetIntent.putExtra("token", token)
+                    veilnetIntent.action = "Start"
                     ContextCompat.startForegroundService(this, veilnetIntent)
                 }
             }

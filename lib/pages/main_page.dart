@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({super.key});
@@ -28,6 +29,16 @@ class MainPage extends HookConsumerWidget {
       });
       return null;
     }, [user]);
+
+    useEffect(() {
+      Future.microtask(() async {
+        final status = await Permission.notification.status;
+        if (status.isDenied) {
+          await Permission.notification.request();
+        }
+      });
+      return null;
+    }, []);
 
     final pageController = ref.watch(pageControllerProvider);
     return Scaffold(

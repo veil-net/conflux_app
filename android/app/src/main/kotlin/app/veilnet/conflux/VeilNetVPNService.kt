@@ -16,67 +16,27 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 
 class VeilNetVPNService : VpnService() {
-
-    companion object {
-        @Volatile
-        private var instance: VeilNetVPNService? = null
-        private const val SERVICE_NOTIFICATION_CHANNEL_ID = "VeilNetService"
-        private const val SERVICE_NOTIFICATION_ID = 1
-
-
-
-        fun stop(){
-            instance?.anchorScope?.launch {
-                // Stop the tunnel interface
-                instance?.tunInterface?.close()
-                instance?.tunInterface = null
-                // Stop the anchor
-                instance?.anchor?.stop()
-                instance?.anchorScope?.cancel()
-                instance?.anchor = null
-                // Call stopSelf to stop the service
-                instance?.stopSelf()
-            }
-        }
-    }
-
     private var tunInterface: ParcelFileDescriptor? = null
     private var anchor: Anchor? = null
-    private var anchorScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-
-    override fun onCreate() {
-        super.onCreate()
-        instance = this
-        createNotificationChannel()
-    }
-
-    override fun onDestroy() {
-        // Stop the tunnel interface when the service is destroyed
-        tunInterface?.close()
-        tunInterface = null
-        // Stop the anchor when the service is destroyed
-        anchor?.stop()
-        anchorScope.cancel()
-        anchor = null
-        // Release the instance reference
-        instance = null
-        super.onDestroy()
-    }
+    private var superVisorJob = SupervisorJob()
+    private var startScope: CoroutineScope = CoroutineScope(Dispatchers.IO  + superVisorJob)
 
     override fun onRevoke() {
-        // Stop the tunnel interface when the service is destroyed
-        tunInterface?.close()
-        tunInterface = null
-        // Stop the anchor when the service is destroyed
+        superVisorJob.cancel()
         anchor?.stop()
-        anchorScope.cancel()
-        anchor = null
-        // Release the instance reference
-        instance = null
-        super.onRevoke()
+        tunInterface?.close()
+        stopSelf()
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        if (intent.action == "Stop") {
+            superVisorJob.cancel()
+            anchor?.stop()
+            tunInterface?.close()
+            stopSelf()
+            return START_NOT_STICKY
+        }
+
         val guardian = intent.getStringExtra("guardian")
         val token = intent.getStringExtra("token")
 
@@ -87,72 +47,29 @@ class VeilNetVPNService : VpnService() {
         }
 
         val notification = buildNotification()
-        startForeground(SERVICE_NOTIFICATION_ID, notification)
+        startForeground(1, notification)
+        startVeilNet(guardian, token)
 
-        anchorScope.launch {
-            try {
-                anchor = newAnchor()
-            } catch (e: Exception) {
-                Log.e("VeilNet", "Failed to create anchor instance")
-                stopSelf()
-                return@launch
-            }
-
-            try {
-                anchor!!.start(guardian, "nats.veilnet.app", 30422,token, false)
-            } catch (e: Exception) {
-                Log.e("VeilNet", "Failed to start anchor")
-                stopSelf()
-                return@launch
-            }
-
-            updateNotification("VeilNet anchor is active, creating tunnel interface...")
-
-            try {
-                val cidr = anchor!!.cidr
-                val (ip, mask) = cidr!!.split("/")
-                val builder = Builder()
-                    .setSession("VeilNet")
-                    .addAddress(ip, mask.toInt())
-                    .addDnsServer("1.1.1.1")
-                    .addRoute("0.0.0.0", 0)
-                    .setMtu(1500)
-                    .addDisallowedApplication(applicationContext.packageName)
-                tunInterface = builder.establish()
-                updateNotification("VeilNet tunnel interface is active, starting egress and ingress...")
-                anchor!!.linkWithFileDescriptor(tunInterface!!.detachFd().toLong() )
-
-            } catch (e: Exception) {
-                Log.e("VeilNet", "Failed to create tunnel interface")
-                stopSelf()
-                return@launch
-            }
-
-            updateNotification("VeilNet is active")
-
-            if (anchor?.isAlive == false) {
-                stop()
-                return@launch
-            }
-        }
-        return START_REDELIVER_INTENT
+        return START_STICKY
     }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(
-                SERVICE_NOTIFICATION_CHANNEL_ID,
+                "VeilNet",
                 "VeilNet", // User-visible name
                 NotificationManager.IMPORTANCE_DEFAULT // Or IMPORTANCE_LOW if less intrusive
-            )
-            val manager = getSystemService(NotificationManager::class.java)
-            manager?.createNotificationChannel(serviceChannel)
+            ).apply { description = "VeilNet Service Channel" }
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(serviceChannel)
         }
     }
 
 
-    private fun buildNotification(message: String = "VeilNet VPN is active"): Notification {
-        // Intent to open your app's main activity when the notification is tapped
+    private fun buildNotification(message: String = "VeilNet is active"): Notification {
+
+        createNotificationChannel()
+
         val notificationIntent = Intent(this, MainActivity::class.java) // Assuming MainActivity is your entry point
         val pendingIntentFlags =
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
@@ -163,19 +80,41 @@ class VeilNetVPNService : VpnService() {
             pendingIntentFlags
         )
 
-        return NotificationCompat.Builder(this, SERVICE_NOTIFICATION_CHANNEL_ID)
-            .setContentTitle("VeilNet VPN")
+        val builder = NotificationCompat.Builder(this, "VeilNet")
+            .setContentTitle("VeilNet")
             .setContentText(message)
-            .setSmallIcon(R.drawable.ic_launcher_foreground) // Replace with your notification icon
+            .setSmallIcon(R.drawable.ic_launcher_monochrome)
             .setContentIntent(pendingIntent)
-            .setOngoing(true) // Makes the notification non-dismissable by swiping
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT) // Or PRIORITY_LOW
-            .build()
+            .setOngoing(true)
+
+        return builder.build()
     }
 
-    private fun updateNotification(message: String) {
-        val notification = buildNotification(message)
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(SERVICE_NOTIFICATION_ID, notification)
+    private fun startVeilNet(guardian: String, token: String) {
+        startScope.launch {
+            try {
+                anchor = newAnchor()
+                anchor!!.start(guardian, "nats.veilnet.app", 30422,token, false)
+                val (ip, mask) = anchor!!.cidr.split("/")
+                val builder = Builder()
+                    .setSession("VeilNet")
+                    .addAddress(ip, mask.toInt())
+                    .addDnsServer("1.1.1.1")
+                    .addRoute("0.0.0.0", 0)
+                    .setMtu(1500)
+                    .addDisallowedApplication(applicationContext.packageName)
+                tunInterface = builder.establish()
+                anchor!!.linkWithFileDescriptor(tunInterface!!.detachFd().toLong() )
+
+                if (!anchor!!.isAlive) {
+                    return@launch
+                }
+
+
+            } catch (e: Exception) {
+                Log.e("VeilNet", "Failed to start VeilNet service")
+                return@launch
+            }
+        }
     }
 }

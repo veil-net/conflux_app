@@ -8,7 +8,7 @@ class AppCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
       child: Card(
         elevation: 3,
         color: Theme.of(context).colorScheme.surface,

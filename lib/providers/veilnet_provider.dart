@@ -195,11 +195,19 @@ class VeilNet extends _$VeilNet {
                     }
                   // If the intent state is disconnected, return the disconnected state
                   case VeilNetState.disconnected:
+                    Future.microtask(() async {
+                      final pref = await ref.watch(preferenceProvider.future);
+                      await pref.remove('conflux_id');
+                    });
                     _actualState = VeilNetState.disconnected;
                     _timer?.cancel();
                     _timer = null;
                   // If the intent state is anything else, return the disconnected state
                   default:
+                    Future.microtask(() async {
+                      final pref = await ref.watch(preferenceProvider.future);
+                      await pref.remove('conflux_id');
+                    });
                     _actualState = VeilNetState.disconnected;
                     _timer?.cancel();
                     _timer = null;
@@ -348,8 +356,6 @@ class VeilNet extends _$VeilNet {
         case "android":
           await _vpnChannel.invokeMethod<bool>('stop');
       }
-      final pref = await ref.watch(preferenceProvider.future);
-      await pref.remove('conflux_id');
       ref.invalidateSelf();
     } on Exception {
       _intentState = VeilNetState.disconnected;
