@@ -20,7 +20,7 @@ _OrganisationMember _$OrganisationMemberFromJson(Map<String, dynamic> json) =>
       user_id: json['user_id'] as String,
       display_name: json['display_name'] as String,
       email: json['email'] as String,
-      plane_id: json['plane_id'] as String?,
+      realm_id: json['realm_id'] as String?,
     );
 
 Map<String, dynamic> _$OrganisationMemberToJson(_OrganisationMember instance) =>
@@ -37,5 +37,5 @@ Map<String, dynamic> _$OrganisationMemberToJson(_OrganisationMember instance) =>
       'user_id': instance.user_id,
       'display_name': instance.display_name,
       'email': instance.email,
-      'plane_id': instance.plane_id,
+      'realm_id': instance.realm_id,
     };

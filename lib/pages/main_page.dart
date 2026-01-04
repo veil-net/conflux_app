@@ -4,7 +4,7 @@ import 'package:conflux/components/app_status_background.dart';
 import 'package:conflux/providers/current_user_provider.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
 import 'package:conflux/views/home_view.dart';
-import 'package:conflux/views/plane_view.dart';
+import 'package:conflux/views/realm_view.dart';
 import 'package:conflux/views/setting_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -53,7 +53,7 @@ class MainPage extends HookConsumerWidget {
                 ref.read(currentPageProvider.notifier).setPage(index);
               },
               physics: const NeverScrollableScrollPhysics(),
-              children: [HomeView(), PlaneView(), SettingView()],
+              children: [HomeView(), RealmView(), SettingView()],
             ),
           ),
         ],

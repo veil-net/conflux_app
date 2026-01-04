@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:conflux/models/conflux_details.dart';
-import 'package:conflux/models/plane_details.dart';
+import 'package:conflux/models/realm_details.dart';
 import 'package:conflux/providers/api_provider.dart';
 import 'package:conflux/providers/conflux_details_provider.dart';
 import 'package:conflux/providers/device_info_provider.dart';
@@ -279,7 +279,7 @@ class VeilNet extends _$VeilNet {
     return _actualState ?? VeilNetState.error;
   }
 
-  Future<void> connect(PlaneDetails plane) async {
+  Future<void> connect(RealmDetails realm) async {
     if (state == VeilNetState.connecting ||
         state == VeilNetState.disconnecting) {
       throw Exception('Veilnet is busy');
@@ -295,7 +295,7 @@ class VeilNet extends _$VeilNet {
       final api = ref.watch(apiProvider);
       final response = await api.post(
         '/conflux',
-        data: {'plane_id': plane.id, 'tag': hostname},
+        data: {'realm_id': realm.id, 'tag': hostname},
       );
       final anchorToken = response.data['token'];
       final confluxID = response.data['conflux_id'];

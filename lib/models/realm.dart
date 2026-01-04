@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'plane.g.dart';
-part 'plane.freezed.dart';
+part 'realm.g.dart';
+part 'realm.freezed.dart';
 
 @freezed
-abstract class Plane with _$Plane {
-  factory Plane({
+abstract class Realm with _$Realm {
+  factory Realm({
     required String id,
     required DateTime created_at,
     required String user_id,
@@ -15,7 +15,7 @@ abstract class Plane with _$Plane {
     required bool public,
     required int portals,
     String? subscription,
-  }) = _Plane;
+  }) = _Realm;
 
-  factory Plane.fromJson(Map<String, dynamic> json) => _$PlaneFromJson(json);
+  factory Realm.fromJson(Map<String, dynamic> json) => _$RealmFromJson(json);
 }

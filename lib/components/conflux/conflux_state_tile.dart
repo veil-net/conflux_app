@@ -63,7 +63,7 @@ class ConfluxStateTile extends HookConsumerWidget {
                 color: Theme.of(context).colorScheme.error,
               ),
               title: Text(
-                'Please select a plane to connect with VeilNet',
+                'Please select a realm to connect with VeilNet',
                 style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
             ),

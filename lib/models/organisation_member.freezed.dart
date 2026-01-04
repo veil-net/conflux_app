@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$OrganisationMember {
 
- String get organisation_id; String get organisation_name; String get organisation_website; String get organisation_email; bool get organisation_owner; String get team_id; String get team_name; String get team_email; bool get team_owner; String get user_id; String get display_name; String get email; String? get plane_id;
+ String get organisation_id; String get organisation_name; String get organisation_website; String get organisation_email; bool get organisation_owner; String get team_id; String get team_name; String get team_email; bool get team_owner; String get user_id; String get display_name; String get email; String? get realm_id;
 /// Create a copy of OrganisationMember
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $OrganisationMemberCopyWith<OrganisationMember> get copyWith => _$OrganisationMe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is OrganisationMember&&(identical(other.organisation_id, organisation_id) || other.organisation_id == organisation_id)&&(identical(other.organisation_name, organisation_name) || other.organisation_name == organisation_name)&&(identical(other.organisation_website, organisation_website) || other.organisation_website == organisation_website)&&(identical(other.organisation_email, organisation_email) || other.organisation_email == organisation_email)&&(identical(other.organisation_owner, organisation_owner) || other.organisation_owner == organisation_owner)&&(identical(other.team_id, team_id) || other.team_id == team_id)&&(identical(other.team_name, team_name) || other.team_name == team_name)&&(identical(other.team_email, team_email) || other.team_email == team_email)&&(identical(other.team_owner, team_owner) || other.team_owner == team_owner)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.email, email) || other.email == email)&&(identical(other.plane_id, plane_id) || other.plane_id == plane_id));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is OrganisationMember&&(identical(other.organisation_id, organisation_id) || other.organisation_id == organisation_id)&&(identical(other.organisation_name, organisation_name) || other.organisation_name == organisation_name)&&(identical(other.organisation_website, organisation_website) || other.organisation_website == organisation_website)&&(identical(other.organisation_email, organisation_email) || other.organisation_email == organisation_email)&&(identical(other.organisation_owner, organisation_owner) || other.organisation_owner == organisation_owner)&&(identical(other.team_id, team_id) || other.team_id == team_id)&&(identical(other.team_name, team_name) || other.team_name == team_name)&&(identical(other.team_email, team_email) || other.team_email == team_email)&&(identical(other.team_owner, team_owner) || other.team_owner == team_owner)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.email, email) || other.email == email)&&(identical(other.realm_id, realm_id) || other.realm_id == realm_id));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,organisation_id,organisation_name,organisation_website,organisation_email,organisation_owner,team_id,team_name,team_email,team_owner,user_id,display_name,email,plane_id);
+int get hashCode => Object.hash(runtimeType,organisation_id,organisation_name,organisation_website,organisation_email,organisation_owner,team_id,team_name,team_email,team_owner,user_id,display_name,email,realm_id);
 
 @override
 String toString() {
-  return 'OrganisationMember(organisation_id: $organisation_id, organisation_name: $organisation_name, organisation_website: $organisation_website, organisation_email: $organisation_email, organisation_owner: $organisation_owner, team_id: $team_id, team_name: $team_name, team_email: $team_email, team_owner: $team_owner, user_id: $user_id, display_name: $display_name, email: $email, plane_id: $plane_id)';
+  return 'OrganisationMember(organisation_id: $organisation_id, organisation_name: $organisation_name, organisation_website: $organisation_website, organisation_email: $organisation_email, organisation_owner: $organisation_owner, team_id: $team_id, team_name: $team_name, team_email: $team_email, team_owner: $team_owner, user_id: $user_id, display_name: $display_name, email: $email, realm_id: $realm_id)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $OrganisationMemberCopyWith<$Res>  {
   factory $OrganisationMemberCopyWith(OrganisationMember value, $Res Function(OrganisationMember) _then) = _$OrganisationMemberCopyWithImpl;
 @useResult
 $Res call({
- String organisation_id, String organisation_name, String organisation_website, String organisation_email, bool organisation_owner, String team_id, String team_name, String team_email, bool team_owner, String user_id, String display_name, String email, String? plane_id
+ String organisation_id, String organisation_name, String organisation_website, String organisation_email, bool organisation_owner, String team_id, String team_name, String team_email, bool team_owner, String user_id, String display_name, String email, String? realm_id
 });
 
 
@@ -65,7 +65,7 @@ class _$OrganisationMemberCopyWithImpl<$Res>
 
 /// Create a copy of OrganisationMember
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? organisation_id = null,Object? organisation_name = null,Object? organisation_website = null,Object? organisation_email = null,Object? organisation_owner = null,Object? team_id = null,Object? team_name = null,Object? team_email = null,Object? team_owner = null,Object? user_id = null,Object? display_name = null,Object? email = null,Object? plane_id = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? organisation_id = null,Object? organisation_name = null,Object? organisation_website = null,Object? organisation_email = null,Object? organisation_owner = null,Object? team_id = null,Object? team_name = null,Object? team_email = null,Object? team_owner = null,Object? user_id = null,Object? display_name = null,Object? email = null,Object? realm_id = freezed,}) {
   return _then(_self.copyWith(
 organisation_id: null == organisation_id ? _self.organisation_id : organisation_id // ignore: cast_nullable_to_non_nullable
 as String,organisation_name: null == organisation_name ? _self.organisation_name : organisation_name // ignore: cast_nullable_to_non_nullable
@@ -79,7 +79,7 @@ as String,team_owner: null == team_owner ? _self.team_owner : team_owner // igno
 as bool,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable
 as String,display_name: null == display_name ? _self.display_name : display_name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,plane_id: freezed == plane_id ? _self.plane_id : plane_id // ignore: cast_nullable_to_non_nullable
+as String,realm_id: freezed == realm_id ? _self.realm_id : realm_id // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -165,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String organisation_id,  String organisation_name,  String organisation_website,  String organisation_email,  bool organisation_owner,  String team_id,  String team_name,  String team_email,  bool team_owner,  String user_id,  String display_name,  String email,  String? plane_id)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String organisation_id,  String organisation_name,  String organisation_website,  String organisation_email,  bool organisation_owner,  String team_id,  String team_name,  String team_email,  bool team_owner,  String user_id,  String display_name,  String email,  String? realm_id)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _OrganisationMember() when $default != null:
-return $default(_that.organisation_id,_that.organisation_name,_that.organisation_website,_that.organisation_email,_that.organisation_owner,_that.team_id,_that.team_name,_that.team_email,_that.team_owner,_that.user_id,_that.display_name,_that.email,_that.plane_id);case _:
+return $default(_that.organisation_id,_that.organisation_name,_that.organisation_website,_that.organisation_email,_that.organisation_owner,_that.team_id,_that.team_name,_that.team_email,_that.team_owner,_that.user_id,_that.display_name,_that.email,_that.realm_id);case _:
   return orElse();
 
 }
@@ -186,10 +186,10 @@ return $default(_that.organisation_id,_that.organisation_name,_that.organisation
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String organisation_id,  String organisation_name,  String organisation_website,  String organisation_email,  bool organisation_owner,  String team_id,  String team_name,  String team_email,  bool team_owner,  String user_id,  String display_name,  String email,  String? plane_id)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String organisation_id,  String organisation_name,  String organisation_website,  String organisation_email,  bool organisation_owner,  String team_id,  String team_name,  String team_email,  bool team_owner,  String user_id,  String display_name,  String email,  String? realm_id)  $default,) {final _that = this;
 switch (_that) {
 case _OrganisationMember():
-return $default(_that.organisation_id,_that.organisation_name,_that.organisation_website,_that.organisation_email,_that.organisation_owner,_that.team_id,_that.team_name,_that.team_email,_that.team_owner,_that.user_id,_that.display_name,_that.email,_that.plane_id);case _:
+return $default(_that.organisation_id,_that.organisation_name,_that.organisation_website,_that.organisation_email,_that.organisation_owner,_that.team_id,_that.team_name,_that.team_email,_that.team_owner,_that.user_id,_that.display_name,_that.email,_that.realm_id);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -206,10 +206,10 @@ return $default(_that.organisation_id,_that.organisation_name,_that.organisation
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String organisation_id,  String organisation_name,  String organisation_website,  String organisation_email,  bool organisation_owner,  String team_id,  String team_name,  String team_email,  bool team_owner,  String user_id,  String display_name,  String email,  String? plane_id)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String organisation_id,  String organisation_name,  String organisation_website,  String organisation_email,  bool organisation_owner,  String team_id,  String team_name,  String team_email,  bool team_owner,  String user_id,  String display_name,  String email,  String? realm_id)?  $default,) {final _that = this;
 switch (_that) {
 case _OrganisationMember() when $default != null:
-return $default(_that.organisation_id,_that.organisation_name,_that.organisation_website,_that.organisation_email,_that.organisation_owner,_that.team_id,_that.team_name,_that.team_email,_that.team_owner,_that.user_id,_that.display_name,_that.email,_that.plane_id);case _:
+return $default(_that.organisation_id,_that.organisation_name,_that.organisation_website,_that.organisation_email,_that.organisation_owner,_that.team_id,_that.team_name,_that.team_email,_that.team_owner,_that.user_id,_that.display_name,_that.email,_that.realm_id);case _:
   return null;
 
 }
@@ -221,7 +221,7 @@ return $default(_that.organisation_id,_that.organisation_name,_that.organisation
 @JsonSerializable()
 
 class _OrganisationMember implements OrganisationMember {
-   _OrganisationMember({required this.organisation_id, required this.organisation_name, required this.organisation_website, required this.organisation_email, required this.organisation_owner, required this.team_id, required this.team_name, required this.team_email, required this.team_owner, required this.user_id, required this.display_name, required this.email, required this.plane_id});
+   _OrganisationMember({required this.organisation_id, required this.organisation_name, required this.organisation_website, required this.organisation_email, required this.organisation_owner, required this.team_id, required this.team_name, required this.team_email, required this.team_owner, required this.user_id, required this.display_name, required this.email, required this.realm_id});
   factory _OrganisationMember.fromJson(Map<String, dynamic> json) => _$OrganisationMemberFromJson(json);
 
 @override final  String organisation_id;
@@ -236,7 +236,7 @@ class _OrganisationMember implements OrganisationMember {
 @override final  String user_id;
 @override final  String display_name;
 @override final  String email;
-@override final  String? plane_id;
+@override final  String? realm_id;
 
 /// Create a copy of OrganisationMember
 /// with the given fields replaced by the non-null parameter values.
@@ -251,16 +251,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrganisationMember&&(identical(other.organisation_id, organisation_id) || other.organisation_id == organisation_id)&&(identical(other.organisation_name, organisation_name) || other.organisation_name == organisation_name)&&(identical(other.organisation_website, organisation_website) || other.organisation_website == organisation_website)&&(identical(other.organisation_email, organisation_email) || other.organisation_email == organisation_email)&&(identical(other.organisation_owner, organisation_owner) || other.organisation_owner == organisation_owner)&&(identical(other.team_id, team_id) || other.team_id == team_id)&&(identical(other.team_name, team_name) || other.team_name == team_name)&&(identical(other.team_email, team_email) || other.team_email == team_email)&&(identical(other.team_owner, team_owner) || other.team_owner == team_owner)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.email, email) || other.email == email)&&(identical(other.plane_id, plane_id) || other.plane_id == plane_id));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _OrganisationMember&&(identical(other.organisation_id, organisation_id) || other.organisation_id == organisation_id)&&(identical(other.organisation_name, organisation_name) || other.organisation_name == organisation_name)&&(identical(other.organisation_website, organisation_website) || other.organisation_website == organisation_website)&&(identical(other.organisation_email, organisation_email) || other.organisation_email == organisation_email)&&(identical(other.organisation_owner, organisation_owner) || other.organisation_owner == organisation_owner)&&(identical(other.team_id, team_id) || other.team_id == team_id)&&(identical(other.team_name, team_name) || other.team_name == team_name)&&(identical(other.team_email, team_email) || other.team_email == team_email)&&(identical(other.team_owner, team_owner) || other.team_owner == team_owner)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.display_name, display_name) || other.display_name == display_name)&&(identical(other.email, email) || other.email == email)&&(identical(other.realm_id, realm_id) || other.realm_id == realm_id));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,organisation_id,organisation_name,organisation_website,organisation_email,organisation_owner,team_id,team_name,team_email,team_owner,user_id,display_name,email,plane_id);
+int get hashCode => Object.hash(runtimeType,organisation_id,organisation_name,organisation_website,organisation_email,organisation_owner,team_id,team_name,team_email,team_owner,user_id,display_name,email,realm_id);
 
 @override
 String toString() {
-  return 'OrganisationMember(organisation_id: $organisation_id, organisation_name: $organisation_name, organisation_website: $organisation_website, organisation_email: $organisation_email, organisation_owner: $organisation_owner, team_id: $team_id, team_name: $team_name, team_email: $team_email, team_owner: $team_owner, user_id: $user_id, display_name: $display_name, email: $email, plane_id: $plane_id)';
+  return 'OrganisationMember(organisation_id: $organisation_id, organisation_name: $organisation_name, organisation_website: $organisation_website, organisation_email: $organisation_email, organisation_owner: $organisation_owner, team_id: $team_id, team_name: $team_name, team_email: $team_email, team_owner: $team_owner, user_id: $user_id, display_name: $display_name, email: $email, realm_id: $realm_id)';
 }
 
 
@@ -271,7 +271,7 @@ abstract mixin class _$OrganisationMemberCopyWith<$Res> implements $Organisation
   factory _$OrganisationMemberCopyWith(_OrganisationMember value, $Res Function(_OrganisationMember) _then) = __$OrganisationMemberCopyWithImpl;
 @override @useResult
 $Res call({
- String organisation_id, String organisation_name, String organisation_website, String organisation_email, bool organisation_owner, String team_id, String team_name, String team_email, bool team_owner, String user_id, String display_name, String email, String? plane_id
+ String organisation_id, String organisation_name, String organisation_website, String organisation_email, bool organisation_owner, String team_id, String team_name, String team_email, bool team_owner, String user_id, String display_name, String email, String? realm_id
 });
 
 
@@ -288,7 +288,7 @@ class __$OrganisationMemberCopyWithImpl<$Res>
 
 /// Create a copy of OrganisationMember
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? organisation_id = null,Object? organisation_name = null,Object? organisation_website = null,Object? organisation_email = null,Object? organisation_owner = null,Object? team_id = null,Object? team_name = null,Object? team_email = null,Object? team_owner = null,Object? user_id = null,Object? display_name = null,Object? email = null,Object? plane_id = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? organisation_id = null,Object? organisation_name = null,Object? organisation_website = null,Object? organisation_email = null,Object? organisation_owner = null,Object? team_id = null,Object? team_name = null,Object? team_email = null,Object? team_owner = null,Object? user_id = null,Object? display_name = null,Object? email = null,Object? realm_id = freezed,}) {
   return _then(_OrganisationMember(
 organisation_id: null == organisation_id ? _self.organisation_id : organisation_id // ignore: cast_nullable_to_non_nullable
 as String,organisation_name: null == organisation_name ? _self.organisation_name : organisation_name // ignore: cast_nullable_to_non_nullable
@@ -302,7 +302,7 @@ as String,team_owner: null == team_owner ? _self.team_owner : team_owner // igno
 as bool,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable
 as String,display_name: null == display_name ? _self.display_name : display_name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,plane_id: freezed == plane_id ? _self.plane_id : plane_id // ignore: cast_nullable_to_non_nullable
+as String,realm_id: freezed == realm_id ? _self.realm_id : realm_id // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

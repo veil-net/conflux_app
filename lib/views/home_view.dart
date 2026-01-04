@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:conflux/components/app_sub_navigation_bar.dart';
 import 'package:conflux/components/conflux/conflux_card.dart';
 import 'package:conflux/components/conflux/conflux_summary_card.dart';
-import 'package:conflux/components/plane/selected_plane.dart';
+import 'package:conflux/components/realm/selected_realm.dart';
 import 'package:conflux/components/profile/greeting_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,7 +23,7 @@ class HomeView extends HookConsumerWidget {
               children: [
                 GreetingTile(),
                 AppSubNavigationBar(),
-                SelectedPlane(),
+                SelectedRealm(),
               ],
             ),
           ),
@@ -41,7 +41,7 @@ class HomeView extends HookConsumerWidget {
           ),
           SliverToBoxAdapter(child: Center(child: GreetingTile())),
           SliverToBoxAdapter(child: Center(child: AppSubNavigationBar())),
-          SliverToBoxAdapter(child: Center(child: SelectedPlane())),
+          SliverToBoxAdapter(child: Center(child: SelectedRealm())),
           SliverToBoxAdapter(child: Center(child: ConfluxSummaryCard())),
         ],
       );

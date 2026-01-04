@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'plane.dart';
+part of 'realm.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'plane.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$Plane {
+mixin _$Realm {
 
  String get id; DateTime get created_at; String get user_id; String get veil_id; String get name; String get subnet; bool get public; int get portals; String? get subscription;
-/// Create a copy of Plane
+/// Create a copy of Realm
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$PlaneCopyWith<Plane> get copyWith => _$PlaneCopyWithImpl<Plane>(this as Plane, _$identity);
+$RealmCopyWith<Realm> get copyWith => _$RealmCopyWithImpl<Realm>(this as Realm, _$identity);
 
-  /// Serializes this Plane to a JSON map.
+  /// Serializes this Realm to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Plane&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.portals, portals) || other.portals == portals)&&(identical(other.subscription, subscription) || other.subscription == subscription));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Realm&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.portals, portals) || other.portals == portals)&&(identical(other.subscription, subscription) || other.subscription == subscription));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,id,created_at,user_id,veil_id,name,s
 
 @override
 String toString() {
-  return 'Plane(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, portals: $portals, subscription: $subscription)';
+  return 'Realm(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, portals: $portals, subscription: $subscription)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $PlaneCopyWith<$Res>  {
-  factory $PlaneCopyWith(Plane value, $Res Function(Plane) _then) = _$PlaneCopyWithImpl;
+abstract mixin class $RealmCopyWith<$Res>  {
+  factory $RealmCopyWith(Realm value, $Res Function(Realm) _then) = _$RealmCopyWithImpl;
 @useResult
 $Res call({
  String id, DateTime created_at, String user_id, String veil_id, String name, String subnet, bool public, int portals, String? subscription
@@ -56,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$PlaneCopyWithImpl<$Res>
-    implements $PlaneCopyWith<$Res> {
-  _$PlaneCopyWithImpl(this._self, this._then);
+class _$RealmCopyWithImpl<$Res>
+    implements $RealmCopyWith<$Res> {
+  _$RealmCopyWithImpl(this._self, this._then);
 
-  final Plane _self;
-  final $Res Function(Plane) _then;
+  final Realm _self;
+  final $Res Function(Realm) _then;
 
-/// Create a copy of Plane
+/// Create a copy of Realm
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? veil_id = null,Object? name = null,Object? subnet = null,Object? public = null,Object? portals = null,Object? subscription = freezed,}) {
   return _then(_self.copyWith(
@@ -83,8 +83,8 @@ as String?,
 }
 
 
-/// Adds pattern-matching-related methods to [Plane].
-extension PlanePatterns on Plane {
+/// Adds pattern-matching-related methods to [Realm].
+extension RealmPatterns on Realm {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -97,10 +97,10 @@ extension PlanePatterns on Plane {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Plane value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Realm value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Plane() when $default != null:
+case _Realm() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -119,10 +119,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Plane value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Realm value)  $default,){
 final _that = this;
 switch (_that) {
-case _Plane():
+case _Realm():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -140,10 +140,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Plane value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Realm value)?  $default,){
 final _that = this;
 switch (_that) {
-case _Plane() when $default != null:
+case _Realm() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -163,7 +163,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  int portals,  String? subscription)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Plane() when $default != null:
+case _Realm() when $default != null:
 return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.portals,_that.subscription);case _:
   return orElse();
 
@@ -184,7 +184,7 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  int portals,  String? subscription)  $default,) {final _that = this;
 switch (_that) {
-case _Plane():
+case _Realm():
 return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.portals,_that.subscription);case _:
   throw StateError('Unexpected subclass');
 
@@ -204,7 +204,7 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  int portals,  String? subscription)?  $default,) {final _that = this;
 switch (_that) {
-case _Plane() when $default != null:
+case _Realm() when $default != null:
 return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.portals,_that.subscription);case _:
   return null;
 
@@ -216,9 +216,9 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name
 /// @nodoc
 @JsonSerializable()
 
-class _Plane implements Plane {
-   _Plane({required this.id, required this.created_at, required this.user_id, required this.veil_id, required this.name, required this.subnet, required this.public, required this.portals, this.subscription});
-  factory _Plane.fromJson(Map<String, dynamic> json) => _$PlaneFromJson(json);
+class _Realm implements Realm {
+   _Realm({required this.id, required this.created_at, required this.user_id, required this.veil_id, required this.name, required this.subnet, required this.public, required this.portals, this.subscription});
+  factory _Realm.fromJson(Map<String, dynamic> json) => _$RealmFromJson(json);
 
 @override final  String id;
 @override final  DateTime created_at;
@@ -230,20 +230,20 @@ class _Plane implements Plane {
 @override final  int portals;
 @override final  String? subscription;
 
-/// Create a copy of Plane
+/// Create a copy of Realm
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$PlaneCopyWith<_Plane> get copyWith => __$PlaneCopyWithImpl<_Plane>(this, _$identity);
+_$RealmCopyWith<_Realm> get copyWith => __$RealmCopyWithImpl<_Realm>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$PlaneToJson(this, );
+  return _$RealmToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Plane&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.portals, portals) || other.portals == portals)&&(identical(other.subscription, subscription) || other.subscription == subscription));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Realm&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.portals, portals) || other.portals == portals)&&(identical(other.subscription, subscription) || other.subscription == subscription));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -252,15 +252,15 @@ int get hashCode => Object.hash(runtimeType,id,created_at,user_id,veil_id,name,s
 
 @override
 String toString() {
-  return 'Plane(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, portals: $portals, subscription: $subscription)';
+  return 'Realm(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, portals: $portals, subscription: $subscription)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$PlaneCopyWith<$Res> implements $PlaneCopyWith<$Res> {
-  factory _$PlaneCopyWith(_Plane value, $Res Function(_Plane) _then) = __$PlaneCopyWithImpl;
+abstract mixin class _$RealmCopyWith<$Res> implements $RealmCopyWith<$Res> {
+  factory _$RealmCopyWith(_Realm value, $Res Function(_Realm) _then) = __$RealmCopyWithImpl;
 @override @useResult
 $Res call({
  String id, DateTime created_at, String user_id, String veil_id, String name, String subnet, bool public, int portals, String? subscription
@@ -271,17 +271,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$PlaneCopyWithImpl<$Res>
-    implements _$PlaneCopyWith<$Res> {
-  __$PlaneCopyWithImpl(this._self, this._then);
+class __$RealmCopyWithImpl<$Res>
+    implements _$RealmCopyWith<$Res> {
+  __$RealmCopyWithImpl(this._self, this._then);
 
-  final _Plane _self;
-  final $Res Function(_Plane) _then;
+  final _Realm _self;
+  final $Res Function(_Realm) _then;
 
-/// Create a copy of Plane
+/// Create a copy of Realm
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? veil_id = null,Object? name = null,Object? subnet = null,Object? public = null,Object? portals = null,Object? subscription = freezed,}) {
-  return _then(_Plane(
+  return _then(_Realm(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
 as DateTime,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable

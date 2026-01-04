@@ -1,9 +1,9 @@
 import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
-import 'package:conflux/models/plane_details.dart';
+import 'package:conflux/models/realm_details.dart';
 import 'package:conflux/providers/conflux_provider.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
-import 'package:conflux/providers/plane_details_provider.dart';
+import 'package:conflux/providers/realm_details_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:country_flags/country_flags.dart';
@@ -12,9 +12,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class PlaneTile extends HookConsumerWidget {
-  final PlaneDetails planeDetails;
-  const PlaneTile({super.key, required this.planeDetails});
+class RealmTile extends HookConsumerWidget {
+  final RealmDetails realmDetails;
+  const RealmTile({super.key, required this.realmDetails});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +22,7 @@ class PlaneTile extends HookConsumerWidget {
     final confluxPortals = ref.watch(confluxPortalsProvider);
     final numberOfPortals = useState(
       confluxPortals.value
-              ?.where((conflux) => conflux.plane_id == planeDetails.id)
+              ?.where((conflux) => conflux.realm_id == realmDetails.id)
               .length ??
           0,
     );
@@ -44,15 +44,15 @@ class PlaneTile extends HookConsumerWidget {
               leading: SizedBox(
                 width: 40,
                 height: 30,
-                child: CountryFlag.fromCountryCode(planeDetails.region),
+                child: CountryFlag.fromCountryCode(realmDetails.region),
               ),
               title: Text(
-                planeDetails.name,
+                realmDetails.name,
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
               subtitle: developerMode
                   ? Text(
-                      "You have ${numberOfPortals.value} Portals on this plane",
+                      "You have ${numberOfPortals.value} Portals on this realm",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.secondary,
                       ),
@@ -65,8 +65,8 @@ class PlaneTile extends HookConsumerWidget {
                 onPressed: veilNetState == VeilNetState.disconnected
                     ? () async {
                         await ref
-                            .read(selectedPlaneDetailsProvider.notifier)
-                            .setSelectedPlane(planeDetails);
+                            .read(selectedRealmDetailsProvider.notifier)
+                            .setSelectedRealm(realmDetails);
                         ref.read(pageControllerProvider).jumpToPage(0);
                       }
                     : null,

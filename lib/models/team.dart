@@ -12,7 +12,7 @@ abstract class Team with _$Team {
     required String organisation_id,
     required String name,
     required String? email,
-    String? plane_id,
+    String? realm_id,
   }) = _Team;
 
   factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);

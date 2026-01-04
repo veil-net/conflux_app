@@ -18,7 +18,7 @@ class RealmSearchCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final realmNameTextController = useTextEditingController();
-    final realmPublicity = ref.watch(realmPublicityProvider);
+    final realmPublicity = ref.watch(realmPublicityProvider); 
     final developerMode = ref.watch(developerModeProvider);
 
     Future<void> managePrivateRealms() async {

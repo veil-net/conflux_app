@@ -79,7 +79,7 @@ lib/
 │   ├── conflux/        # VPN connection components
 │   ├── notification/   # Notification components
 │   ├── org/            # Organization components
-│   ├── plane/          # Network plane components
+│   ├── realm/          # Network realm components
 │   ├── profile/        # User profile components
 │   ├── settings/       # Settings components
 │   └── team/           # Team management components

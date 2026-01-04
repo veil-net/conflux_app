@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'plane_details.dart';
+part of 'realm_details.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_PlaneDetails _$PlaneDetailsFromJson(Map<String, dynamic> json) =>
-    _PlaneDetails(
+_RealmDetails _$RealmDetailsFromJson(Map<String, dynamic> json) =>
+    _RealmDetails(
       id: json['id'] as String,
       created_at: DateTime.parse(json['created_at'] as String),
       user_id: json['user_id'] as String,
@@ -24,7 +24,7 @@ _PlaneDetails _$PlaneDetailsFromJson(Map<String, dynamic> json) =>
       status: json['status'] as String?,
     );
 
-Map<String, dynamic> _$PlaneDetailsToJson(_PlaneDetails instance) =>
+Map<String, dynamic> _$RealmDetailsToJson(_RealmDetails instance) =>
     <String, dynamic>{
       'id': instance.id,
       'created_at': instance.created_at.toIso8601String(),

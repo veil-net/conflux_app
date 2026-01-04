@@ -13,7 +13,7 @@ _Team _$TeamFromJson(Map<String, dynamic> json) => _Team(
   organisation_id: json['organisation_id'] as String,
   name: json['name'] as String,
   email: json['email'] as String?,
-  plane_id: json['plane_id'] as String?,
+  realm_id: json['realm_id'] as String?,
 );
 
 Map<String, dynamic> _$TeamToJson(_Team instance) => <String, dynamic>{
@@ -23,5 +23,5 @@ Map<String, dynamic> _$TeamToJson(_Team instance) => <String, dynamic>{
   'organisation_id': instance.organisation_id,
   'name': instance.name,
   'email': instance.email,
-  'plane_id': instance.plane_id,
+  'realm_id': instance.realm_id,
 };

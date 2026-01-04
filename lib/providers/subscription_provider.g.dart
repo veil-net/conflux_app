@@ -33,7 +33,7 @@ final class SubscriptionsProvider
   Subscriptions create() => Subscriptions();
 }
 
-String _$subscriptionsHash() => r'638482ed4c1d3e449a99a79beaa27ab49168eb27';
+String _$subscriptionsHash() => r'da22ee67f68c8bffdb6e7523a75ba3beee8fa55d';
 
 abstract class _$Subscriptions extends $StreamNotifier<List<Subscription>> {
   Stream<List<Subscription>> build();
@@ -95,10 +95,10 @@ final class ConfluxSubscriptionProvider
 String _$confluxSubscriptionHash() =>
     r'9e09cad6b2542932731c00ac987f0b6007de4822';
 
-@ProviderFor(planeSubscriptions)
-const planeSubscriptionsProvider = PlaneSubscriptionsProvider._();
+@ProviderFor(realmSubscriptions)
+const realmSubscriptionsProvider = RealmSubscriptionsProvider._();
 
-final class PlaneSubscriptionsProvider
+final class RealmSubscriptionsProvider
     extends
         $FunctionalProvider<
           AsyncValue<List<Subscription>>,
@@ -108,19 +108,19 @@ final class PlaneSubscriptionsProvider
     with
         $FutureModifier<List<Subscription>>,
         $FutureProvider<List<Subscription>> {
-  const PlaneSubscriptionsProvider._()
+  const RealmSubscriptionsProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'planeSubscriptionsProvider',
+        name: r'realmSubscriptionsProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$planeSubscriptionsHash();
+  String debugGetCreateSourceHash() => _$realmSubscriptionsHash();
 
   @$internal
   @override
@@ -130,9 +130,9 @@ final class PlaneSubscriptionsProvider
 
   @override
   FutureOr<List<Subscription>> create(Ref ref) {
-    return planeSubscriptions(ref);
+    return realmSubscriptions(ref);
   }
 }
 
-String _$planeSubscriptionsHash() =>
-    r'c1783e51a829d52e04c7ac0da48085375816ce1b';
+String _$realmSubscriptionsHash() =>
+    r'10601dd6fa9fd3cb52d190c22139b94bf3349c70';

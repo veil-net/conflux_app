@@ -48,7 +48,7 @@ class GeneralSettingsCard extends HookConsumerWidget {
                 if (value) {
                   DialogManager.showDialog(
                     context,
-                    'Developer Mode enables options for developers to manage Veilnet Private Planes and Conflux nodes.\n\nIf you are using VeilNet as VPN service, you do not need to enable this option.',
+                    'Developer Mode enables options for developers to manage Veilnet Private Realms and Conflux nodes.\n\nIf you are using VeilNet as VPN service, you do not need to enable this option.',
                     DialogType.warning,
                   );
                 }

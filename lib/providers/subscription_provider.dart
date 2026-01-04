@@ -24,14 +24,14 @@ class Subscriptions extends _$Subscriptions {
         );
   }
 
-  Future<String> createPlaneSubscription(
+  Future<String> createRealmSubscription(
     String success_url,
     String cancel_url,
   ) async {
     final api = ref.read(apiProvider);
     try {
       final response = await api.post(
-        '/stripe/subscribe/plane',
+        '/stripe/subscribe/realm',
         data: {'success_url': success_url, 'cancel_url': cancel_url},
       );
       return response.data['url'];
@@ -111,13 +111,13 @@ Future<Subscription?> confluxSubscription(Ref ref) async {
 }
 
 @riverpod
-Future<List<Subscription>> planeSubscriptions(Ref ref) async {
+Future<List<Subscription>> realmSubscriptions(Ref ref) async {
   ref.keepAlive();
   final subscriptions = await ref.watch(subscriptionsProvider.future);
   return subscriptions
       .where(
         (subscription) =>
-            subscription.metadata.type == 'plane' &&
+            subscription.metadata.type == 'realm' &&
             subscription.status != 'canceled',
       )
       .toList();

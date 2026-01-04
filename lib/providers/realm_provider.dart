@@ -1,29 +1,26 @@
-import 'package:conflux/models/plane.dart';
+import 'package:conflux/models/realm.dart';
 import 'package:conflux/providers/api_provider.dart';
 import 'package:conflux/providers/current_user_provider.dart';
 import 'package:conflux/providers/supabase_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'plane_provider.g.dart';
+part 'realm_provider.g.dart';
 
 @riverpod
-class Planes extends _$Planes {
+class Realms extends _$Realms {
   @override
-  Stream<List<Plane>> build() {
+  Stream<List<Realm>> build() {
     ref.keepAlive();
     ref.watch(currentUserProvider);
     final supabase = ref.read(supabaseClientProvider);
     return supabase
-        .from('planes')
+        .from('realms')
         .stream(primaryKey: ['id'])
-        .map(
-          (event) =>
-              event.map((data) => Plane.fromJson(data)).toList(),
-        );
+        .map((event) => event.map((data) => Realm.fromJson(data)).toList());
   }
 
-  Future<void> createPlane(
+  Future<void> createRealm(
     String name,
     String subnet,
     bool public,
@@ -33,7 +30,7 @@ class Planes extends _$Planes {
     final api = ref.read(apiProvider);
     try {
       await api.post(
-        '/plane',
+        '/realm',
         data: {
           'name': name,
           'subnet': subnet,
@@ -49,10 +46,10 @@ class Planes extends _$Planes {
     }
   }
 
-  Future<void> deletePlane(String id) async {
+  Future<void> deleteRealm(String id) async {
     final api = ref.read(apiProvider);
     try {
-      await api.delete('/plane?plane_id=$id');
+      await api.delete('/realm?realm_id=$id');
     } on DioException catch (e) {
       throw Exception(e.response?.data['detail']);
     } catch (e) {
@@ -60,15 +57,15 @@ class Planes extends _$Planes {
     }
   }
 
-  Future<void> updatePlaneSubscription(
+  Future<void> updateRealmSubscription(
     String id,
     String subscription_id,
   ) async {
     final api = ref.read(apiProvider);
     try {
       await api.patch(
-        '/plane/subscription',
-        data: {'plane_id': id, 'subscription_id': subscription_id},
+        '/realm/subscription',
+        data: {'realm_id': id, 'subscription_id': subscription_id},
       );
     } on DioException catch (e) {
       throw Exception(e.response?.data['detail']);
@@ -77,10 +74,10 @@ class Planes extends _$Planes {
     }
   }
 
-  Future<void> dissociatePlaneSubscription(String id) async {
+  Future<void> dissociateRealmSubscription(String id) async {
     final api = ref.read(apiProvider);
     try {
-      await api.delete('/plane/subscription?plane_id=$id');
+      await api.delete('/realm/subscription?realm_id=$id');
     } on DioException catch (e) {
       throw Exception(e.response?.data['detail']);
     } catch (e) {
@@ -90,45 +87,45 @@ class Planes extends _$Planes {
 }
 
 @riverpod
-Stream<Plane?> plane(Ref ref, String id) {
+Stream<Realm?> realm(Ref ref, String id) {
   ref.keepAlive();
   final supabase = ref.read(supabaseClientProvider);
   return supabase
-      .from('planes')
+      .from('realms')
       .stream(primaryKey: ['id'])
       .eq('id', id)
       .limit(1)
       .map(
         (event) =>
-            event.map((data) => Plane.fromJson(data)).toList().firstOrNull,
+            event.map((data) => Realm.fromJson(data)).toList().firstOrNull,
       );
 }
 
 @riverpod
-Future<List<Plane>> ownedPlanes(Ref ref) async {
+Future<List<Realm>> ownedRealms(Ref ref) async {
   ref.keepAlive();
   final user = ref.watch(currentUserProvider);
   if (user == null) {
     throw Exception('User not found');
   }
   final supabase = ref.read(supabaseClientProvider);
-  final planes = await supabase
-      .from('planes')
+  final realms = await supabase
+      .from('realms')
       .select('*')
       .eq('user_id', user.id);
-  return planes.map((data) => Plane.fromJson(data)).toList();
+  return realms.map((data) => Realm.fromJson(data)).toList();
 }
 
 @riverpod
-Future<List<Plane>> privatePlanes(Ref ref) async {
+Future<List<Realm>> privateRealms(Ref ref) async {
   ref.keepAlive();
-  final planes = await ref.watch(planesProvider.future);
-  return planes.where((plane) => plane.public == false).toList().toList();
+  final realms = await ref.watch(realmsProvider.future);
+  return realms.where((realm) => realm.public == false).toList();
 }
 
 @riverpod
-Future<List<Plane>> publicPlanes(Ref ref) async {
+Future<List<Realm>> publicRealms(Ref ref) async {
   ref.keepAlive();
-  final planes = await ref.watch(planesProvider.future);
-  return planes.where((plane) => plane.public == true).toList().toList();
+  final realms = await ref.watch(realmsProvider.future);
+  return realms.where((realm) => realm.public == true).toList();
 }

@@ -19,14 +19,8 @@ class AppBottomNavigationBar extends HookConsumerWidget {
       },
       destinations: [
         NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-        NavigationDestination(
-          icon: Icon(Icons.language),
-          label: 'Planes',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.settings),
-          label: 'Settings',
-        ),
+        NavigationDestination(icon: Icon(Icons.language), label: 'Realms'),
+        NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
       ],
     );
   }

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Team {
 
- String get id; DateTime get created_at; String get user_id; String get organisation_id; String get name; String? get email; String? get plane_id;
+ String get id; DateTime get created_at; String get user_id; String get organisation_id; String get name; String? get email; String? get realm_id;
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $TeamCopyWith<Team> get copyWith => _$TeamCopyWithImpl<Team>(this as Team, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Team&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.organisation_id, organisation_id) || other.organisation_id == organisation_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.plane_id, plane_id) || other.plane_id == plane_id));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Team&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.organisation_id, organisation_id) || other.organisation_id == organisation_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.realm_id, realm_id) || other.realm_id == realm_id));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,created_at,user_id,organisation_id,name,email,plane_id);
+int get hashCode => Object.hash(runtimeType,id,created_at,user_id,organisation_id,name,email,realm_id);
 
 @override
 String toString() {
-  return 'Team(id: $id, created_at: $created_at, user_id: $user_id, organisation_id: $organisation_id, name: $name, email: $email, plane_id: $plane_id)';
+  return 'Team(id: $id, created_at: $created_at, user_id: $user_id, organisation_id: $organisation_id, name: $name, email: $email, realm_id: $realm_id)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $TeamCopyWith<$Res>  {
   factory $TeamCopyWith(Team value, $Res Function(Team) _then) = _$TeamCopyWithImpl;
 @useResult
 $Res call({
- String id, DateTime created_at, String user_id, String organisation_id, String name, String? email, String? plane_id
+ String id, DateTime created_at, String user_id, String organisation_id, String name, String? email, String? realm_id
 });
 
 
@@ -65,7 +65,7 @@ class _$TeamCopyWithImpl<$Res>
 
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? organisation_id = null,Object? name = null,Object? email = freezed,Object? plane_id = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? organisation_id = null,Object? name = null,Object? email = freezed,Object? realm_id = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
@@ -73,7 +73,7 @@ as DateTime,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_n
 as String,organisation_id: null == organisation_id ? _self.organisation_id : organisation_id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String?,plane_id: freezed == plane_id ? _self.plane_id : plane_id // ignore: cast_nullable_to_non_nullable
+as String?,realm_id: freezed == realm_id ? _self.realm_id : realm_id // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -159,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String organisation_id,  String name,  String? email,  String? plane_id)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String organisation_id,  String name,  String? email,  String? realm_id)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Team() when $default != null:
-return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_that.name,_that.email,_that.plane_id);case _:
+return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_that.name,_that.email,_that.realm_id);case _:
   return orElse();
 
 }
@@ -180,10 +180,10 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String organisation_id,  String name,  String? email,  String? plane_id)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String organisation_id,  String name,  String? email,  String? realm_id)  $default,) {final _that = this;
 switch (_that) {
 case _Team():
-return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_that.name,_that.email,_that.plane_id);case _:
+return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_that.name,_that.email,_that.realm_id);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +200,10 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  String user_id,  String organisation_id,  String name,  String? email,  String? plane_id)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  String user_id,  String organisation_id,  String name,  String? email,  String? realm_id)?  $default,) {final _that = this;
 switch (_that) {
 case _Team() when $default != null:
-return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_that.name,_that.email,_that.plane_id);case _:
+return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_that.name,_that.email,_that.realm_id);case _:
   return null;
 
 }
@@ -215,7 +215,7 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.organisation_id,_t
 @JsonSerializable()
 
 class _Team implements Team {
-   _Team({required this.id, required this.created_at, required this.user_id, required this.organisation_id, required this.name, required this.email, this.plane_id});
+   _Team({required this.id, required this.created_at, required this.user_id, required this.organisation_id, required this.name, required this.email, this.realm_id});
   factory _Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
 
 @override final  String id;
@@ -224,7 +224,7 @@ class _Team implements Team {
 @override final  String organisation_id;
 @override final  String name;
 @override final  String? email;
-@override final  String? plane_id;
+@override final  String? realm_id;
 
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
@@ -239,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Team&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.organisation_id, organisation_id) || other.organisation_id == organisation_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.plane_id, plane_id) || other.plane_id == plane_id));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Team&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.organisation_id, organisation_id) || other.organisation_id == organisation_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.realm_id, realm_id) || other.realm_id == realm_id));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,created_at,user_id,organisation_id,name,email,plane_id);
+int get hashCode => Object.hash(runtimeType,id,created_at,user_id,organisation_id,name,email,realm_id);
 
 @override
 String toString() {
-  return 'Team(id: $id, created_at: $created_at, user_id: $user_id, organisation_id: $organisation_id, name: $name, email: $email, plane_id: $plane_id)';
+  return 'Team(id: $id, created_at: $created_at, user_id: $user_id, organisation_id: $organisation_id, name: $name, email: $email, realm_id: $realm_id)';
 }
 
 
@@ -259,7 +259,7 @@ abstract mixin class _$TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
   factory _$TeamCopyWith(_Team value, $Res Function(_Team) _then) = __$TeamCopyWithImpl;
 @override @useResult
 $Res call({
- String id, DateTime created_at, String user_id, String organisation_id, String name, String? email, String? plane_id
+ String id, DateTime created_at, String user_id, String organisation_id, String name, String? email, String? realm_id
 });
 
 
@@ -276,7 +276,7 @@ class __$TeamCopyWithImpl<$Res>
 
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? organisation_id = null,Object? name = null,Object? email = freezed,Object? plane_id = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? organisation_id = null,Object? name = null,Object? email = freezed,Object? realm_id = freezed,}) {
   return _then(_Team(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
@@ -284,7 +284,7 @@ as DateTime,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_n
 as String,organisation_id: null == organisation_id ? _self.organisation_id : organisation_id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String?,plane_id: freezed == plane_id ? _self.plane_id : plane_id // ignore: cast_nullable_to_non_nullable
+as String?,realm_id: freezed == realm_id ? _self.realm_id : realm_id // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

@@ -9,10 +9,11 @@ abstract class Conflux with _$Conflux {
     required String id,
     required DateTime created_at,
     required String user_id,
-    required String plane_id,
+    required String realm_id,
     String? tag,
     required bool portal,
   }) = _Conflux;
 
-  factory Conflux.fromJson(Map<String, dynamic> json) => _$ConfluxFromJson(json);
+  factory Conflux.fromJson(Map<String, dynamic> json) =>
+      _$ConfluxFromJson(json);
 }

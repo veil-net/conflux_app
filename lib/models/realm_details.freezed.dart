@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'plane_details.dart';
+part of 'realm_details.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'plane_details.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$PlaneDetails {
+mixin _$RealmDetails {
 
  String get id; DateTime get created_at; String get user_id; String get veil_id; String get name; String get subnet; bool get public; String get region; String get veil_host; int get veil_port; int get portals; String? get team; String? get subscription; String? get status;
-/// Create a copy of PlaneDetails
+/// Create a copy of RealmDetails
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$PlaneDetailsCopyWith<PlaneDetails> get copyWith => _$PlaneDetailsCopyWithImpl<PlaneDetails>(this as PlaneDetails, _$identity);
+$RealmDetailsCopyWith<RealmDetails> get copyWith => _$RealmDetailsCopyWithImpl<RealmDetails>(this as RealmDetails, _$identity);
 
-  /// Serializes this PlaneDetails to a JSON map.
+  /// Serializes this RealmDetails to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlaneDetails&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.region, region) || other.region == region)&&(identical(other.veil_host, veil_host) || other.veil_host == veil_host)&&(identical(other.veil_port, veil_port) || other.veil_port == veil_port)&&(identical(other.portals, portals) || other.portals == portals)&&(identical(other.team, team) || other.team == team)&&(identical(other.subscription, subscription) || other.subscription == subscription)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RealmDetails&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.region, region) || other.region == region)&&(identical(other.veil_host, veil_host) || other.veil_host == veil_host)&&(identical(other.veil_port, veil_port) || other.veil_port == veil_port)&&(identical(other.portals, portals) || other.portals == portals)&&(identical(other.team, team) || other.team == team)&&(identical(other.subscription, subscription) || other.subscription == subscription)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,id,created_at,user_id,veil_id,name,s
 
 @override
 String toString() {
-  return 'PlaneDetails(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, region: $region, veil_host: $veil_host, veil_port: $veil_port, portals: $portals, team: $team, subscription: $subscription, status: $status)';
+  return 'RealmDetails(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, region: $region, veil_host: $veil_host, veil_port: $veil_port, portals: $portals, team: $team, subscription: $subscription, status: $status)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $PlaneDetailsCopyWith<$Res>  {
-  factory $PlaneDetailsCopyWith(PlaneDetails value, $Res Function(PlaneDetails) _then) = _$PlaneDetailsCopyWithImpl;
+abstract mixin class $RealmDetailsCopyWith<$Res>  {
+  factory $RealmDetailsCopyWith(RealmDetails value, $Res Function(RealmDetails) _then) = _$RealmDetailsCopyWithImpl;
 @useResult
 $Res call({
  String id, DateTime created_at, String user_id, String veil_id, String name, String subnet, bool public, String region, String veil_host, int veil_port, int portals, String? team, String? subscription, String? status
@@ -56,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$PlaneDetailsCopyWithImpl<$Res>
-    implements $PlaneDetailsCopyWith<$Res> {
-  _$PlaneDetailsCopyWithImpl(this._self, this._then);
+class _$RealmDetailsCopyWithImpl<$Res>
+    implements $RealmDetailsCopyWith<$Res> {
+  _$RealmDetailsCopyWithImpl(this._self, this._then);
 
-  final PlaneDetails _self;
-  final $Res Function(PlaneDetails) _then;
+  final RealmDetails _self;
+  final $Res Function(RealmDetails) _then;
 
-/// Create a copy of PlaneDetails
+/// Create a copy of RealmDetails
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? veil_id = null,Object? name = null,Object? subnet = null,Object? public = null,Object? region = null,Object? veil_host = null,Object? veil_port = null,Object? portals = null,Object? team = freezed,Object? subscription = freezed,Object? status = freezed,}) {
   return _then(_self.copyWith(
@@ -88,8 +88,8 @@ as String?,
 }
 
 
-/// Adds pattern-matching-related methods to [PlaneDetails].
-extension PlaneDetailsPatterns on PlaneDetails {
+/// Adds pattern-matching-related methods to [RealmDetails].
+extension RealmDetailsPatterns on RealmDetails {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -102,10 +102,10 @@ extension PlaneDetailsPatterns on PlaneDetails {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _PlaneDetails value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _RealmDetails value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _PlaneDetails() when $default != null:
+case _RealmDetails() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -124,10 +124,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _PlaneDetails value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _RealmDetails value)  $default,){
 final _that = this;
 switch (_that) {
-case _PlaneDetails():
+case _RealmDetails():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -145,10 +145,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _PlaneDetails value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _RealmDetails value)?  $default,){
 final _that = this;
 switch (_that) {
-case _PlaneDetails() when $default != null:
+case _RealmDetails() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -168,7 +168,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  String region,  String veil_host,  int veil_port,  int portals,  String? team,  String? subscription,  String? status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _PlaneDetails() when $default != null:
+case _RealmDetails() when $default != null:
 return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.region,_that.veil_host,_that.veil_port,_that.portals,_that.team,_that.subscription,_that.status);case _:
   return orElse();
 
@@ -189,7 +189,7 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  String region,  String veil_host,  int veil_port,  int portals,  String? team,  String? subscription,  String? status)  $default,) {final _that = this;
 switch (_that) {
-case _PlaneDetails():
+case _RealmDetails():
 return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.region,_that.veil_host,_that.veil_port,_that.portals,_that.team,_that.subscription,_that.status);case _:
   throw StateError('Unexpected subclass');
 
@@ -209,7 +209,7 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  String user_id,  String veil_id,  String name,  String subnet,  bool public,  String region,  String veil_host,  int veil_port,  int portals,  String? team,  String? subscription,  String? status)?  $default,) {final _that = this;
 switch (_that) {
-case _PlaneDetails() when $default != null:
+case _RealmDetails() when $default != null:
 return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name,_that.subnet,_that.public,_that.region,_that.veil_host,_that.veil_port,_that.portals,_that.team,_that.subscription,_that.status);case _:
   return null;
 
@@ -221,9 +221,9 @@ return $default(_that.id,_that.created_at,_that.user_id,_that.veil_id,_that.name
 /// @nodoc
 @JsonSerializable()
 
-class _PlaneDetails implements PlaneDetails {
-   _PlaneDetails({required this.id, required this.created_at, required this.user_id, required this.veil_id, required this.name, required this.subnet, required this.public, required this.region, required this.veil_host, required this.veil_port, required this.portals, this.team, this.subscription, this.status});
-  factory _PlaneDetails.fromJson(Map<String, dynamic> json) => _$PlaneDetailsFromJson(json);
+class _RealmDetails implements RealmDetails {
+   _RealmDetails({required this.id, required this.created_at, required this.user_id, required this.veil_id, required this.name, required this.subnet, required this.public, required this.region, required this.veil_host, required this.veil_port, required this.portals, this.team, this.subscription, this.status});
+  factory _RealmDetails.fromJson(Map<String, dynamic> json) => _$RealmDetailsFromJson(json);
 
 @override final  String id;
 @override final  DateTime created_at;
@@ -240,20 +240,20 @@ class _PlaneDetails implements PlaneDetails {
 @override final  String? subscription;
 @override final  String? status;
 
-/// Create a copy of PlaneDetails
+/// Create a copy of RealmDetails
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$PlaneDetailsCopyWith<_PlaneDetails> get copyWith => __$PlaneDetailsCopyWithImpl<_PlaneDetails>(this, _$identity);
+_$RealmDetailsCopyWith<_RealmDetails> get copyWith => __$RealmDetailsCopyWithImpl<_RealmDetails>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$PlaneDetailsToJson(this, );
+  return _$RealmDetailsToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlaneDetails&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.region, region) || other.region == region)&&(identical(other.veil_host, veil_host) || other.veil_host == veil_host)&&(identical(other.veil_port, veil_port) || other.veil_port == veil_port)&&(identical(other.portals, portals) || other.portals == portals)&&(identical(other.team, team) || other.team == team)&&(identical(other.subscription, subscription) || other.subscription == subscription)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RealmDetails&&(identical(other.id, id) || other.id == id)&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.veil_id, veil_id) || other.veil_id == veil_id)&&(identical(other.name, name) || other.name == name)&&(identical(other.subnet, subnet) || other.subnet == subnet)&&(identical(other.public, public) || other.public == public)&&(identical(other.region, region) || other.region == region)&&(identical(other.veil_host, veil_host) || other.veil_host == veil_host)&&(identical(other.veil_port, veil_port) || other.veil_port == veil_port)&&(identical(other.portals, portals) || other.portals == portals)&&(identical(other.team, team) || other.team == team)&&(identical(other.subscription, subscription) || other.subscription == subscription)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -262,15 +262,15 @@ int get hashCode => Object.hash(runtimeType,id,created_at,user_id,veil_id,name,s
 
 @override
 String toString() {
-  return 'PlaneDetails(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, region: $region, veil_host: $veil_host, veil_port: $veil_port, portals: $portals, team: $team, subscription: $subscription, status: $status)';
+  return 'RealmDetails(id: $id, created_at: $created_at, user_id: $user_id, veil_id: $veil_id, name: $name, subnet: $subnet, public: $public, region: $region, veil_host: $veil_host, veil_port: $veil_port, portals: $portals, team: $team, subscription: $subscription, status: $status)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$PlaneDetailsCopyWith<$Res> implements $PlaneDetailsCopyWith<$Res> {
-  factory _$PlaneDetailsCopyWith(_PlaneDetails value, $Res Function(_PlaneDetails) _then) = __$PlaneDetailsCopyWithImpl;
+abstract mixin class _$RealmDetailsCopyWith<$Res> implements $RealmDetailsCopyWith<$Res> {
+  factory _$RealmDetailsCopyWith(_RealmDetails value, $Res Function(_RealmDetails) _then) = __$RealmDetailsCopyWithImpl;
 @override @useResult
 $Res call({
  String id, DateTime created_at, String user_id, String veil_id, String name, String subnet, bool public, String region, String veil_host, int veil_port, int portals, String? team, String? subscription, String? status
@@ -281,17 +281,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$PlaneDetailsCopyWithImpl<$Res>
-    implements _$PlaneDetailsCopyWith<$Res> {
-  __$PlaneDetailsCopyWithImpl(this._self, this._then);
+class __$RealmDetailsCopyWithImpl<$Res>
+    implements _$RealmDetailsCopyWith<$Res> {
+  __$RealmDetailsCopyWithImpl(this._self, this._then);
 
-  final _PlaneDetails _self;
-  final $Res Function(_PlaneDetails) _then;
+  final _RealmDetails _self;
+  final $Res Function(_RealmDetails) _then;
 
-/// Create a copy of PlaneDetails
+/// Create a copy of RealmDetails
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? user_id = null,Object? veil_id = null,Object? name = null,Object? subnet = null,Object? public = null,Object? region = null,Object? veil_host = null,Object? veil_port = null,Object? portals = null,Object? team = freezed,Object? subscription = freezed,Object? status = freezed,}) {
-  return _then(_PlaneDetails(
+  return _then(_RealmDetails(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
 as DateTime,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable

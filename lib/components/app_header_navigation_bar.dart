@@ -70,7 +70,7 @@ class AppHeaderNavigationBar extends HookConsumerWidget
                     SizedBox(
                       width: 150,
                       child: AppButton(
-                        label: 'Planes',
+                        label: 'Realms',
                         icon: Icons.language,
                         onPressed: () async {
                           ref.read(pageControllerProvider).jumpToPage(1);

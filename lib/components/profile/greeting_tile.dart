@@ -183,7 +183,7 @@ class GreetingTile extends HookConsumerWidget {
                       ),
                     ),
                     subtitle: Text(
-                      'access to VeilNet Public Plane',
+                      'access to VeilNet Public Realm',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                       ),

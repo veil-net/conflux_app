@@ -18,8 +18,9 @@ abstract class OrganisationMember with _$OrganisationMember {
     required String user_id,
     required String display_name,
     required String email,
-    required String? plane_id,
+    required String? realm_id,
   }) = _OrganisationMember;
 
-  factory OrganisationMember.fromJson(Map<String, dynamic> json) => _$OrganisationMemberFromJson(json);
+  factory OrganisationMember.fromJson(Map<String, dynamic> json) =>
+      _$OrganisationMemberFromJson(json);
 }

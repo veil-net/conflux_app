@@ -14,8 +14,8 @@ abstract class ConfluxDetails with _$ConfluxDetails {
     String? signature,
     String? cidr,
     required String subnet,
-    required String plane,
-    required String plane_id,
+    required String realm,
+    required String realm_id,
     required bool public,
     required bool portal,
     required String region,
@@ -23,5 +23,6 @@ abstract class ConfluxDetails with _$ConfluxDetails {
     required int veil_port,
   }) = _ConfluxDetails;
 
-  factory ConfluxDetails.fromJson(Map<String, dynamic> json) => _$ConfluxDetailsFromJson(json);
+  factory ConfluxDetails.fromJson(Map<String, dynamic> json) =>
+      _$ConfluxDetailsFromJson(json);
 }

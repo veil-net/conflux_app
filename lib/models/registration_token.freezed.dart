@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$RegistrationToken {
 
- DateTime get created_at; String get user_id; String get plane_id; String get token_hash; DateTime get expires_at; String get token_id; String? get tag;
+ DateTime get created_at; String get user_id; String get realm_id; String get token_hash; DateTime get expires_at; String get token_id; String? get tag;
 /// Create a copy of RegistrationToken
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $RegistrationTokenCopyWith<RegistrationToken> get copyWith => _$RegistrationToke
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegistrationToken&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.plane_id, plane_id) || other.plane_id == plane_id)&&(identical(other.token_hash, token_hash) || other.token_hash == token_hash)&&(identical(other.expires_at, expires_at) || other.expires_at == expires_at)&&(identical(other.token_id, token_id) || other.token_id == token_id)&&(identical(other.tag, tag) || other.tag == tag));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RegistrationToken&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.realm_id, realm_id) || other.realm_id == realm_id)&&(identical(other.token_hash, token_hash) || other.token_hash == token_hash)&&(identical(other.expires_at, expires_at) || other.expires_at == expires_at)&&(identical(other.token_id, token_id) || other.token_id == token_id)&&(identical(other.tag, tag) || other.tag == tag));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,created_at,user_id,plane_id,token_hash,expires_at,token_id,tag);
+int get hashCode => Object.hash(runtimeType,created_at,user_id,realm_id,token_hash,expires_at,token_id,tag);
 
 @override
 String toString() {
-  return 'RegistrationToken(created_at: $created_at, user_id: $user_id, plane_id: $plane_id, token_hash: $token_hash, expires_at: $expires_at, token_id: $token_id, tag: $tag)';
+  return 'RegistrationToken(created_at: $created_at, user_id: $user_id, realm_id: $realm_id, token_hash: $token_hash, expires_at: $expires_at, token_id: $token_id, tag: $tag)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $RegistrationTokenCopyWith<$Res>  {
   factory $RegistrationTokenCopyWith(RegistrationToken value, $Res Function(RegistrationToken) _then) = _$RegistrationTokenCopyWithImpl;
 @useResult
 $Res call({
- DateTime created_at, String user_id, String plane_id, String token_hash, DateTime expires_at, String token_id, String? tag
+ DateTime created_at, String user_id, String realm_id, String token_hash, DateTime expires_at, String token_id, String? tag
 });
 
 
@@ -65,11 +65,11 @@ class _$RegistrationTokenCopyWithImpl<$Res>
 
 /// Create a copy of RegistrationToken
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? created_at = null,Object? user_id = null,Object? plane_id = null,Object? token_hash = null,Object? expires_at = null,Object? token_id = null,Object? tag = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? created_at = null,Object? user_id = null,Object? realm_id = null,Object? token_hash = null,Object? expires_at = null,Object? token_id = null,Object? tag = freezed,}) {
   return _then(_self.copyWith(
 created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
 as DateTime,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable
-as String,plane_id: null == plane_id ? _self.plane_id : plane_id // ignore: cast_nullable_to_non_nullable
+as String,realm_id: null == realm_id ? _self.realm_id : realm_id // ignore: cast_nullable_to_non_nullable
 as String,token_hash: null == token_hash ? _self.token_hash : token_hash // ignore: cast_nullable_to_non_nullable
 as String,expires_at: null == expires_at ? _self.expires_at : expires_at // ignore: cast_nullable_to_non_nullable
 as DateTime,token_id: null == token_id ? _self.token_id : token_id // ignore: cast_nullable_to_non_nullable
@@ -159,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime created_at,  String user_id,  String plane_id,  String token_hash,  DateTime expires_at,  String token_id,  String? tag)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime created_at,  String user_id,  String realm_id,  String token_hash,  DateTime expires_at,  String token_id,  String? tag)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RegistrationToken() when $default != null:
-return $default(_that.created_at,_that.user_id,_that.plane_id,_that.token_hash,_that.expires_at,_that.token_id,_that.tag);case _:
+return $default(_that.created_at,_that.user_id,_that.realm_id,_that.token_hash,_that.expires_at,_that.token_id,_that.tag);case _:
   return orElse();
 
 }
@@ -180,10 +180,10 @@ return $default(_that.created_at,_that.user_id,_that.plane_id,_that.token_hash,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime created_at,  String user_id,  String plane_id,  String token_hash,  DateTime expires_at,  String token_id,  String? tag)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime created_at,  String user_id,  String realm_id,  String token_hash,  DateTime expires_at,  String token_id,  String? tag)  $default,) {final _that = this;
 switch (_that) {
 case _RegistrationToken():
-return $default(_that.created_at,_that.user_id,_that.plane_id,_that.token_hash,_that.expires_at,_that.token_id,_that.tag);case _:
+return $default(_that.created_at,_that.user_id,_that.realm_id,_that.token_hash,_that.expires_at,_that.token_id,_that.tag);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +200,10 @@ return $default(_that.created_at,_that.user_id,_that.plane_id,_that.token_hash,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime created_at,  String user_id,  String plane_id,  String token_hash,  DateTime expires_at,  String token_id,  String? tag)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime created_at,  String user_id,  String realm_id,  String token_hash,  DateTime expires_at,  String token_id,  String? tag)?  $default,) {final _that = this;
 switch (_that) {
 case _RegistrationToken() when $default != null:
-return $default(_that.created_at,_that.user_id,_that.plane_id,_that.token_hash,_that.expires_at,_that.token_id,_that.tag);case _:
+return $default(_that.created_at,_that.user_id,_that.realm_id,_that.token_hash,_that.expires_at,_that.token_id,_that.tag);case _:
   return null;
 
 }
@@ -215,12 +215,12 @@ return $default(_that.created_at,_that.user_id,_that.plane_id,_that.token_hash,_
 @JsonSerializable()
 
 class _RegistrationToken implements RegistrationToken {
-   _RegistrationToken({required this.created_at, required this.user_id, required this.plane_id, required this.token_hash, required this.expires_at, required this.token_id, required this.tag});
+   _RegistrationToken({required this.created_at, required this.user_id, required this.realm_id, required this.token_hash, required this.expires_at, required this.token_id, required this.tag});
   factory _RegistrationToken.fromJson(Map<String, dynamic> json) => _$RegistrationTokenFromJson(json);
 
 @override final  DateTime created_at;
 @override final  String user_id;
-@override final  String plane_id;
+@override final  String realm_id;
 @override final  String token_hash;
 @override final  DateTime expires_at;
 @override final  String token_id;
@@ -239,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RegistrationToken&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.plane_id, plane_id) || other.plane_id == plane_id)&&(identical(other.token_hash, token_hash) || other.token_hash == token_hash)&&(identical(other.expires_at, expires_at) || other.expires_at == expires_at)&&(identical(other.token_id, token_id) || other.token_id == token_id)&&(identical(other.tag, tag) || other.tag == tag));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RegistrationToken&&(identical(other.created_at, created_at) || other.created_at == created_at)&&(identical(other.user_id, user_id) || other.user_id == user_id)&&(identical(other.realm_id, realm_id) || other.realm_id == realm_id)&&(identical(other.token_hash, token_hash) || other.token_hash == token_hash)&&(identical(other.expires_at, expires_at) || other.expires_at == expires_at)&&(identical(other.token_id, token_id) || other.token_id == token_id)&&(identical(other.tag, tag) || other.tag == tag));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,created_at,user_id,plane_id,token_hash,expires_at,token_id,tag);
+int get hashCode => Object.hash(runtimeType,created_at,user_id,realm_id,token_hash,expires_at,token_id,tag);
 
 @override
 String toString() {
-  return 'RegistrationToken(created_at: $created_at, user_id: $user_id, plane_id: $plane_id, token_hash: $token_hash, expires_at: $expires_at, token_id: $token_id, tag: $tag)';
+  return 'RegistrationToken(created_at: $created_at, user_id: $user_id, realm_id: $realm_id, token_hash: $token_hash, expires_at: $expires_at, token_id: $token_id, tag: $tag)';
 }
 
 
@@ -259,7 +259,7 @@ abstract mixin class _$RegistrationTokenCopyWith<$Res> implements $RegistrationT
   factory _$RegistrationTokenCopyWith(_RegistrationToken value, $Res Function(_RegistrationToken) _then) = __$RegistrationTokenCopyWithImpl;
 @override @useResult
 $Res call({
- DateTime created_at, String user_id, String plane_id, String token_hash, DateTime expires_at, String token_id, String? tag
+ DateTime created_at, String user_id, String realm_id, String token_hash, DateTime expires_at, String token_id, String? tag
 });
 
 
@@ -276,11 +276,11 @@ class __$RegistrationTokenCopyWithImpl<$Res>
 
 /// Create a copy of RegistrationToken
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? created_at = null,Object? user_id = null,Object? plane_id = null,Object? token_hash = null,Object? expires_at = null,Object? token_id = null,Object? tag = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? created_at = null,Object? user_id = null,Object? realm_id = null,Object? token_hash = null,Object? expires_at = null,Object? token_id = null,Object? tag = freezed,}) {
   return _then(_RegistrationToken(
 created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
 as DateTime,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable
-as String,plane_id: null == plane_id ? _self.plane_id : plane_id // ignore: cast_nullable_to_non_nullable
+as String,realm_id: null == realm_id ? _self.realm_id : realm_id // ignore: cast_nullable_to_non_nullable
 as String,token_hash: null == token_hash ? _self.token_hash : token_hash // ignore: cast_nullable_to_non_nullable
 as String,expires_at: null == expires_at ? _self.expires_at : expires_at // ignore: cast_nullable_to_non_nullable
 as DateTime,token_id: null == token_id ? _self.token_id : token_id // ignore: cast_nullable_to_non_nullable

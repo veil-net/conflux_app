@@ -20,10 +20,10 @@ class Confluxes extends _$Confluxes {
         .map((event) => event.map((data) => Conflux.fromJson(data)).toList());
   }
 
-  Future<void> createConflux(String name, String plane_id, String? tag) async {
+  Future<void> createConflux(String name, String realm_id, String? tag) async {
     final api = ref.read(apiProvider);
     try {
-      await api.post('/conflux?plane_id=$plane_id&tag=$tag');
+      await api.post('/conflux?realm_id=$realm_id&tag=$tag');
       ref.invalidateSelf();
     } on DioException catch (e) {
       throw Exception(e.response?.data['detail']);
