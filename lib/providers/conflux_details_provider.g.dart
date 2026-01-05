@@ -10,7 +10,7 @@ part of 'conflux_details_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(confluxDetails)
-const confluxDetailsProvider = ConfluxDetailsFamily._();
+final confluxDetailsProvider = ConfluxDetailsFamily._();
 
 final class ConfluxDetailsProvider
     extends
@@ -20,7 +20,7 @@ final class ConfluxDetailsProvider
           FutureOr<ConfluxDetails?>
         >
     with $FutureModifier<ConfluxDetails?>, $FutureProvider<ConfluxDetails?> {
-  const ConfluxDetailsProvider._({
+  ConfluxDetailsProvider._({
     required ConfluxDetailsFamily super.from,
     required String super.argument,
   }) : super(
@@ -68,7 +68,7 @@ String _$confluxDetailsHash() => r'b467c6872402193a82964ff09e55bc5d137c4907';
 
 final class ConfluxDetailsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<ConfluxDetails?>, String> {
-  const ConfluxDetailsFamily._()
+  ConfluxDetailsFamily._()
     : super(
         retry: null,
         name: r'confluxDetailsProvider',
@@ -85,7 +85,7 @@ final class ConfluxDetailsFamily extends $Family
 }
 
 @ProviderFor(confluxRiftsDetails)
-const confluxRiftsDetailsProvider = ConfluxRiftsDetailsProvider._();
+final confluxRiftsDetailsProvider = ConfluxRiftsDetailsProvider._();
 
 final class ConfluxRiftsDetailsProvider
     extends
@@ -97,7 +97,7 @@ final class ConfluxRiftsDetailsProvider
     with
         $FutureModifier<List<ConfluxDetails>>,
         $FutureProvider<List<ConfluxDetails>> {
-  const ConfluxRiftsDetailsProvider._()
+  ConfluxRiftsDetailsProvider._()
     : super(
         from: null,
         argument: null,
@@ -127,7 +127,7 @@ String _$confluxRiftsDetailsHash() =>
     r'987fc8c3f7cde37f5321800392fb9f4247f51ef4';
 
 @ProviderFor(confluxPortalsDetails)
-const confluxPortalsDetailsProvider = ConfluxPortalsDetailsProvider._();
+final confluxPortalsDetailsProvider = ConfluxPortalsDetailsProvider._();
 
 final class ConfluxPortalsDetailsProvider
     extends
@@ -139,7 +139,7 @@ final class ConfluxPortalsDetailsProvider
     with
         $FutureModifier<List<ConfluxDetails>>,
         $FutureProvider<List<ConfluxDetails>> {
-  const ConfluxPortalsDetailsProvider._()
+  ConfluxPortalsDetailsProvider._()
     : super(
         from: null,
         argument: null,

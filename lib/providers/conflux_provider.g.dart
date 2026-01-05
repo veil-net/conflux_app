@@ -10,11 +10,11 @@ part of 'conflux_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(Confluxes)
-const confluxesProvider = ConfluxesProvider._();
+final confluxesProvider = ConfluxesProvider._();
 
 final class ConfluxesProvider
     extends $StreamNotifierProvider<Confluxes, List<Conflux>> {
-  const ConfluxesProvider._()
+  ConfluxesProvider._()
     : super(
         from: null,
         argument: null,
@@ -40,7 +40,6 @@ abstract class _$Confluxes extends $StreamNotifier<List<Conflux>> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AsyncValue<List<Conflux>>, List<Conflux>>;
     final element =
         ref.element
@@ -50,18 +49,18 @@ abstract class _$Confluxes extends $StreamNotifier<List<Conflux>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
 
 @ProviderFor(confluxByID)
-const confluxByIDProvider = ConfluxByIDFamily._();
+final confluxByIDProvider = ConfluxByIDFamily._();
 
 final class ConfluxByIDProvider
     extends
         $FunctionalProvider<AsyncValue<Conflux?>, Conflux?, Stream<Conflux?>>
     with $FutureModifier<Conflux?>, $StreamProvider<Conflux?> {
-  const ConfluxByIDProvider._({
+  ConfluxByIDProvider._({
     required ConfluxByIDFamily super.from,
     required String super.argument,
   }) : super(
@@ -108,7 +107,7 @@ String _$confluxByIDHash() => r'28c7f26e6f2bf03ac58c43410be610a079ec19b2';
 
 final class ConfluxByIDFamily extends $Family
     with $FunctionalFamilyOverride<Stream<Conflux?>, String> {
-  const ConfluxByIDFamily._()
+  ConfluxByIDFamily._()
     : super(
         retry: null,
         name: r'confluxByIDProvider',
@@ -125,7 +124,7 @@ final class ConfluxByIDFamily extends $Family
 }
 
 @ProviderFor(confluxRifts)
-const confluxRiftsProvider = ConfluxRiftsProvider._();
+final confluxRiftsProvider = ConfluxRiftsProvider._();
 
 final class ConfluxRiftsProvider
     extends
@@ -135,7 +134,7 @@ final class ConfluxRiftsProvider
           FutureOr<List<Conflux>>
         >
     with $FutureModifier<List<Conflux>>, $FutureProvider<List<Conflux>> {
-  const ConfluxRiftsProvider._()
+  ConfluxRiftsProvider._()
     : super(
         from: null,
         argument: null,
@@ -164,7 +163,7 @@ final class ConfluxRiftsProvider
 String _$confluxRiftsHash() => r'3a847ef0074849725edd0442a33a341bf74ff96f';
 
 @ProviderFor(confluxPortals)
-const confluxPortalsProvider = ConfluxPortalsProvider._();
+final confluxPortalsProvider = ConfluxPortalsProvider._();
 
 final class ConfluxPortalsProvider
     extends
@@ -174,7 +173,7 @@ final class ConfluxPortalsProvider
           FutureOr<List<Conflux>>
         >
     with $FutureModifier<List<Conflux>>, $FutureProvider<List<Conflux>> {
-  const ConfluxPortalsProvider._()
+  ConfluxPortalsProvider._()
     : super(
         from: null,
         argument: null,

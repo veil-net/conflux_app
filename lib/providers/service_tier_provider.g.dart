@@ -10,12 +10,12 @@ part of 'service_tier_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(serviceTier)
-const serviceTierProvider = ServiceTierProvider._();
+final serviceTierProvider = ServiceTierProvider._();
 
 final class ServiceTierProvider
     extends $FunctionalProvider<AsyncValue<int>, int, FutureOr<int>>
     with $FutureModifier<int>, $FutureProvider<int> {
-  const ServiceTierProvider._()
+  ServiceTierProvider._()
     : super(
         from: null,
         argument: null,

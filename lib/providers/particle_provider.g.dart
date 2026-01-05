@@ -10,11 +10,11 @@ part of 'particle_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(PrimaryParticles)
-const primaryParticlesProvider = PrimaryParticlesFamily._();
+final primaryParticlesProvider = PrimaryParticlesFamily._();
 
 final class PrimaryParticlesProvider
     extends $NotifierProvider<PrimaryParticles, List<Particle>> {
-  const PrimaryParticlesProvider._({
+  PrimaryParticlesProvider._({
     required PrimaryParticlesFamily super.from,
     required int super.argument,
   }) : super(
@@ -69,7 +69,7 @@ final class PrimaryParticlesFamily extends $Family
           List<Particle>,
           int
         > {
-  const PrimaryParticlesFamily._()
+  PrimaryParticlesFamily._()
     : super(
         retry: null,
         name: r'primaryParticlesProvider',
@@ -93,7 +93,6 @@ abstract class _$PrimaryParticles extends $Notifier<List<Particle>> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build(_$args);
     final ref = this.ref as $Ref<List<Particle>, List<Particle>>;
     final element =
         ref.element
@@ -103,16 +102,16 @@ abstract class _$PrimaryParticles extends $Notifier<List<Particle>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, () => build(_$args));
   }
 }
 
 @ProviderFor(SecondaryParticles)
-const secondaryParticlesProvider = SecondaryParticlesFamily._();
+final secondaryParticlesProvider = SecondaryParticlesFamily._();
 
 final class SecondaryParticlesProvider
     extends $NotifierProvider<SecondaryParticles, List<Particle>> {
-  const SecondaryParticlesProvider._({
+  SecondaryParticlesProvider._({
     required SecondaryParticlesFamily super.from,
     required int super.argument,
   }) : super(
@@ -168,7 +167,7 @@ final class SecondaryParticlesFamily extends $Family
           List<Particle>,
           int
         > {
-  const SecondaryParticlesFamily._()
+  SecondaryParticlesFamily._()
     : super(
         retry: null,
         name: r'secondaryParticlesProvider',
@@ -192,7 +191,6 @@ abstract class _$SecondaryParticles extends $Notifier<List<Particle>> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build(_$args);
     final ref = this.ref as $Ref<List<Particle>, List<Particle>>;
     final element =
         ref.element
@@ -202,6 +200,6 @@ abstract class _$SecondaryParticles extends $Notifier<List<Particle>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, () => build(_$args));
   }
 }

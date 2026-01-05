@@ -10,11 +10,11 @@ part of 'team_member_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(TeamMembers)
-const teamMembersProvider = TeamMembersFamily._();
+final teamMembersProvider = TeamMembersFamily._();
 
 final class TeamMembersProvider
     extends $StreamNotifierProvider<TeamMembers, List<TeamMember>> {
-  const TeamMembersProvider._({
+  TeamMembersProvider._({
     required TeamMembersFamily super.from,
     required String super.argument,
   }) : super(
@@ -61,7 +61,7 @@ final class TeamMembersFamily extends $Family
           Stream<List<TeamMember>>,
           String
         > {
-  const TeamMembersFamily._()
+  TeamMembersFamily._()
     : super(
         retry: null,
         name: r'teamMembersProvider',
@@ -85,7 +85,6 @@ abstract class _$TeamMembers extends $StreamNotifier<List<TeamMember>> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build(_$args);
     final ref =
         this.ref as $Ref<AsyncValue<List<TeamMember>>, List<TeamMember>>;
     final element =
@@ -96,6 +95,6 @@ abstract class _$TeamMembers extends $StreamNotifier<List<TeamMember>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, () => build(_$args));
   }
 }

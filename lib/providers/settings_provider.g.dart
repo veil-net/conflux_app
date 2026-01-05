@@ -10,10 +10,10 @@ part of 'settings_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(DarkMode)
-const darkModeProvider = DarkModeProvider._();
+final darkModeProvider = DarkModeProvider._();
 
 final class DarkModeProvider extends $NotifierProvider<DarkMode, bool> {
-  const DarkModeProvider._()
+  DarkModeProvider._()
     : super(
         from: null,
         argument: null,
@@ -47,7 +47,6 @@ abstract class _$DarkMode extends $Notifier<bool> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -57,16 +56,16 @@ abstract class _$DarkMode extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
 
 @ProviderFor(DeveloperMode)
-const developerModeProvider = DeveloperModeProvider._();
+final developerModeProvider = DeveloperModeProvider._();
 
 final class DeveloperModeProvider
     extends $NotifierProvider<DeveloperMode, bool> {
-  const DeveloperModeProvider._()
+  DeveloperModeProvider._()
     : super(
         from: null,
         argument: null,
@@ -100,7 +99,6 @@ abstract class _$DeveloperMode extends $Notifier<bool> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
@@ -110,6 +108,6 @@ abstract class _$DeveloperMode extends $Notifier<bool> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

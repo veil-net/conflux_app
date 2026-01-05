@@ -10,7 +10,7 @@ part of 'user_profile_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(userProfile)
-const userProfileProvider = UserProfileProvider._();
+final userProfileProvider = UserProfileProvider._();
 
 final class UserProfileProvider
     extends
@@ -20,7 +20,7 @@ final class UserProfileProvider
           FutureOr<UserProfile>
         >
     with $FutureModifier<UserProfile>, $FutureProvider<UserProfile> {
-  const UserProfileProvider._()
+  UserProfileProvider._()
     : super(
         from: null,
         argument: null,
@@ -49,12 +49,12 @@ final class UserProfileProvider
 String _$userProfileHash() => r'7c1c8a00b85a8764d3d55a4907a4c90401606f7e';
 
 @ProviderFor(userMP)
-const userMPProvider = UserMPProvider._();
+final userMPProvider = UserMPProvider._();
 
 final class UserMPProvider
     extends $FunctionalProvider<AsyncValue<int>, int, FutureOr<int>>
     with $FutureModifier<int>, $FutureProvider<int> {
-  const UserMPProvider._()
+  UserMPProvider._()
     : super(
         from: null,
         argument: null,

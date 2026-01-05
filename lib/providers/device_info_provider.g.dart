@@ -10,12 +10,12 @@ part of 'device_info_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(deviceHostname)
-const deviceHostnameProvider = DeviceHostnameProvider._();
+final deviceHostnameProvider = DeviceHostnameProvider._();
 
 final class DeviceHostnameProvider
     extends $FunctionalProvider<AsyncValue<String>, String, FutureOr<String>>
     with $FutureModifier<String>, $FutureProvider<String> {
-  const DeviceHostnameProvider._()
+  DeviceHostnameProvider._()
     : super(
         from: null,
         argument: null,

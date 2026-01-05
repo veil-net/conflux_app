@@ -10,12 +10,12 @@ part of 'applinks_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(appLinks)
-const appLinksProvider = AppLinksProvider._();
+final appLinksProvider = AppLinksProvider._();
 
 final class AppLinksProvider
     extends $FunctionalProvider<AppLinks, AppLinks, AppLinks>
     with $Provider<AppLinks> {
-  const AppLinksProvider._()
+  AppLinksProvider._()
     : super(
         from: null,
         argument: null,

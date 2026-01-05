@@ -10,11 +10,11 @@ part of 'subscription_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(Subscriptions)
-const subscriptionsProvider = SubscriptionsProvider._();
+final subscriptionsProvider = SubscriptionsProvider._();
 
 final class SubscriptionsProvider
     extends $StreamNotifierProvider<Subscriptions, List<Subscription>> {
-  const SubscriptionsProvider._()
+  SubscriptionsProvider._()
     : super(
         from: null,
         argument: null,
@@ -40,7 +40,6 @@ abstract class _$Subscriptions extends $StreamNotifier<List<Subscription>> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref =
         this.ref as $Ref<AsyncValue<List<Subscription>>, List<Subscription>>;
     final element =
@@ -51,12 +50,12 @@ abstract class _$Subscriptions extends $StreamNotifier<List<Subscription>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
 
 @ProviderFor(confluxSubscription)
-const confluxSubscriptionProvider = ConfluxSubscriptionProvider._();
+final confluxSubscriptionProvider = ConfluxSubscriptionProvider._();
 
 final class ConfluxSubscriptionProvider
     extends
@@ -66,7 +65,7 @@ final class ConfluxSubscriptionProvider
           FutureOr<Subscription?>
         >
     with $FutureModifier<Subscription?>, $FutureProvider<Subscription?> {
-  const ConfluxSubscriptionProvider._()
+  ConfluxSubscriptionProvider._()
     : super(
         from: null,
         argument: null,
@@ -96,7 +95,7 @@ String _$confluxSubscriptionHash() =>
     r'9e09cad6b2542932731c00ac987f0b6007de4822';
 
 @ProviderFor(realmSubscriptions)
-const realmSubscriptionsProvider = RealmSubscriptionsProvider._();
+final realmSubscriptionsProvider = RealmSubscriptionsProvider._();
 
 final class RealmSubscriptionsProvider
     extends
@@ -108,7 +107,7 @@ final class RealmSubscriptionsProvider
     with
         $FutureModifier<List<Subscription>>,
         $FutureProvider<List<Subscription>> {
-  const RealmSubscriptionsProvider._()
+  RealmSubscriptionsProvider._()
     : super(
         from: null,
         argument: null,

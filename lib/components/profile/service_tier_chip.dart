@@ -42,7 +42,7 @@ class SubscriptionTierChip extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     Future<void> manageSubscription() async {
       try {
-        launchUrl(Uri.parse('https://console.veilnet.app/setting'));
+        launchUrl(Uri.parse('https://console.veilnet.app/subscription'));
       } catch (e) {
         if (context.mounted) {
           DialogManager.showDialog(context, e.toString(), DialogType.error);

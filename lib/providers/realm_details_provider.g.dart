@@ -10,7 +10,7 @@ part of 'realm_details_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(realmsDetails)
-const realmsDetailsProvider = RealmsDetailsProvider._();
+final realmsDetailsProvider = RealmsDetailsProvider._();
 
 final class RealmsDetailsProvider
     extends
@@ -22,7 +22,7 @@ final class RealmsDetailsProvider
     with
         $FutureModifier<List<RealmDetails>>,
         $FutureProvider<List<RealmDetails>> {
-  const RealmsDetailsProvider._()
+  RealmsDetailsProvider._()
     : super(
         from: null,
         argument: null,
@@ -51,7 +51,7 @@ final class RealmsDetailsProvider
 String _$realmsDetailsHash() => r'09be74ffd40b8ecf95bcc5c57088a3792fd128a2';
 
 @ProviderFor(realmDetails)
-const realmDetailsProvider = RealmDetailsFamily._();
+final realmDetailsProvider = RealmDetailsFamily._();
 
 final class RealmDetailsProvider
     extends
@@ -61,7 +61,7 @@ final class RealmDetailsProvider
           FutureOr<RealmDetails?>
         >
     with $FutureModifier<RealmDetails?>, $FutureProvider<RealmDetails?> {
-  const RealmDetailsProvider._({
+  RealmDetailsProvider._({
     required RealmDetailsFamily super.from,
     required String super.argument,
   }) : super(
@@ -109,7 +109,7 @@ String _$realmDetailsHash() => r'69d4788d4321d24cc82631f5e4c86196bf118f0b';
 
 final class RealmDetailsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<RealmDetails?>, String> {
-  const RealmDetailsFamily._()
+  RealmDetailsFamily._()
     : super(
         retry: null,
         name: r'realmDetailsProvider',
@@ -126,7 +126,7 @@ final class RealmDetailsFamily extends $Family
 }
 
 @ProviderFor(privateRealmDetails)
-const privateRealmDetailsProvider = PrivateRealmDetailsProvider._();
+final privateRealmDetailsProvider = PrivateRealmDetailsProvider._();
 
 final class PrivateRealmDetailsProvider
     extends
@@ -138,7 +138,7 @@ final class PrivateRealmDetailsProvider
     with
         $FutureModifier<List<RealmDetails>>,
         $FutureProvider<List<RealmDetails>> {
-  const PrivateRealmDetailsProvider._()
+  PrivateRealmDetailsProvider._()
     : super(
         from: null,
         argument: null,
@@ -168,7 +168,7 @@ String _$privateRealmDetailsHash() =>
     r'282020668f09eea4307bbdcf11b44629be293678';
 
 @ProviderFor(publicRealmDetails)
-const publicRealmDetailsProvider = PublicRealmDetailsProvider._();
+final publicRealmDetailsProvider = PublicRealmDetailsProvider._();
 
 final class PublicRealmDetailsProvider
     extends
@@ -180,7 +180,7 @@ final class PublicRealmDetailsProvider
     with
         $FutureModifier<List<RealmDetails>>,
         $FutureProvider<List<RealmDetails>> {
-  const PublicRealmDetailsProvider._()
+  PublicRealmDetailsProvider._()
     : super(
         from: null,
         argument: null,
@@ -210,11 +210,11 @@ String _$publicRealmDetailsHash() =>
     r'e6da8ac2670c52bd68d064386fd6649eb2a49810';
 
 @ProviderFor(SelectedRealmDetails)
-const selectedRealmDetailsProvider = SelectedRealmDetailsProvider._();
+final selectedRealmDetailsProvider = SelectedRealmDetailsProvider._();
 
 final class SelectedRealmDetailsProvider
     extends $AsyncNotifierProvider<SelectedRealmDetails, RealmDetails?> {
-  const SelectedRealmDetailsProvider._()
+  SelectedRealmDetailsProvider._()
     : super(
         from: null,
         argument: null,
@@ -241,7 +241,6 @@ abstract class _$SelectedRealmDetails extends $AsyncNotifier<RealmDetails?> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AsyncValue<RealmDetails?>, RealmDetails?>;
     final element =
         ref.element
@@ -251,15 +250,15 @@ abstract class _$SelectedRealmDetails extends $AsyncNotifier<RealmDetails?> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
 
 @ProviderFor(RealmFilter)
-const realmFilterProvider = RealmFilterProvider._();
+final realmFilterProvider = RealmFilterProvider._();
 
 final class RealmFilterProvider extends $NotifierProvider<RealmFilter, String> {
-  const RealmFilterProvider._()
+  RealmFilterProvider._()
     : super(
         from: null,
         argument: null,
@@ -293,7 +292,6 @@ abstract class _$RealmFilter extends $Notifier<String> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<String, String>;
     final element =
         ref.element
@@ -303,16 +301,16 @@ abstract class _$RealmFilter extends $Notifier<String> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
 
 @ProviderFor(RealmPublicity)
-const realmPublicityProvider = RealmPublicityProvider._();
+final realmPublicityProvider = RealmPublicityProvider._();
 
 final class RealmPublicityProvider
     extends $NotifierProvider<RealmPublicity, bool?> {
-  const RealmPublicityProvider._()
+  RealmPublicityProvider._()
     : super(
         from: null,
         argument: null,
@@ -346,7 +344,6 @@ abstract class _$RealmPublicity extends $Notifier<bool?> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<bool?, bool?>;
     final element =
         ref.element
@@ -356,6 +353,6 @@ abstract class _$RealmPublicity extends $Notifier<bool?> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

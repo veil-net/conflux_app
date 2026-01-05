@@ -10,7 +10,7 @@ part of 'page_controller_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(pageController)
-const pageControllerProvider = PageControllerProvider._();
+final pageControllerProvider = PageControllerProvider._();
 
 final class PageControllerProvider
     extends
@@ -20,7 +20,7 @@ final class PageControllerProvider
           Raw<PageController>
         >
     with $Provider<Raw<PageController>> {
-  const PageControllerProvider._()
+  PageControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -57,10 +57,10 @@ final class PageControllerProvider
 String _$pageControllerHash() => r'7a8d1760d17ec41748bb24be997ec523cffc982f';
 
 @ProviderFor(CurrentPage)
-const currentPageProvider = CurrentPageProvider._();
+final currentPageProvider = CurrentPageProvider._();
 
 final class CurrentPageProvider extends $NotifierProvider<CurrentPage, int> {
-  const CurrentPageProvider._()
+  CurrentPageProvider._()
     : super(
         from: null,
         argument: null,
@@ -94,7 +94,6 @@ abstract class _$CurrentPage extends $Notifier<int> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<int, int>;
     final element =
         ref.element
@@ -104,6 +103,6 @@ abstract class _$CurrentPage extends $Notifier<int> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

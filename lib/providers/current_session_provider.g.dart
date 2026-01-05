@@ -10,11 +10,11 @@ part of 'current_session_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(CurrentSession)
-const currentSessionProvider = CurrentSessionProvider._();
+final currentSessionProvider = CurrentSessionProvider._();
 
 final class CurrentSessionProvider
     extends $NotifierProvider<CurrentSession, Session?> {
-  const CurrentSessionProvider._()
+  CurrentSessionProvider._()
     : super(
         from: null,
         argument: null,
@@ -48,7 +48,6 @@ abstract class _$CurrentSession extends $Notifier<Session?> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<Session?, Session?>;
     final element =
         ref.element
@@ -58,6 +57,6 @@ abstract class _$CurrentSession extends $Notifier<Session?> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

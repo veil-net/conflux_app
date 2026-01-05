@@ -10,11 +10,11 @@ part of 'organisation_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(Organisations)
-const organisationsProvider = OrganisationsProvider._();
+final organisationsProvider = OrganisationsProvider._();
 
 final class OrganisationsProvider
     extends $StreamNotifierProvider<Organisations, List<Organisation>> {
-  const OrganisationsProvider._()
+  OrganisationsProvider._()
     : super(
         from: null,
         argument: null,
@@ -40,7 +40,6 @@ abstract class _$Organisations extends $StreamNotifier<List<Organisation>> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref =
         this.ref as $Ref<AsyncValue<List<Organisation>>, List<Organisation>>;
     final element =
@@ -51,12 +50,12 @@ abstract class _$Organisations extends $StreamNotifier<List<Organisation>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
 
 @ProviderFor(ownedOrganisation)
-const ownedOrganisationProvider = OwnedOrganisationProvider._();
+final ownedOrganisationProvider = OwnedOrganisationProvider._();
 
 final class OwnedOrganisationProvider
     extends
@@ -66,7 +65,7 @@ final class OwnedOrganisationProvider
           FutureOr<Organisation?>
         >
     with $FutureModifier<Organisation?>, $FutureProvider<Organisation?> {
-  const OwnedOrganisationProvider._()
+  OwnedOrganisationProvider._()
     : super(
         from: null,
         argument: null,

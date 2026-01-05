@@ -10,12 +10,12 @@ part of 'public_ip_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(publicIP)
-const publicIPProvider = PublicIPProvider._();
+final publicIPProvider = PublicIPProvider._();
 
 final class PublicIPProvider
     extends $FunctionalProvider<AsyncValue<String>, String, FutureOr<String>>
     with $FutureModifier<String>, $FutureProvider<String> {
-  const PublicIPProvider._()
+  PublicIPProvider._()
     : super(
         from: null,
         argument: null,

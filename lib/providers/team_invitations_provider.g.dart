@@ -10,11 +10,11 @@ part of 'team_invitations_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(TeamInvitations)
-const teamInvitationsProvider = TeamInvitationsProvider._();
+final teamInvitationsProvider = TeamInvitationsProvider._();
 
 final class TeamInvitationsProvider
     extends $StreamNotifierProvider<TeamInvitations, List<TeamInvitation>> {
-  const TeamInvitationsProvider._()
+  TeamInvitationsProvider._()
     : super(
         from: null,
         argument: null,
@@ -40,7 +40,6 @@ abstract class _$TeamInvitations extends $StreamNotifier<List<TeamInvitation>> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref =
         this.ref
             as $Ref<AsyncValue<List<TeamInvitation>>, List<TeamInvitation>>;
@@ -55,6 +54,6 @@ abstract class _$TeamInvitations extends $StreamNotifier<List<TeamInvitation>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

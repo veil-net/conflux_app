@@ -10,7 +10,7 @@ part of 'veil_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(veils)
-const veilsProvider = VeilsProvider._();
+final veilsProvider = VeilsProvider._();
 
 final class VeilsProvider
     extends
@@ -20,7 +20,7 @@ final class VeilsProvider
           Stream<List<Veil>>
         >
     with $FutureModifier<List<Veil>>, $StreamProvider<List<Veil>> {
-  const VeilsProvider._()
+  VeilsProvider._()
     : super(
         from: null,
         argument: null,
@@ -48,12 +48,12 @@ final class VeilsProvider
 String _$veilsHash() => r'968d0d11c7eef2bcb4e37704d70e6f54922d0436';
 
 @ProviderFor(veil)
-const veilProvider = VeilFamily._();
+final veilProvider = VeilFamily._();
 
 final class VeilProvider
     extends $FunctionalProvider<AsyncValue<Veil?>, Veil?, Stream<Veil?>>
     with $FutureModifier<Veil?>, $StreamProvider<Veil?> {
-  const VeilProvider._({
+  VeilProvider._({
     required VeilFamily super.from,
     required String super.argument,
   }) : super(
@@ -100,7 +100,7 @@ String _$veilHash() => r'7685bd5332f04ba4331b7f9efd59d2c48af42238';
 
 final class VeilFamily extends $Family
     with $FunctionalFamilyOverride<Stream<Veil?>, String> {
-  const VeilFamily._()
+  VeilFamily._()
     : super(
         retry: null,
         name: r'veilProvider',

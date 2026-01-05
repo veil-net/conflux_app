@@ -10,11 +10,11 @@ part of 'realm_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(Realms)
-const realmsProvider = RealmsProvider._();
+final realmsProvider = RealmsProvider._();
 
 final class RealmsProvider
     extends $StreamNotifierProvider<Realms, List<Realm>> {
-  const RealmsProvider._()
+  RealmsProvider._()
     : super(
         from: null,
         argument: null,
@@ -40,7 +40,6 @@ abstract class _$Realms extends $StreamNotifier<List<Realm>> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AsyncValue<List<Realm>>, List<Realm>>;
     final element =
         ref.element
@@ -50,17 +49,17 @@ abstract class _$Realms extends $StreamNotifier<List<Realm>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
 
 @ProviderFor(realm)
-const realmProvider = RealmFamily._();
+final realmProvider = RealmFamily._();
 
 final class RealmProvider
     extends $FunctionalProvider<AsyncValue<Realm?>, Realm?, Stream<Realm?>>
     with $FutureModifier<Realm?>, $StreamProvider<Realm?> {
-  const RealmProvider._({
+  RealmProvider._({
     required RealmFamily super.from,
     required String super.argument,
   }) : super(
@@ -107,7 +106,7 @@ String _$realmHash() => r'c24168b236f7d6b6c6e6632908d0c0ba2e996800';
 
 final class RealmFamily extends $Family
     with $FunctionalFamilyOverride<Stream<Realm?>, String> {
-  const RealmFamily._()
+  RealmFamily._()
     : super(
         retry: null,
         name: r'realmProvider',
@@ -123,7 +122,7 @@ final class RealmFamily extends $Family
 }
 
 @ProviderFor(ownedRealms)
-const ownedRealmsProvider = OwnedRealmsProvider._();
+final ownedRealmsProvider = OwnedRealmsProvider._();
 
 final class OwnedRealmsProvider
     extends
@@ -133,7 +132,7 @@ final class OwnedRealmsProvider
           FutureOr<List<Realm>>
         >
     with $FutureModifier<List<Realm>>, $FutureProvider<List<Realm>> {
-  const OwnedRealmsProvider._()
+  OwnedRealmsProvider._()
     : super(
         from: null,
         argument: null,
@@ -162,7 +161,7 @@ final class OwnedRealmsProvider
 String _$ownedRealmsHash() => r'82702e6f4164e7acc90c5a33ac729a71ddc6dcb2';
 
 @ProviderFor(privateRealms)
-const privateRealmsProvider = PrivateRealmsProvider._();
+final privateRealmsProvider = PrivateRealmsProvider._();
 
 final class PrivateRealmsProvider
     extends
@@ -172,7 +171,7 @@ final class PrivateRealmsProvider
           FutureOr<List<Realm>>
         >
     with $FutureModifier<List<Realm>>, $FutureProvider<List<Realm>> {
-  const PrivateRealmsProvider._()
+  PrivateRealmsProvider._()
     : super(
         from: null,
         argument: null,
@@ -201,7 +200,7 @@ final class PrivateRealmsProvider
 String _$privateRealmsHash() => r'dd80236661087fc6f5efb1576a43b84af6af1b5e';
 
 @ProviderFor(publicRealms)
-const publicRealmsProvider = PublicRealmsProvider._();
+final publicRealmsProvider = PublicRealmsProvider._();
 
 final class PublicRealmsProvider
     extends
@@ -211,7 +210,7 @@ final class PublicRealmsProvider
           FutureOr<List<Realm>>
         >
     with $FutureModifier<List<Realm>>, $FutureProvider<List<Realm>> {
-  const PublicRealmsProvider._()
+  PublicRealmsProvider._()
     : super(
         from: null,
         argument: null,

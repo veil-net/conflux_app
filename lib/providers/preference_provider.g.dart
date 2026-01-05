@@ -10,7 +10,7 @@ part of 'preference_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(preference)
-const preferenceProvider = PreferenceProvider._();
+final preferenceProvider = PreferenceProvider._();
 
 final class PreferenceProvider
     extends
@@ -22,7 +22,7 @@ final class PreferenceProvider
     with
         $FutureModifier<SharedPreferences>,
         $FutureProvider<SharedPreferences> {
-  const PreferenceProvider._()
+  PreferenceProvider._()
     : super(
         from: null,
         argument: null,

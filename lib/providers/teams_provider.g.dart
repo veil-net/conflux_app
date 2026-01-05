@@ -10,7 +10,7 @@ part of 'teams_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(teams)
-const teamsProvider = TeamsProvider._();
+final teamsProvider = TeamsProvider._();
 
 final class TeamsProvider
     extends
@@ -20,7 +20,7 @@ final class TeamsProvider
           Stream<List<Team>>
         >
     with $FutureModifier<List<Team>>, $StreamProvider<List<Team>> {
-  const TeamsProvider._()
+  TeamsProvider._()
     : super(
         from: null,
         argument: null,
@@ -48,7 +48,7 @@ final class TeamsProvider
 String _$teamsHash() => r'a712dbfb8efdc0cb8ed0eb6361e6e76abbd869d3';
 
 @ProviderFor(ownedTeams)
-const ownedTeamsProvider = OwnedTeamsProvider._();
+final ownedTeamsProvider = OwnedTeamsProvider._();
 
 final class OwnedTeamsProvider
     extends
@@ -58,7 +58,7 @@ final class OwnedTeamsProvider
           Stream<List<Team>>
         >
     with $FutureModifier<List<Team>>, $StreamProvider<List<Team>> {
-  const OwnedTeamsProvider._()
+  OwnedTeamsProvider._()
     : super(
         from: null,
         argument: null,

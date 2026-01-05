@@ -10,7 +10,7 @@ part of 'conflux_session_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(confluxSessions)
-const confluxSessionsProvider = ConfluxSessionsProvider._();
+final confluxSessionsProvider = ConfluxSessionsProvider._();
 
 final class ConfluxSessionsProvider
     extends
@@ -22,7 +22,7 @@ final class ConfluxSessionsProvider
     with
         $FutureModifier<List<ConfluxSession>>,
         $StreamProvider<List<ConfluxSession>> {
-  const ConfluxSessionsProvider._()
+  ConfluxSessionsProvider._()
     : super(
         from: null,
         argument: null,
@@ -51,7 +51,7 @@ final class ConfluxSessionsProvider
 String _$confluxSessionsHash() => r'167848034ab3c2d4f775811bb9ff12adae7d3d6a';
 
 @ProviderFor(confluxSession)
-const confluxSessionProvider = ConfluxSessionFamily._();
+final confluxSessionProvider = ConfluxSessionFamily._();
 
 final class ConfluxSessionProvider
     extends
@@ -61,7 +61,7 @@ final class ConfluxSessionProvider
           Stream<ConfluxSession?>
         >
     with $FutureModifier<ConfluxSession?>, $StreamProvider<ConfluxSession?> {
-  const ConfluxSessionProvider._({
+  ConfluxSessionProvider._({
     required ConfluxSessionFamily super.from,
     required String super.argument,
   }) : super(
@@ -109,7 +109,7 @@ String _$confluxSessionHash() => r'f8bc8ab121caa830285be2620579ffa4faf3717e';
 
 final class ConfluxSessionFamily extends $Family
     with $FunctionalFamilyOverride<Stream<ConfluxSession?>, String> {
-  const ConfluxSessionFamily._()
+  ConfluxSessionFamily._()
     : super(
         retry: null,
         name: r'confluxSessionProvider',

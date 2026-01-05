@@ -10,11 +10,11 @@ part of 'veilnet_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(ConfluxService)
-const confluxServiceProvider = ConfluxServiceProvider._();
+final confluxServiceProvider = ConfluxServiceProvider._();
 
 final class ConfluxServiceProvider
     extends $AsyncNotifierProvider<ConfluxService, ConfluxService> {
-  const ConfluxServiceProvider._()
+  ConfluxServiceProvider._()
     : super(
         from: null,
         argument: null,
@@ -40,7 +40,6 @@ abstract class _$ConfluxService extends $AsyncNotifier<ConfluxService> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AsyncValue<ConfluxService>, ConfluxService>;
     final element =
         ref.element
@@ -50,15 +49,15 @@ abstract class _$ConfluxService extends $AsyncNotifier<ConfluxService> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
 
 @ProviderFor(VeilNet)
-const veilNetProvider = VeilNetProvider._();
+final veilNetProvider = VeilNetProvider._();
 
 final class VeilNetProvider extends $NotifierProvider<VeilNet, VeilNetState> {
-  const VeilNetProvider._()
+  VeilNetProvider._()
     : super(
         from: null,
         argument: null,
@@ -92,7 +91,6 @@ abstract class _$VeilNet extends $Notifier<VeilNetState> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<VeilNetState, VeilNetState>;
     final element =
         ref.element
@@ -102,6 +100,6 @@ abstract class _$VeilNet extends $Notifier<VeilNetState> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

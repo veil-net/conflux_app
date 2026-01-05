@@ -10,7 +10,7 @@ part of 'team_member_details_provider.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(teamMemberDetails)
-const teamMemberDetailsProvider = TeamMemberDetailsFamily._();
+final teamMemberDetailsProvider = TeamMemberDetailsFamily._();
 
 final class TeamMemberDetailsProvider
     extends
@@ -22,7 +22,7 @@ final class TeamMemberDetailsProvider
     with
         $FutureModifier<List<TeamMemberDetails>>,
         $FutureProvider<List<TeamMemberDetails>> {
-  const TeamMemberDetailsProvider._({
+  TeamMemberDetailsProvider._({
     required TeamMemberDetailsFamily super.from,
     required String super.argument,
   }) : super(
@@ -70,7 +70,7 @@ String _$teamMemberDetailsHash() => r'a6a3a27c0320b00146f80ea62d07e9c2db5a5cfc';
 
 final class TeamMemberDetailsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<TeamMemberDetails>>, String> {
-  const TeamMemberDetailsFamily._()
+  TeamMemberDetailsFamily._()
     : super(
         retry: null,
         name: r'teamMemberDetailsProvider',
