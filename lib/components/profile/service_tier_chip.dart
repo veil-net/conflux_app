@@ -1,6 +1,5 @@
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/providers/service_tier_provider.dart';
-import 'package:conflux/providers/supabase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -43,20 +42,14 @@ class SubscriptionTierChip extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     Future<void> manageSubscription() async {
       try {
-        final supabase = ref.read(supabaseClientProvider);
-        final session = supabase.auth.currentSession;
-        if (session != null) {
-          launchUrl(Uri.parse('https://auth.veilnet.app/subscribe#refresh_token=${session.refreshToken}'));
-        } else {
-          launchUrl(Uri.parse('https://auth.veilnet.app/subscribe'));
-        }
+        launchUrl(Uri.parse('https://console.veilnet.app/setting'));
       } catch (e) {
         if (context.mounted) {
           DialogManager.showDialog(context, e.toString(), DialogType.error);
         }
       }
     }
-    
+
     return GestureDetector(
       onTap: manageSubscription,
       child: Chip(

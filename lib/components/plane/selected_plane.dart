@@ -155,7 +155,7 @@ class SelectedRealm extends HookConsumerWidget {
                                         if (session != null) {
                                           launchUrl(
                                             Uri.parse(
-                                              'https://auth.veilnet.app/subscribe#refresh_token=${session.refreshToken}',
+                                              'https://console.veilnet.app/subscription',
                                             ),
                                           );
                                           if (context.mounted) {

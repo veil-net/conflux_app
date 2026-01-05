@@ -45,13 +45,7 @@ class AccountManagement extends HookConsumerWidget {
 
     Future<void> manageAccount() async {
       try {
-        final supabase = ref.read(supabaseClientProvider);
-        final session = supabase.auth.currentSession;
-        if (session != null) {
-          launchUrl(Uri.parse('https://auth.veilnet.app/subscribe#refresh_token=${session.refreshToken}'));
-        } else {
-          launchUrl(Uri.parse('https://auth.veilnet.app/subscribe'));
-        }
+        launchUrl(Uri.parse('https://console.veilnet.app/setting'));
       } catch (e) {
         if (context.mounted) {
           DialogManager.showDialog(context, e.toString(), DialogType.error);
@@ -61,13 +55,7 @@ class AccountManagement extends HookConsumerWidget {
 
     Future<void> resetPassword() async {
       try {
-        final supabase = ref.read(supabaseClientProvider);
-        final session = supabase.auth.currentSession;
-        if (session != null) {
-          launchUrl(Uri.parse('https://auth.veilnet.app/reset-password#refresh_token=${session.refreshToken}'));
-        } else {
-          launchUrl(Uri.parse('https://auth.veilnet.app/reset-password'));
-        }
+        launchUrl(Uri.parse('https://console.veilnet.app/password/reset'));
       } catch (e) {
         if (context.mounted) {
           DialogManager.showDialog(context, e.toString(), DialogType.error);
@@ -78,56 +66,48 @@ class AccountManagement extends HookConsumerWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 500),
       child: AppCard(
-              child: ExpansionTile(
-                tilePadding: EdgeInsets.symmetric(horizontal: 16),
-                childrenPadding: EdgeInsets.symmetric(horizontal: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                initiallyExpanded: true,
-                title: Text(
-                  'Account Management',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                ),
-                children: [
-                  ListTile(
-                    dense: true,
-                    onTap: resetPassword,
-                    title: Text(
-                      'Change Password',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                    trailing: Icon(Icons.open_in_new),
-                  ),
-                  ListTile(
-                    dense: true,
-                    onTap: manageAccount,
-                    title: Text(
-                      'Manage Account',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                    trailing: Icon(Icons.open_in_new),
-                  ),
-                  ListTile(
-                    dense: true,
-                    onTap: switchAccount,
-                    title: Text(
-                      'Switch Account',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                    trailing: Icon(Icons.open_in_new),
-                  ),
-                ],
+        child: ExpansionTile(
+          tilePadding: EdgeInsets.symmetric(horizontal: 16),
+          childrenPadding: EdgeInsets.symmetric(horizontal: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          initiallyExpanded: true,
+          title: Text(
+            'Account Management',
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+          ),
+          children: [
+            ListTile(
+              dense: true,
+              onTap: resetPassword,
+              title: Text(
+                'Change Password',
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
-            ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
+              trailing: Icon(Icons.open_in_new),
+            ),
+            ListTile(
+              dense: true,
+              onTap: manageAccount,
+              title: Text(
+                'Manage Account',
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+              trailing: Icon(Icons.open_in_new),
+            ),
+            ListTile(
+              dense: true,
+              onTap: switchAccount,
+              title: Text(
+                'Switch Account',
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+              trailing: Icon(Icons.open_in_new),
+            ),
+          ],
+        ),
+      ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
     );
   }
 }

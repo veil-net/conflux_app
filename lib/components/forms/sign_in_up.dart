@@ -141,7 +141,9 @@ class SignInForm extends HookConsumerWidget {
           AppButton(label: 'Sign In', onPressed: signIn, expand: true),
           TextButton(
             onPressed: () {
-              launchUrl(Uri.parse('https://auth.veilnet.app/reset-password'));
+              launchUrl(
+                Uri.parse('https://console.veilnet.app/password/reset'),
+              );
             },
             child: Text('Forgot Password?'),
           ),
@@ -335,7 +337,9 @@ class SignUpForm extends HookConsumerWidget {
 
           TextButton(
             onPressed: () {
-              launchUrl(Uri.parse('https://auth.veilnet.app/reset-password'));
+              launchUrl(
+                Uri.parse('https://console.veilnet.app/password/reset'),
+              );
             },
             child: Text('Forgot Password?'),
           ),

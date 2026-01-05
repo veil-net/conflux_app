@@ -4,7 +4,6 @@ import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/components/app_text_input.dart';
 import 'package:conflux/providers/realm_details_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
-import 'package:conflux/providers/supabase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -18,22 +17,12 @@ class RealmSearchCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final realmNameTextController = useTextEditingController();
-    final realmPublicity = ref.watch(realmPublicityProvider); 
+    final realmPublicity = ref.watch(realmPublicityProvider);
     final developerMode = ref.watch(developerModeProvider);
 
     Future<void> managePrivateRealms() async {
       try {
-        final supabase = ref.read(supabaseClientProvider);
-        final session = supabase.auth.currentSession;
-        if (session != null) {
-          launchUrl(
-            Uri.parse(
-              'https://auth.veilnet.app/realm#refresh_token=${session.refreshToken}',
-            ),
-          );
-        } else {
-          launchUrl(Uri.parse('https://auth.veilnet.app/realm'));
-        }
+        launchUrl(Uri.parse('https://console.veilnet.app'));
       } catch (e) {
         if (context.mounted) {
           DialogManager.showDialog(context, e.toString(), DialogType.error);

@@ -155,7 +155,7 @@ class SelectedRealm extends HookConsumerWidget {
                                         if (session != null) {
                                           launchUrl(
                                             Uri.parse(
-                                              'https://auth.veilnet.app/subscribe#refresh_token=${session.refreshToken}',
+                                              'https://console.veilnet.app/subscription',
                                             ),
                                           );
                                           if (context.mounted) {
@@ -170,8 +170,7 @@ class SelectedRealm extends HookConsumerWidget {
                                       }
                                       break;
                                     case 1:
-                                      if (count >= 3 &&
-                                          userProfile.mp <= 0) {
+                                      if (count >= 3 && userProfile.mp <= 0) {
                                         if (context.mounted) {
                                           DialogManager.showDialog(
                                             context,
@@ -183,8 +182,7 @@ class SelectedRealm extends HookConsumerWidget {
                                       }
                                       break;
                                     case 2:
-                                      if (count >= 10 &&
-                                          userProfile.mp <= 0) {
+                                      if (count >= 10 && userProfile.mp <= 0) {
                                         if (context.mounted) {
                                           DialogManager.showDialog(
                                             context,

@@ -3,7 +3,6 @@ import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/providers/conflux_details_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
-import 'package:conflux/providers/supabase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -19,17 +18,7 @@ class ConfluxSummaryCard extends HookConsumerWidget {
 
     Future<void> manageConflux() async {
       try {
-        final supabase = ref.read(supabaseClientProvider);
-        final session = supabase.auth.currentSession;
-        if (session != null) {
-          launchUrl(
-            Uri.parse(
-              'https://auth.veilnet.app/deploy#refresh_token=${session.refreshToken}',
-            ),
-          );
-        } else {
-          launchUrl(Uri.parse('https://auth.veilnet.app/deploy'));
-        }
+        launchUrl(Uri.parse('https://console.veilnet.app'));
       } catch (e) {
         if (context.mounted) {
           DialogManager.showDialog(context, e.toString(), DialogType.error);
@@ -80,7 +69,7 @@ class RiftSummaryTitle extends HookConsumerWidget {
           0;
       return null;
     }, [confluxRifts.value]);
-    
+
     return Flexible(
       child: ListTile(
         contentPadding: EdgeInsets.zero,
