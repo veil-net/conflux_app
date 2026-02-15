@@ -10,7 +10,7 @@ class ConfluxStateTile extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final veilNetState = ref.watch(veilNetProvider);
-    final confluxDetails = ref.watch(veilNetProvider.notifier).confluxDetails;
+    final conflux = ref.watch(veilNetProvider.notifier).conflux;
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 1000),
       child: AppCard(
@@ -18,7 +18,7 @@ class ConfluxStateTile extends HookConsumerWidget {
           padding: const EdgeInsets.all(16.0),
           child: switch (veilNetState) {
             VeilNetState.connected =>
-              confluxDetails == null
+              conflux == null
                   ? TextButton(
                       onPressed: () {
                         ref.invalidate(veilNetProvider);
@@ -36,25 +36,22 @@ class ConfluxStateTile extends HookConsumerWidget {
                         width: 40,
                         height: 30,
                         child: CountryFlag.fromCountryCode(
-                          confluxDetails.region,
+                          conflux.region ?? '',
                         ),
                       ),
                       title: Text(
-                        confluxDetails.tag ?? 'No tag',
+                        conflux.tag ?? 'No tag',
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       subtitle: Text(
-                        confluxDetails.cidr ?? 'No cidr',
+                        conflux.cidr ?? 'No cidr',
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
-                      trailing: Icon(
-                        Icons.check_circle,
-                        color: Colors.green,
-                      ),
+                      trailing: Icon(Icons.check_circle, color: Colors.green),
                     ),
             VeilNetState.disconnected => ListTile(
               contentPadding: EdgeInsets.zero,

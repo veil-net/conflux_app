@@ -1,9 +1,9 @@
 import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
-import 'package:conflux/models/realm_details.dart';
+import 'package:conflux/models/realm.dart';
 import 'package:conflux/providers/conflux_provider.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
-import 'package:conflux/providers/realm_details_provider.dart';
+import 'package:conflux/providers/realm_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:country_flags/country_flags.dart';
@@ -13,8 +13,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class RealmTile extends HookConsumerWidget {
-  final RealmDetails realmDetails;
-  const RealmTile({super.key, required this.realmDetails});
+  final Realm realm;
+  const RealmTile({super.key, required this.realm});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +22,7 @@ class RealmTile extends HookConsumerWidget {
     final confluxPortals = ref.watch(confluxPortalsProvider);
     final numberOfPortals = useState(
       confluxPortals.value
-              ?.where((conflux) => conflux.realm_id == realmDetails.id)
+              ?.where((conflux) => conflux.realm_id == realm.id)
               .length ??
           0,
     );
@@ -44,10 +44,10 @@ class RealmTile extends HookConsumerWidget {
               leading: SizedBox(
                 width: 40,
                 height: 30,
-                child: CountryFlag.fromCountryCode(realmDetails.region),
+                child: CountryFlag.fromCountryCode(realm.region),
               ),
               title: Text(
-                realmDetails.name,
+                realm.name,
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
               subtitle: developerMode
@@ -65,8 +65,8 @@ class RealmTile extends HookConsumerWidget {
                 onPressed: veilNetState == VeilNetState.disconnected
                     ? () async {
                         await ref
-                            .read(selectedRealmDetailsProvider.notifier)
-                            .setSelectedRealm(realmDetails);
+                            .read(selectedRealmProvider.notifier)
+                            .setSelectedRealm(realm);
                         ref.read(pageControllerProvider).jumpToPage(0);
                       }
                     : null,

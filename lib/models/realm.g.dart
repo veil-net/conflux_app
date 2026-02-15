@@ -14,8 +14,11 @@ _Realm _$RealmFromJson(Map<String, dynamic> json) => _Realm(
   name: json['name'] as String,
   subnet: json['subnet'] as String,
   public: json['public'] as bool,
-  portals: (json['portals'] as num).toInt(),
+  region: json['region'] as String,
+  veil_host: json['veil_host'] as String,
+  veil_port: (json['veil_port'] as num).toInt(),
   subscription: json['subscription'] as String?,
+  status: json['status'] as String?,
 );
 
 Map<String, dynamic> _$RealmToJson(_Realm instance) => <String, dynamic>{
@@ -26,6 +29,9 @@ Map<String, dynamic> _$RealmToJson(_Realm instance) => <String, dynamic>{
   'name': instance.name,
   'subnet': instance.subnet,
   'public': instance.public,
-  'portals': instance.portals,
+  'region': instance.region,
+  'veil_host': instance.veil_host,
+  'veil_port': instance.veil_port,
   'subscription': instance.subscription,
+  'status': instance.status,
 };

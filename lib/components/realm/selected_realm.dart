@@ -2,24 +2,20 @@ import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
-import 'package:conflux/providers/realm_details_provider.dart';
-import 'package:conflux/providers/service_tier_provider.dart';
-import 'package:conflux/providers/supabase_provider.dart';
-import 'package:conflux/providers/user_profile_provider.dart';
+import 'package:conflux/providers/realm_provider.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SelectedRealm extends HookConsumerWidget {
   const SelectedRealm({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedRealm = ref.watch(selectedRealmDetailsProvider);
+    final selectedRealm = ref.watch(selectedRealmProvider);
     final veilNetState = ref.watch(veilNetProvider);
     ref.watch(confluxServiceProvider);
 
@@ -127,97 +123,29 @@ class SelectedRealm extends HookConsumerWidget {
                       ),
                       VeilNetState.disconnected => AppButton(
                         label: 'Connect',
-                        onPressed: realm.portals > 0
-                            ? () async {
-                                try {
-                                  final supabase = ref.read(
-                                    supabaseClientProvider,
-                                  );
-                                  final resp = await supabase.rpc(
-                                    'count_user_public_rifts',
-                                    params: {'u': realm.user_id},
-                                  );
-                                  final count = (resp as num).toInt();
-                                  ref.invalidate(serviceTierProvider);
-                                  ref.invalidate(userProfileProvider);
-
-                                  final serviceTier = await ref.watch(
-                                    serviceTierProvider.future,
-                                  );
-                                  final userProfile = await ref.watch(
-                                    userProfileProvider.future,
-                                  );
-                                  switch (serviceTier) {
-                                    case 0:
-                                      if (userProfile.mp <= 0) {
-                                        final session =
-                                            supabase.auth.currentSession;
-                                        if (session != null) {
-                                          launchUrl(
-                                            Uri.parse(
-                                              'https://console.veilnet.app/subscription',
-                                            ),
-                                          );
-                                          if (context.mounted) {
-                                            DialogManager.showDialog(
-                                              context,
-                                              'Please upgrade your subscription or self host to earn credits.',
-                                              DialogType.info,
-                                            );
-                                          }
-                                          return;
-                                        }
-                                      }
-                                      break;
-                                    case 1:
-                                      if (count >= 3 && userProfile.mp <= 0) {
-                                        if (context.mounted) {
-                                          DialogManager.showDialog(
-                                            context,
-                                            'Your subscription does not allow you to connect more than 3 devices at the same time.',
-                                            DialogType.info,
-                                          );
-                                        }
-                                        return;
-                                      }
-                                      break;
-                                    case 2:
-                                      if (count >= 10 && userProfile.mp <= 0) {
-                                        if (context.mounted) {
-                                          DialogManager.showDialog(
-                                            context,
-                                            'Your subscription does not allow you to connect more than 10 devices at the same time.',
-                                            DialogType.info,
-                                          );
-                                        }
-                                        return;
-                                      }
-                                      break;
-                                    default:
-                                      throw Exception('Invalid service tier');
-                                  }
-                                  await ref
-                                      .read(veilNetProvider.notifier)
-                                      .connect(realm);
-                                } on DioException catch (e) {
-                                  if (context.mounted) {
-                                    DialogManager.showDialog(
-                                      context,
-                                      'Failed to connect to VeilNet: ${e.response?.data['detail']}',
-                                      DialogType.error,
-                                    );
-                                  }
-                                } on Exception catch (e) {
-                                  if (context.mounted) {
-                                    DialogManager.showDialog(
-                                      context,
-                                      'Failed to connect to VeilNet: $e',
-                                      DialogType.error,
-                                    );
-                                  }
-                                }
-                              }
-                            : null,
+                        onPressed: () async {
+                          try {
+                            await ref
+                                .read(veilNetProvider.notifier)
+                                .connect(realm);
+                          } on DioException catch (e) {
+                            if (context.mounted) {
+                              DialogManager.showDialog(
+                                context,
+                                'Failed to connect to VeilNet: ${e.response?.data['detail']}',
+                                DialogType.error,
+                              );
+                            }
+                          } on Exception catch (e) {
+                            if (context.mounted) {
+                              DialogManager.showDialog(
+                                context,
+                                'Failed to connect to VeilNet: $e',
+                                DialogType.error,
+                              );
+                            }
+                          }
+                        },
                         expand: true,
                         outline: false,
                       ),
@@ -254,7 +182,7 @@ class SelectedRealm extends HookConsumerWidget {
           error: (error, stackTrace) => Center(
             child: TextButton(
               onPressed: () {
-                ref.invalidate(selectedRealmDetailsProvider);
+                ref.invalidate(selectedRealmProvider);
               },
               child: Text(
                 'Failed to load selected realm, retry',

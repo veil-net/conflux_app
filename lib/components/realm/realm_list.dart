@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:conflux/components/realm/realm_tile.dart';
-import 'package:conflux/providers/realm_details_provider.dart';
+import 'package:conflux/providers/realm_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -10,19 +10,19 @@ class RealmList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final realmsDetails = ref.watch(realmsDetailsProvider);
+    final realms = ref.watch(realmsProvider);
     final realmFilter = ref.watch(realmFilterProvider);
     final realmPublicity = ref.watch(realmPublicityProvider);
-    return realmsDetails.when(
+    return realms.when(
       data: (data) {
         var filteredData = data
-            .where((realmDetails) => realmDetails.name.contains(realmFilter))
+            .where((realm) => realm.name.contains(realmFilter))
             .toList();
 
         // Apply publicity filter
         if (realmPublicity != null) {
           filteredData = filteredData
-              .where((realmDetails) => realmDetails.public == realmPublicity)
+              .where((realm) => realm.public == realmPublicity)
               .toList();
         }
 
@@ -37,8 +37,8 @@ class RealmList extends HookConsumerWidget {
 
         return Wrap(
           children: [
-            for (var realmDetails in filteredData)
-              RealmTile(realmDetails: realmDetails),
+            for (var realm in filteredData)
+              RealmTile(realm: realm),
           ],
         );
       },
@@ -47,7 +47,7 @@ class RealmList extends HookConsumerWidget {
         return Center(
           child: TextButton(
             onPressed: () {
-              ref.invalidate(realmsDetailsProvider);
+              ref.invalidate(realmsProvider);
             },
             child: Text(
               'Failed to load realms, retry',

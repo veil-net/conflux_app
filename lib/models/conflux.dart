@@ -1,17 +1,26 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'conflux.g.dart';
 part 'conflux.freezed.dart';
+part 'conflux.g.dart';
 
 @freezed
 abstract class Conflux with _$Conflux {
   factory Conflux({
     required String id,
     required DateTime created_at,
+    required DateTime last_seen,
     required String user_id,
-    required String realm_id,
     String? tag,
+    String? signature,
+    String? cidr,
+    required String subnet,
+    required String realm,
+    required String realm_id,
+    required bool rift,
     required bool portal,
+    required String region,
+    required String veil_host,
+    required int veil_port,
   }) = _Conflux;
 
   factory Conflux.fromJson(Map<String, dynamic> json) =>

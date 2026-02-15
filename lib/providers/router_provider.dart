@@ -1,7 +1,6 @@
 import 'package:conflux/pages/auth_page.dart';
 import 'package:conflux/pages/main_page.dart';
 import 'package:conflux/pages/notification_page.dart';
-import 'package:conflux/pages/organisation_page.dart';
 import 'package:conflux/providers/supabase_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -60,31 +59,6 @@ GoRouter router(Ref ref) {
         }
       },
     ),
-    GoRoute(
-      path: '/organisation',
-      builder: (context, state) => OrganisationPage(),
-      redirect: (context, state) {
-        try {
-          final user = supabase.auth.currentUser;
-          if (user == null) {
-            return '/auth';
-          }
-          return null;
-        } catch (e) {
-          return '/auth';
-        }
-      },
-    ),
-    // GoRoute(
-    //   path: '/callback',
-    //   builder: (context, state) {
-    //     final refreshToken =
-    //         state.uri.queryParameters['refresh_token'] ??
-    //         Uri.splitQueryString(state.uri.fragment)['refresh_token'] ??
-    //         '';
-    //     return AuthCallbackPage(refreshToken: refreshToken);
-    //   },
-    // ),
   ],
 );
 }

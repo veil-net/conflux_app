@@ -1,7 +1,7 @@
+import 'dart:developer';
+
 import 'package:conflux/models/conflux.dart';
 import 'package:conflux/providers/api_provider.dart';
-import 'package:conflux/providers/current_user_provider.dart';
-import 'package:conflux/providers/supabase_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -10,20 +10,18 @@ part 'conflux_provider.g.dart';
 @riverpod
 class Confluxes extends _$Confluxes {
   @override
-  Stream<List<Conflux>> build() {
+  Future<List<Conflux>> build() async {
     ref.keepAlive();
-    ref.watch(currentUserProvider);
-    final supabase = ref.read(supabaseClientProvider);
-    return supabase
-        .from('confluxes')
-        .stream(primaryKey: ['id'])
-        .map((event) => event.map((data) => Conflux.fromJson(data)).toList());
+    final api = ref.read(apiProvider);
+    final response = await api.get('/conflux/list');
+    final rawList = response.data as List;
+    return rawList.map((e) => Conflux.fromJson(e as Map<String, dynamic>)).toList();
   }
 
   Future<void> createConflux(String name, String realm_id, String? tag) async {
     final api = ref.read(apiProvider);
     try {
-      await api.post('/conflux?realm_id=$realm_id&tag=$tag');
+      await api.post('/conflux', data: {'realm_id': realm_id, 'tag': tag});
       ref.invalidateSelf();
     } on DioException catch (e) {
       throw Exception(e.response?.data['detail']);
@@ -46,24 +44,21 @@ class Confluxes extends _$Confluxes {
 }
 
 @riverpod
-Stream<Conflux?> confluxByID(Ref ref, String id) {
-  ref.keepAlive();
-  final supabase = ref.read(supabaseClientProvider);
-  return supabase
-      .from('confluxes')
-      .stream(primaryKey: ['id'])
-      .eq('id', id)
-      .map(
-        (event) =>
-            event.map((data) => Conflux.fromJson(data)).toList().firstOrNull,
-      );
+Stream<Conflux> confluxByID(Ref ref, String id) async* {
+  final api = ref.read(apiProvider);
+  while (true) {
+    final response = await api.get('/conflux?conflux_id=$id');
+    final data = response.data as Map<String, dynamic>;
+    yield Conflux.fromJson(data);
+    await Future.delayed(const Duration(seconds: 10));
+  }
 }
 
 @riverpod
 Future<List<Conflux>> confluxRifts(Ref ref) async {
   ref.keepAlive();
   final confluxes = await ref.watch(confluxesProvider.future);
-  return confluxes.where((conflux) => conflux.portal == false).toList();
+  return confluxes.where((conflux) => conflux.rift == false).toList();
 }
 
 @riverpod

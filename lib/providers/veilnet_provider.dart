@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:conflux/models/conflux_details.dart';
-import 'package:conflux/models/realm_details.dart';
+import 'package:conflux/models/conflux.dart';
+import 'package:conflux/models/realm.dart';
 import 'package:conflux/providers/api_provider.dart';
-import 'package:conflux/providers/conflux_details_provider.dart';
+import 'package:conflux/providers/conflux_provider.dart';
 import 'package:conflux/providers/device_info_provider.dart';
 import 'package:conflux/providers/preference_provider.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +27,7 @@ class ConfluxService extends _$ConfluxService {
     switch (Platform.operatingSystem) {
       case "windows":
         final binary = await rootBundle.load(
-          'assets/bin/windows/veilnet-conflux.exe',
+          'assets/bin/windows/conflux-windows-amd64.exe',
         );
         _executable = File('${tempDir.path}/veilnet-conflux.exe');
         _executable.writeAsBytesSync(binary.buffer.asUint8List());
@@ -36,7 +36,7 @@ class ConfluxService extends _$ConfluxService {
         break;
       case "linux":
         final binary = await rootBundle.load(
-          'assets/bin/linux/veilnet-conflux',
+          'assets/bin/linux/conflux-linux-amd64',
         );
         _executable = File('${tempDir.path}/veilnet-conflux');
         _executable.writeAsBytesSync(binary.buffer.asUint8List());
@@ -47,7 +47,7 @@ class ConfluxService extends _$ConfluxService {
         break;
       case "macos":
         final binary = await rootBundle.load(
-          'assets/bin/macos/veilnet-conflux',
+          'assets/bin/macos/conflux-darwin-arm64',
         );
         _executable = File('${tempDir.path}/veilnet-conflux');
         _executable.writeAsBytesSync(binary.buffer.asUint8List());
@@ -165,7 +165,7 @@ class VeilNet extends _$VeilNet {
   VeilNetState? _intentState;
   VeilNetState? _actualState;
   Timer? _timer;
-  ConfluxDetails? _confluxDetails;
+  Conflux? _conflux;
   @override
   VeilNetState build() {
     ref.keepAlive();
@@ -177,88 +177,70 @@ class VeilNet extends _$VeilNet {
         // If the conflux ID is null, return the disconnected state
         if (confluxID == null) {
           _actualState = VeilNetState.disconnected;
-          _confluxDetails = null;
+          _conflux = null;
         } else {
           // Read the conflux details from the database
-          final confluxDetails = ref.watch(confluxDetailsProvider(confluxID));
-          confluxDetails.when(
-            data: (details) {
-              _confluxDetails = details;
-              // If the conflux details are null
-              if (details == null) {
-                switch (_intentState) {
-                  // If the intent state is connected, return the connecting state
-                  case VeilNetState.connected:
+          final conflux = ref.watch(confluxByIDProvider(confluxID));
+          conflux.when(
+            data: (conflux) {
+              _conflux = conflux;
+              switch (_intentState) {
+                // If the intent state is connected
+                case VeilNetState.connected:
+                  if (conflux.signature != null &&
+                      conflux.cidr != null &&
+                      conflux.last_seen.isAfter(
+                        DateTime.now().subtract(const Duration(seconds: 30)),
+                      )) {
+                    _actualState = VeilNetState.connected;
+                    _timer?.cancel();
+                    _timer = null;
+                  } else {
                     _actualState = VeilNetState.connecting;
                     if (_timer == null) {
                       setTimer();
                     }
-                  // If the intent state is disconnected, return the disconnected state
-                  case VeilNetState.disconnected:
-                    Future.microtask(() async {
-                      final pref = await ref.watch(preferenceProvider.future);
-                      await pref.remove('conflux_id');
-                    });
-                    _actualState = VeilNetState.disconnected;
-                    _timer?.cancel();
-                    _timer = null;
-                  // If the intent state is anything else, return the disconnected state
-                  default:
-                    Future.microtask(() async {
-                      final pref = await ref.watch(preferenceProvider.future);
-                      await pref.remove('conflux_id');
-                    });
-                    _actualState = VeilNetState.disconnected;
-                    _timer?.cancel();
-                    _timer = null;
-                }
-              } else {
-                // If the conflux details are not null
-                switch (_intentState) {
-                  // If the intent state is connected
-                  case VeilNetState.connected:
-                    // If the conflux details have no signature or cidr, return the connecting state
-                    if (details.signature == null || details.cidr == null) {
-                      _actualState = VeilNetState.connecting;
-                      if (_timer == null) {
-                        setTimer();
-                      }
-                    } else {
-                      // If the conflux details have a signature and cidr, return the connected state
-                      _actualState = VeilNetState.connected;
-                      _timer?.cancel();
-                      _timer = null;
-                    }
-                  // If the intent state is disconnected, return disconnecting state
-                  case VeilNetState.disconnected:
+                  }
+                // If the intent state is disconnected, return disconnecting state
+                case VeilNetState.disconnected:
+                  if (conflux.signature != null &&
+                      conflux.cidr != null &&
+                      conflux.last_seen.isAfter(
+                        DateTime.now().subtract(const Duration(seconds: 30)),
+                      )) {
                     _actualState = VeilNetState.disconnecting;
                     if (_timer == null) {
                       setTimer();
                     }
-                  // If the intent state is anything else, return the error state
-                  default:
-                    if (details.signature == null || details.cidr == null) {
-                      _actualState = VeilNetState.connecting;
-                      if (_timer == null) {
-                        setTimer();
-                      }
-                    } else {
-                      // If the conflux details have a signature and cidr, return the connected state
-                      _actualState = VeilNetState.connected;
-                      _timer?.cancel();
-                      _timer = null;
-                    }
-                }
+                  } else {
+                    _actualState = VeilNetState.disconnected;
+                    _timer?.cancel();
+                    _timer = null;
+                  }
+                // If the intent state is anything else, return the error state
+                default:
+                  if (conflux.signature != null &&
+                      conflux.cidr != null &&
+                      conflux.last_seen.isAfter(
+                        DateTime.now().subtract(const Duration(seconds: 30)),
+                      )) {
+                    _actualState = VeilNetState.connected;
+                    _intentState = VeilNetState.connected;
+                  } else {
+                    _actualState = VeilNetState.disconnected;
+                    _intentState = VeilNetState.disconnected;
+                  }
               }
             },
             error: (error, stackTrace) {
               // If there is an error for reading the conflux details, return the error state
               log('Error reading conflux details: $error');
-              _actualState = VeilNetState.error;
-              _confluxDetails = null;
+              _intentState = VeilNetState.disconnected;
+              _actualState = VeilNetState.disconnected;
+              _conflux = null;
             },
             loading: () {
-              _confluxDetails = null;
+              _conflux = null;
               _actualState = VeilNetState.loading;
             },
           );
@@ -268,10 +250,10 @@ class VeilNet extends _$VeilNet {
         // If there is an error for reading the preferences, return the error state
         log('Error reading preferences: $error');
         _actualState = VeilNetState.error;
-        _confluxDetails = null;
+        _conflux = null;
       },
       loading: () {
-        _confluxDetails = null;
+        _conflux = null;
         _actualState = VeilNetState.loading;
       },
     );
@@ -279,7 +261,7 @@ class VeilNet extends _$VeilNet {
     return _actualState ?? VeilNetState.error;
   }
 
-  Future<void> connect(RealmDetails realm) async {
+  Future<void> connect(Realm realm) async {
     if (state == VeilNetState.connecting ||
         state == VeilNetState.disconnecting) {
       throw Exception('Veilnet is busy');
@@ -374,25 +356,21 @@ class VeilNet extends _$VeilNet {
         _intentState = VeilNetState.disconnected;
         state = VeilNetState.disconnected;
       } else {
-        final confluxDetails = await ref.watch(
-          confluxDetailsProvider(confluxID).future,
-        );
-        if (confluxDetails == null) {
-          _intentState = VeilNetState.disconnected;
-          state = VeilNetState.disconnected;
+        final conflux = await ref.watch(confluxByIDProvider(confluxID).future);
+        if (conflux.signature != null &&
+            conflux.cidr != null &&
+            conflux.last_seen.isAfter(
+              DateTime.now().subtract(const Duration(seconds: 30)),
+            )) {
+          _actualState = VeilNetState.connected;
+          _intentState = VeilNetState.connected;
         } else {
-          if (confluxDetails.signature == null || confluxDetails.cidr == null) {
-            await pref.remove('conflux_id');
-            _intentState = VeilNetState.disconnected;
-            state = VeilNetState.disconnected;
-          } else {
-            _intentState = VeilNetState.connected;
-            state = VeilNetState.connected;
-          }
+          _actualState = VeilNetState.disconnected;
+          _intentState = VeilNetState.disconnected;
         }
       }
     });
   }
 
-  ConfluxDetails? get confluxDetails => _confluxDetails;
+  Conflux? get conflux => _conflux;
 }

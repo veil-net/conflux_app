@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:conflux/components/realm/realm_list.dart';
 import 'package:conflux/components/realm/realm_search_card.dart';
-import 'package:conflux/providers/realm_details_provider.dart';
+import 'package:conflux/providers/realm_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

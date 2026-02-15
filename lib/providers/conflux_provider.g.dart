@@ -13,7 +13,7 @@ part of 'conflux_provider.dart';
 final confluxesProvider = ConfluxesProvider._();
 
 final class ConfluxesProvider
-    extends $StreamNotifierProvider<Confluxes, List<Conflux>> {
+    extends $AsyncNotifierProvider<Confluxes, List<Conflux>> {
   ConfluxesProvider._()
     : super(
         from: null,
@@ -33,10 +33,10 @@ final class ConfluxesProvider
   Confluxes create() => Confluxes();
 }
 
-String _$confluxesHash() => r'610e708ac93b61cfdb53484c0a4b5b2dff44ac92';
+String _$confluxesHash() => r'19e9809fb8fdf2ce5bb9521b7e426f065d8d576e';
 
-abstract class _$Confluxes extends $StreamNotifier<List<Conflux>> {
-  Stream<List<Conflux>> build();
+abstract class _$Confluxes extends $AsyncNotifier<List<Conflux>> {
+  FutureOr<List<Conflux>> build();
   @$mustCallSuper
   @override
   void runBuild() {
@@ -57,9 +57,8 @@ abstract class _$Confluxes extends $StreamNotifier<List<Conflux>> {
 final confluxByIDProvider = ConfluxByIDFamily._();
 
 final class ConfluxByIDProvider
-    extends
-        $FunctionalProvider<AsyncValue<Conflux?>, Conflux?, Stream<Conflux?>>
-    with $FutureModifier<Conflux?>, $StreamProvider<Conflux?> {
+    extends $FunctionalProvider<AsyncValue<Conflux>, Conflux, Stream<Conflux>>
+    with $FutureModifier<Conflux>, $StreamProvider<Conflux> {
   ConfluxByIDProvider._({
     required ConfluxByIDFamily super.from,
     required String super.argument,
@@ -83,11 +82,11 @@ final class ConfluxByIDProvider
 
   @$internal
   @override
-  $StreamProviderElement<Conflux?> $createElement($ProviderPointer pointer) =>
+  $StreamProviderElement<Conflux> $createElement($ProviderPointer pointer) =>
       $StreamProviderElement(pointer);
 
   @override
-  Stream<Conflux?> create(Ref ref) {
+  Stream<Conflux> create(Ref ref) {
     final argument = this.argument as String;
     return confluxByID(ref, argument);
   }
@@ -103,10 +102,10 @@ final class ConfluxByIDProvider
   }
 }
 
-String _$confluxByIDHash() => r'28c7f26e6f2bf03ac58c43410be610a079ec19b2';
+String _$confluxByIDHash() => r'7affa15dbcd7f19dd2ebcd8c047edd108b8bf995';
 
 final class ConfluxByIDFamily extends $Family
-    with $FunctionalFamilyOverride<Stream<Conflux?>, String> {
+    with $FunctionalFamilyOverride<Stream<Conflux>, String> {
   ConfluxByIDFamily._()
     : super(
         retry: null,
@@ -160,7 +159,7 @@ final class ConfluxRiftsProvider
   }
 }
 
-String _$confluxRiftsHash() => r'3a847ef0074849725edd0442a33a341bf74ff96f';
+String _$confluxRiftsHash() => r'e9aa63ecfe1051a158fe7f51ea379c649cc198be';
 
 @ProviderFor(confluxPortals)
 final confluxPortalsProvider = ConfluxPortalsProvider._();

@@ -2,7 +2,7 @@ import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
 import 'package:conflux/components/app_text_input.dart';
-import 'package:conflux/providers/realm_details_provider.dart';
+import 'package:conflux/providers/realm_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';

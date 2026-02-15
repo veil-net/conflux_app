@@ -5,8 +5,7 @@ import android.net.VpnService
 import android.os.ParcelFileDescriptor
 import android.util.Log
 import kotlinx.coroutines.*
-import veilnet.Anchor
-import veilnet.Veilnet.newAnchor
+import anchor.Anchor_
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -17,7 +16,7 @@ import androidx.core.app.NotificationCompat
 
 class VeilNetVPNService : VpnService() {
     private var tunInterface: ParcelFileDescriptor? = null
-    private var anchor: Anchor? = null
+    private var anchor: Anchor_? = null
     private var superVisorJob = SupervisorJob()
     private var startScope: CoroutineScope = CoroutineScope(Dispatchers.IO  + superVisorJob)
 
@@ -93,23 +92,18 @@ class VeilNetVPNService : VpnService() {
     private fun startVeilNet(guardian: String, token: String) {
         startScope.launch {
             try {
-                anchor = newAnchor()
-                anchor!!.start(guardian, "nats.veilnet.app", 30422,token, false)
+                anchor = Anchor_()
+                anchor!!.start(guardian, token, "", false, false)
                 val (ip, mask) = anchor!!.cidr.split("/")
                 val builder = Builder()
                     .setSession("VeilNet")
                     .addAddress(ip, mask.toInt())
-                    .addDnsServer("1.1.1.1")
+                    .addDnsServer("10.128.0.1")
                     .addRoute("0.0.0.0", 0)
                     .setMtu(1500)
                     .addDisallowedApplication(applicationContext.packageName)
                 tunInterface = builder.establish()
-                anchor!!.linkWithFileDescriptor(tunInterface!!.detachFd().toLong() )
-
-                if (!anchor!!.isAlive) {
-                    return@launch
-                }
-
+                anchor!!.attachWithFileDescriptor(tunInterface!!.detachFd().toLong() )
 
             } catch (e: Exception) {
                 Log.e("VeilNet", "Failed to start VeilNet service")

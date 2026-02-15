@@ -1,7 +1,7 @@
 import 'package:conflux/components/app_button.dart';
 import 'package:conflux/components/app_card.dart';
 import 'package:conflux/components/app_dialog_manager.dart';
-import 'package:conflux/providers/conflux_details_provider.dart';
+import 'package:conflux/providers/conflux_provider.dart';
 import 'package:conflux/providers/settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -58,7 +58,7 @@ class RiftSummaryTitle extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final confluxRifts = ref.watch(confluxRiftsDetailsProvider);
+    final confluxRifts = ref.watch(confluxRiftsProvider);
     final numberOfOnlineRifts = useState(0);
 
     useEffect(() {
@@ -92,7 +92,7 @@ class PortalSummaryTitle extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final confluxPortals = ref.watch(confluxPortalsDetailsProvider);
+    final confluxPortals = ref.watch(confluxPortalsProvider);
     final numberOfOnlinePortals = useState(0);
 
     useEffect(() {

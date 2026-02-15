@@ -1,0 +1,2003 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "VeilNet Guardian",
+    "description": "VeilNet Guardian is a microservice that serves as the central management service for VeilNet infrastructure. It provides REST APIs for managing Veil servers, realms (planes), confluxes (client connections), user authentication, organization and team management, and subscription handling. The Guardian microservice coordinates between Veil servers via NATS messaging and manages IP address allocation, certificate generation, and access control.",
+    "contact": {
+      "name": "VeilNet",
+      "url": "https://veilnet.net/",
+      "email": "support@veilnet.org"
+    },
+    "version": "Beta-v1.0.2"
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Handle Login",
+        "description": "Handle user login with email and password.\n\nArgs:\n    form_data: OAuth2 password request form containing username and password\n    \nReturns:\n    JSONResponse: Authentication response with access token\n    \nRaises:\n    HTTPException: If authentication fails (401) or server error (500)",
+        "operationId": "handle_login_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_handle_login_auth_login_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Handle Get User Profile",
+        "description": "Get the authenticated user's profile.\n\nArgs:\n    user: Authenticated user from dependency injection\n    \nReturns:\n    PublicProfiles: User profile information\n    \nRaises:\n    HTTPException: If profile not found (404) or server error (500)",
+        "operationId": "handle_get_user_profile_auth_profile_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PublicProfiles" }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    },
+    "/auth/profile/display-name": {
+      "patch": {
+        "tags": ["auth"],
+        "summary": "Handle Update Display Name",
+        "description": "Update the authenticated user's display name.\n\nArgs:\n    request: Request containing the new display name\n    user: Authenticated user from dependency injection\n    \nReturns:\n    JSONResponse: Success message\n    \nRaises:\n    HTTPException: If update fails (500)",
+        "operationId": "handle_update_display_name_auth_profile_display_name_patch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDisplayNameRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    },
+    "/auth/create/registration-token": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Handle Create Register Token",
+        "description": "Create a registration token for conflux registration.\n\nArgs:\n    request: Request containing realm_id, expires_after, and optional tag\n    user: Authenticated user from dependency injection\n    \nReturns:\n    RegistrationToken: Created token with token_id and token string\n    \nRaises:\n    HTTPException: If token creation fails (500)",
+        "operationId": "handle_create_register_token_auth_create_registration_token_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRegistrationTokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "title": "Response Handle Create Register Token Auth Create Registration Token Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    },
+    "/auth/revoke/registration-token": {
+      "delete": {
+        "tags": ["auth"],
+        "summary": "Handle Revoke Register Token",
+        "description": "Revoke a registration token.\n\nArgs:\n    token_id: ID of the token to revoke\n    user: Authenticated user from dependency injection\n    \nReturns:\n    JSONResponse: Success message\n    \nRaises:\n    HTTPException: If token not found (404) or revocation fails (500)",
+        "operationId": "handle_revoke_register_token_auth_revoke_registration_token_delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Token Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/list/registration-token": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Handle List Registration Token",
+        "description": "List all registration tokens for the authenticated user.\n\nArgs:\n    user: Authenticated user from dependency injection\n    \nReturns:\n    List[RegistrationTokenInfo]: List of registration token information\n    \nRaises:\n    HTTPException: If listing fails (500)",
+        "operationId": "handle_list_registration_token_auth_list_registration_token_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PublicRegistrationTokens"
+                  },
+                  "type": "array",
+                  "title": "Response Handle List Registration Token Auth List Registration Token Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    },
+    "/realm": {
+      "post": {
+        "tags": ["realm"],
+        "summary": "Handle Create Realm",
+        "description": "Create a new realm.\n\nValidates user permissions (superuser for public realms, subscription\nrequired for private realms) and creates a new realm with the specified\nconfiguration.\n\nArgs:\n    request: Request containing realm configuration\n    user: Authenticated user from dependency injection\n\nReturns:\n    PublicRealms: Created realm object\n\nRaises:\n    HTTPException: If user lacks permissions (403), veil not found (400),\n        subscription invalid (403), or creation fails (500)",
+        "operationId": "handle_create_realm_realm_post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateRealmRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PublicRealmDetails" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["realm"],
+        "summary": "Handle Get Realm",
+        "description": "Get a specific realm by ID.\n\nVerifies user has access to the realm before returning it.\n\nArgs:\n    realm_id: ID of the realm to retrieve\n    user: Authenticated user from dependency injection\n\nReturns:\n    PublicRealmDetails: Realm object\n\nRaises:\n    HTTPException: If realm not found or access denied (404/403)\n        or server error (500)",
+        "operationId": "handle_get_realm_realm_get",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "realm_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Realm Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PublicRealmDetails" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["realm"],
+        "summary": "Handle Delete Realm",
+        "description": "Delete a realm.\n\nOnly the realm owner can delete a realm.\n\nArgs:\n    realm_id: ID of the realm to delete\n    user: Authenticated user from dependency injection\n\nReturns:\n    PublicRealmDetails: Deleted realm object\n\nRaises:\n    HTTPException: If realm not found or user not owner (404/403)\n        or deletion fails (500)",
+        "operationId": "handle_delete_realm_realm_delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "realm_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Realm Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PublicRealmDetails" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/realm/list": {
+      "get": {
+        "tags": ["realm"],
+        "summary": "Handle List Realms",
+        "description": "List all realms accessible to the user.\n\nReturns realms owned by the user, public realms, and realms\nassociated with teams the user is a member of.\n\nArgs:\n    user: Authenticated user from dependency injection\n\nReturns:\n    List[PublicRealmDetails]: List of accessible realms\n\nRaises:\n    HTTPException: If listing fails (500)",
+        "operationId": "handle_list_realms_realm_list_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PublicRealmDetails"
+                  },
+                  "type": "array",
+                  "title": "Response Handle List Realms Realm List Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    },
+    "/realm/subscription": {
+      "patch": {
+        "tags": ["realm"],
+        "summary": "Handle Update Realm Subscription",
+        "description": "Update the subscription associated with a realm.\n\nOnly the realm owner can update the subscription.\n\nArgs:\n    request: Request containing realm_id and subscription_id\n    user: Authenticated user from dependency injection\n\nReturns:\n    JSONResponse: Success message\n\nRaises:\n    HTTPException: If realm not found or user not owner (404/403)\n        or update fails (500)",
+        "operationId": "handle_update_realm_subscription_realm_subscription_patch",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRealmSubscriptionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["realm"],
+        "summary": "Handle Delete Realm Subscription",
+        "description": "Remove the subscription from a realm.\n\nOnly the realm owner can remove the subscription.\n\nArgs:\n    realm_id: ID of the realm to remove subscription from\n    user: Authenticated user from dependency injection\n\nReturns:\n    JSONResponse: Success message\n\nRaises:\n    HTTPException: If realm not found or user not owner (404/403)\n        or deletion fails (500)",
+        "operationId": "handle_delete_realm_subscription_realm_subscription_delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "realm_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Realm Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/realm/member": {
+      "post": {
+        "tags": ["realm"],
+        "summary": "Handle Add Realm Member",
+        "description": "Add a member to a realm.\n\nOnly the realm owner can add a member to a realm.",
+        "operationId": "handle_add_realm_member_realm_member_post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AddRealmMemberRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PublicRealmMembers" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["realm"],
+        "summary": "Handle Remove Realm Member",
+        "description": "Remove a member from a realm.\n\nOnly the realm owner can remove a member from a realm.",
+        "operationId": "handle_remove_realm_member_realm_member_delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveRealmMemberRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["realm"],
+        "summary": "Handle List Realm Members",
+        "description": "List all members of a realm.\n\nOnly the realm owner can list the members of a realm.",
+        "operationId": "handle_list_realm_members_realm_member_get",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "realm_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Realm Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conflux": {
+      "post": {
+        "tags": ["conflux"],
+        "summary": "Handle Create Conflux",
+        "description": "Create a new conflux for a realm.\n\nCreates a conflux with certificates and generates an authentication\ntoken. Verifies user has access to the realm.\n\nArgs:\n    request: Request containing realm_id and optional tag\n    user: Authenticated user from dependency injection\n\nReturns:\n    JSONResponse: Conflux token and ID\n\nRaises:\n    HTTPException: If CA certs not found (500) or creation fails (500)",
+        "operationId": "handle_create_conflux_conflux_post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateConfluxRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["conflux"],
+        "summary": "Handle Get Conflux",
+        "description": "Get a specific conflux by ID.\n\nVerifies user has access to the conflux before returning it.\n\nArgs:\n    conflux_id: ID of the conflux to retrieve\n    user: Authenticated user from dependency injection\n\nReturns:\n    PublicConfluxDetails: Conflux object\n\nRaises:\n    HTTPException: If conflux not found (404), access denied (403),\n        or retrieval fails (500)",
+        "operationId": "handle_get_conflux_conflux_get",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "conflux_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Conflux Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicConfluxDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["conflux"],
+        "summary": "Handle Delete Conflux",
+        "description": "Delete a conflux.\n\nVerifies user has access to the conflux before deletion.\n\nArgs:\n    conflux_id: ID of the conflux to delete\n    user: Authenticated user from dependency injection\n\nReturns:\n    PublicConfluxDetails: Deleted conflux object\n\nRaises:\n    HTTPException: If conflux not found (404), access denied (403),\n        or deletion fails (500)",
+        "operationId": "handle_delete_conflux_conflux_delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "conflux_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Conflux Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicConfluxDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conflux/register": {
+      "post": {
+        "tags": ["conflux"],
+        "summary": "Handle Register Conflux",
+        "description": "Register a conflux using a registration token.\n\nCreates a new conflux or returns an existing one if CIDR matches.\nAssociates teams if specified. Requires a valid registration token.\n\nArgs:\n    credentials: HTTP bearer token containing registration token\n    request: Request containing optional tag, CIDR, and teams\n\nReturns:\n    JSONResponse: Conflux token and ID\n\nRaises:\n    HTTPException: If token invalid (401), CIDR invalid (400),\n        IP not available (400), CA certs not found (500),\n        or registration fails (500)",
+        "operationId": "handle_register_conflux_conflux_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterConfluxRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    },
+    "/conflux/unregister": {
+      "delete": {
+        "tags": ["conflux"],
+        "summary": "Handle Unregister Conflux",
+        "description": "Unregister a conflux.\n\nDeletes a conflux that was registered with a registration token.\nRequires a valid registration token.\n\nArgs:\n    credentials: HTTP bearer token containing registration token\n    conflux_id: ID of the conflux to unregister\n\nReturns:\n    JSONResponse: Success message\n\nRaises:\n    HTTPException: If token invalid (401) or unregistration fails (500)",
+        "operationId": "handle_unregister_conflux_conflux_unregister_delete",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "conflux_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Conflux Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conflux/list": {
+      "get": {
+        "tags": ["conflux"],
+        "summary": "Handle List Conflux",
+        "description": "List all confluxes accessible to the user.\n\nReturns confluxes owned by the user and confluxes in realms\nowned by the user (if not public).\n\nArgs:\n    user: Authenticated user from dependency injection\n\nReturns:\n    List[PublicConfluxDetails]: List of accessible confluxes\n\nRaises:\n    HTTPException: If listing fails (500)",
+        "operationId": "handle_list_conflux_conflux_list_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": { "$ref": "#/components/schemas/Conflux" },
+                  "type": "array",
+                  "title": "Response Handle List Conflux Conflux List Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    },
+    "/conflux/session/login": {
+      "post": {
+        "tags": ["conflux"],
+        "summary": "Handle Conflux Session Login",
+        "description": "Login to a conflux session.\n\nCreates or retrieves an IP lease, verifies access permissions,\nand creates a conflux session. Updates conflux portal status.\n\nArgs:\n    request: FastAPI request object for country code verification\n    loginReq: Request containing signature and portal flag\n    conflux: Authenticated conflux from dependency injection\n\nReturns:\n    PublicConfluxDetails: Updated conflux object\n\nRaises:\n    HTTPException: If access denied (403), no IPs available (500),\n        or login fails (500)",
+        "operationId": "handle_conflux_session_login_conflux_session_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfluxSessionLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicConfluxDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "APIKeyHeader": [] }]
+      }
+    },
+    "/conflux/session/logout": {
+      "post": {
+        "tags": ["conflux"],
+        "summary": "Handle Conflux Session Logout",
+        "description": "Logout from a conflux session.\n\nDeletes the conflux session. For non-portal confluxes, also\ndeletes the conflux itself.\n\nArgs:\n    conflux: Authenticated conflux from dependency injection\n\nRaises:\n    HTTPException: If logout fails (500)",
+        "operationId": "handle_conflux_session_logout_conflux_session_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        },
+        "security": [{ "APIKeyHeader": [] }]
+      }
+    },
+    "/conflux/webrtc": {
+      "get": {
+        "tags": ["conflux"],
+        "summary": "Handle Get Conflux Webrtc",
+        "description": "Get WebRTC ICE server configuration.\n\nRetrieves Cloudflare TURN server credentials for WebRTC connections.\n\nArgs:\n    request: FastAPI request object\n    conflux: Authenticated conflux from dependency injection\n\nReturns:\n    WebRTCConfig: WebRTC configuration with ICE servers\n\nRaises:\n    HTTPException: If credential retrieval fails (500)",
+        "operationId": "handle_get_conflux_webrtc_conflux_webrtc_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        },
+        "security": [{ "APIKeyHeader": [] }]
+      }
+    },
+    "/conflux/scope": {
+      "get": {
+        "tags": ["conflux"],
+        "summary": "Handle Get Conflux Scopes",
+        "description": "Get scopes for a conflux.\n\nRetrieves the scopes for a conflux.",
+        "operationId": "handle_get_conflux_scopes_conflux_scope_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        },
+        "security": [{ "APIKeyHeader": [] }]
+      }
+    },
+    "/conflux/local-network": {
+      "get": {
+        "tags": ["conflux"],
+        "summary": "Handle Get Conflux Local Networks",
+        "description": "Get local networks for a conflux.\n\nQueries the conflux via NATS to retrieve its local network configuration.\n\nArgs:\n    conflux_id: ID of the conflux to query\n    user: Authenticated user from dependency injection\n\nReturns:\n    List[ConfluxLocalNetwork]: List of local networks\n\nRaises:\n    HTTPException: If access denied (403) or query fails (500)",
+        "operationId": "handle_get_conflux_local_networks_conflux_local_network_get",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "conflux_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Conflux Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conflux/remote-network": {
+      "get": {
+        "tags": ["conflux"],
+        "summary": "Handle Get Conflux Remote Networks",
+        "description": "Get remote networks for a conflux.\n\nQueries the conflux via NATS to retrieve its remote network configuration.\n\nArgs:\n    conflux_id: ID of the conflux to query\n    user: Authenticated user from dependency injection\n\nReturns:\n    List[ConfluxRemoteNetwork]: List of remote networks\n\nRaises:\n    HTTPException: If access denied (403) or query fails (500)",
+        "operationId": "handle_get_conflux_remote_networks_conflux_remote_network_get",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "conflux_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Conflux Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conflux/taint": {
+      "post": {
+        "tags": ["conflux"],
+        "summary": "Handle Add Conflux Taint",
+        "description": "Add a taint to a conflux.\n\nAdds a taint to a conflux.",
+        "operationId": "handle_add_conflux_taint_conflux_taint_post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "conflux_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Conflux Id" }
+          },
+          {
+            "name": "taint",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Taint" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["conflux"],
+        "summary": "Handle Remove Conflux Taint",
+        "description": "Remove a taint from a conflux.\n\nRemoves a taint from a conflux.",
+        "operationId": "handle_remove_conflux_taint_conflux_taint_delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "conflux_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Conflux Id" }
+          },
+          {
+            "name": "taint",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Taint" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["conflux"],
+        "summary": "Handle Get Conflux Taints",
+        "description": "Get taints for a conflux.\n\nQueries the conflux via NATS to retrieve its taints.",
+        "operationId": "handle_get_conflux_taints_conflux_taint_get",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "conflux_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Conflux Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conflux/info": {
+      "get": {
+        "tags": ["conflux"],
+        "summary": "Handle Get Conflux Info",
+        "description": "Get info for a conflux.\n\nQueries the conflux via NATS to retrieve its info.",
+        "operationId": "handle_get_conflux_info_conflux_info_get",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "conflux_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Conflux Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ConfluxInfo" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/veil/": {
+      "post": {
+        "tags": ["veil"],
+        "summary": "Handle Create Veil",
+        "description": "Create a new Veil server.\n\nOnly superusers can create Veil servers. Generates certificates\nfor the Veil and stores the configuration.\n\nArgs:\n    req: Request containing Veil configuration\n    user: Authenticated user from dependency injection\n    \nReturns:\n    PublicVeils: Created Veil object\n    \nRaises:\n    HTTPException: If user is not superuser (403), CA certs not found (500),\n        or creation fails (500)",
+        "operationId": "handle_create_veil_veil__post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateVeilRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PublicVeils" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["veil"],
+        "summary": "Handle Get Veil",
+        "description": "Get a specific Veil server by ID.\n\nReturns the Veil if it's owned by the user or is public.\n\nArgs:\n    veil_id: ID of the Veil to retrieve\n    user: Authenticated user from dependency injection\n    \nReturns:\n    PublicVeils: Veil object\n    \nRaises:\n    HTTPException: If Veil not found (404) or retrieval fails (500)",
+        "operationId": "handle_get_veil_veil__get",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "veil_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Veil Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PublicVeils" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["veil"],
+        "summary": "Handle Delete Veil",
+        "description": "Delete a Veil server.\n\nOnly superusers can delete Veil servers. Only the owner can\ndelete their own Veil.\n\nArgs:\n    veil_id: ID of the Veil to delete\n    user: Authenticated user from dependency injection\n    \nReturns:\n    PublicVeils: Deleted Veil object\n    \nRaises:\n    HTTPException: If user is not superuser (403), Veil not found (404),\n        or deletion fails (500)",
+        "operationId": "handle_delete_veil_veil__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "veil_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Veil Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PublicVeils" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/veil/list": {
+      "get": {
+        "tags": ["veil"],
+        "summary": "Handle List Veils",
+        "description": "List all Veil servers accessible to the user.\n\nReturns Veils owned by the user and public Veils.\n\nArgs:\n    user: Authenticated user from dependency injection\n    \nReturns:\n    List[PublicVeils]: List of accessible Veil servers\n    \nRaises:\n    HTTPException: If listing fails (500)",
+        "operationId": "handle_list_veils_veil_list_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": { "$ref": "#/components/schemas/PublicVeils" },
+                  "type": "array",
+                  "title": "Response Handle List Veils Veil List Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    },
+    "/stripe/subscription": {
+      "post": {
+        "tags": ["stripe"],
+        "summary": "Handle Subscribe Plane",
+        "description": "Create a Stripe checkout session for realm subscription.\n\nCreates or retrieves the Stripe customer and generates a checkout\nsession for a realm subscription.\n\nArgs:\n    req: Request containing redirect URLs\n    user: Authenticated user from dependency injection\n\nReturns:\n    JSONResponse: Checkout session URL\n\nRaises:\n    HTTPException: If checkout creation fails (500)",
+        "operationId": "handle_subscribe_plane_stripe_subscription_post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RealmSubscribeRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["stripe"],
+        "summary": "Handle Get Subscriptions",
+        "description": "Get all subscriptions for the authenticated user.\n\nArgs:\n    user: Authenticated user from dependency injection\n\nReturns:\n    list[StripeSubscriptions]: List of user subscriptions\n\nRaises:\n    HTTPException: If retrieval fails (500)",
+        "operationId": "handle_get_subscriptions_stripe_subscription_get",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["stripe"],
+        "summary": "Handle Cancel Subscription",
+        "description": "Cancel a subscription at the end of the current period.\n\nVerifies ownership and sets cancel_at_period_end to True.\n\nArgs:\n    subscription_id: ID of the subscription to cancel\n    user: Authenticated user from dependency injection\n\nRaises:\n    HTTPException: If subscription not found (404), user not owner (403),\n        already canceled (400), or cancellation fails (500)",
+        "operationId": "handle_cancel_subscription_stripe_subscription_delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "subscription_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Subscription Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": ["health"],
+        "summary": "Handle Health",
+        "description": "Health check endpoint.\n\nReturns a 200 OK status to indicate the service is healthy\nand responding to requests.\n\nReturns:\n    Response: HTTP 200 OK response",
+        "operationId": "handle_health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          }
+        }
+      }
+    },
+    "/identity/": {
+      "get": {
+        "tags": ["identity"],
+        "summary": "Handle Get Identity",
+        "description": "Get a specific identity by ID.\n\nReturns the identity if it's owned by the user.",
+        "operationId": "handle_get_identity_identity__get",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "identity_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Identity Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PublicIdentities" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["identity"],
+        "summary": "Handle Create Identity",
+        "description": "Create a new identity.\n\nCreates a new identity for the user.",
+        "operationId": "handle_create_identity_identity__post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateIdentityRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PublicIdentities" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["identity"],
+        "summary": "Handle Delete Identity",
+        "description": "Delete a specific identity by ID.\n\nDeletes the identity if it's owned by the user.",
+        "operationId": "handle_delete_identity_identity__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "identity_id",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "title": "Identity Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PublicIdentities" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identity/list": {
+      "get": {
+        "tags": ["identity"],
+        "summary": "Handle List Identities",
+        "description": "List all identities owned by the user.\n\nReturns all identities owned by the user.",
+        "operationId": "handle_list_identities_identity_list_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": { "$ref": "#/components/schemas/PublicIdentities" },
+                  "type": "array",
+                  "title": "Response Handle List Identities Identity List Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddRealmMemberRequest": {
+        "properties": {
+          "realm_id": { "type": "string", "title": "Realm Id" },
+          "email": { "type": "string", "title": "Email" }
+        },
+        "type": "object",
+        "required": ["realm_id", "email"],
+        "title": "AddRealmMemberRequest",
+        "description": "Request model for adding a member to a realm.\n\nAttributes:\n    realm_id: ID of the realm to add member to\n    user_id: ID of the user to add as member"
+      },
+      "Body_handle_login_auth_login_post": {
+        "properties": {
+          "grant_type": {
+            "anyOf": [
+              { "type": "string", "pattern": "^password$" },
+              { "type": "null" }
+            ],
+            "title": "Grant Type"
+          },
+          "username": { "type": "string", "title": "Username" },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "title": "Password"
+          },
+          "scope": { "type": "string", "title": "Scope", "default": "" },
+          "client_id": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Client Id"
+          },
+          "client_secret": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "format": "password",
+            "title": "Client Secret"
+          }
+        },
+        "type": "object",
+        "required": ["username", "password"],
+        "title": "Body_handle_login_auth_login_post"
+      },
+      "Conflux": {
+        "properties": {
+          "ca_pem": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Ca Pem"
+          },
+          "cert_pem": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Cert Pem"
+          },
+          "cidr": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Cidr"
+          },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "id": {
+            "anyOf": [
+              { "type": "string", "format": "uuid" },
+              { "type": "null" }
+            ],
+            "title": "Id"
+          },
+          "key_pem": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Key Pem"
+          },
+          "last_seen": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Last Seen"
+          },
+          "portal": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Portal"
+          },
+          "realm": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Realm"
+          },
+          "realm_id": {
+            "anyOf": [
+              { "type": "string", "format": "uuid" },
+              { "type": "null" }
+            ],
+            "title": "Realm Id"
+          },
+          "region": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Region"
+          },
+          "rift": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Rift"
+          },
+          "signature": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Signature"
+          },
+          "subnet": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Subnet"
+          },
+          "tag": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tag"
+          },
+          "user_id": {
+            "anyOf": [
+              { "type": "string", "format": "uuid" },
+              { "type": "null" }
+            ],
+            "title": "User Id"
+          },
+          "veil_host": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Veil Host"
+          },
+          "veil_id": {
+            "anyOf": [
+              { "type": "string", "format": "uuid" },
+              { "type": "null" }
+            ],
+            "title": "Veil Id"
+          },
+          "veil_port": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Veil Port"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ca_pem",
+          "cert_pem",
+          "cidr",
+          "created_at",
+          "id",
+          "key_pem",
+          "last_seen",
+          "portal",
+          "realm",
+          "realm_id",
+          "region",
+          "rift",
+          "signature",
+          "subnet",
+          "tag",
+          "user_id",
+          "veil_host",
+          "veil_id",
+          "veil_port"
+        ],
+        "title": "Conflux"
+      },
+      "ConfluxInfo": {
+        "properties": {
+          "id": { "type": "string", "title": "Id" },
+          "tag": { "type": "string", "title": "Tag" },
+          "uid": { "type": "string", "title": "Uid" },
+          "cidr": { "type": "string", "title": "Cidr" },
+          "rift": { "type": "boolean", "title": "Rift" },
+          "portal": { "type": "boolean", "title": "Portal" },
+          "public": { "type": "boolean", "title": "Public" }
+        },
+        "type": "object",
+        "required": ["id", "tag", "uid", "cidr", "rift", "portal", "public"],
+        "title": "ConfluxInfo",
+        "description": "Response model for conflux info.\n\nAttributes:\n    id: ID of the conflux\n    tag: Tag of the conflux\n    uid: UID of the conflux\n    cidr: CIDR of the conflux\n    rift: Whether the conflux is in rift mode\n    portal: Whether the conflux is a portal conflux\n    public: Whether the conflux is public"
+      },
+      "ConfluxSessionLoginRequest": {
+        "properties": {
+          "signature": { "type": "string", "title": "Signature" },
+          "portal": { "type": "boolean", "title": "Portal" },
+          "rift": { "type": "boolean", "title": "Rift" }
+        },
+        "type": "object",
+        "required": ["signature", "portal", "rift"],
+        "title": "ConfluxSessionLoginRequest",
+        "description": "Request model for conflux session login.\n\nAttributes:\n    signature: Cryptographic signature for validation\n    portal: Whether this is a portal conflux"
+      },
+      "CreateConfluxRequest": {
+        "properties": {
+          "realm_id": { "type": "string", "title": "Realm Id" },
+          "tag": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tag"
+          }
+        },
+        "type": "object",
+        "required": ["realm_id"],
+        "title": "CreateConfluxRequest",
+        "description": "Request model for creating a new conflux.\n\nAttributes:\n    realm_id: ID of the realm to create conflux for\n    tag: Optional tag for categorizing the conflux"
+      },
+      "CreateIdentityRequest": {
+        "properties": {
+          "audience": { "type": "string", "title": "Audience" },
+          "issuer": { "type": "string", "title": "Issuer" },
+          "jwks_url": { "type": "string", "title": "Jwks Url" }
+        },
+        "type": "object",
+        "required": ["audience", "issuer", "jwks_url"],
+        "title": "CreateIdentityRequest",
+        "description": "Request model for creating a new identity.\n\nAttributes:\n    audience: Audience of the identity\n    issuer: Issuer of the identity\n    jwks_url: JWKS URL of the identity"
+      },
+      "CreateRealmRequest": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "subnet": { "type": "string", "title": "Subnet" },
+          "public": { "type": "boolean", "title": "Public" },
+          "veil_id": { "type": "string", "title": "Veil Id" },
+          "subscription_id": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Subscription Id"
+          }
+        },
+        "type": "object",
+        "required": ["name", "subnet", "public", "veil_id"],
+        "title": "CreateRealmRequest",
+        "description": "Request model for creating a new realm.\n\nAttributes:\n    name: Name of the realm\n    subnet: CIDR notation of the realm's subnet (must be private)\n    public: Whether the realm is public\n    veil_id: ID of the associated Veil server\n    subscription_id: Optional subscription ID for private realms"
+      },
+      "CreateRegistrationTokenRequest": {
+        "properties": {
+          "realm_id": { "type": "string", "title": "Realm Id" },
+          "expires_after": { "type": "integer", "title": "Expires After" },
+          "tag": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tag"
+          }
+        },
+        "type": "object",
+        "required": ["realm_id", "expires_after"],
+        "title": "CreateRegistrationTokenRequest",
+        "description": "Request model for creating a registration token.\n\nAttributes:\n    realm_id: ID of the realm to create token for\n    expires_after: Number of days until token expiration\n    tag: Optional tag for categorizing the token"
+      },
+      "CreateVeilRequest": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "region": { "type": "string", "title": "Region" },
+          "host": { "type": "string", "title": "Host" },
+          "port": { "type": "integer", "title": "Port" },
+          "public": { "type": "boolean", "title": "Public", "default": true }
+        },
+        "type": "object",
+        "required": ["name", "region", "host", "port"],
+        "title": "CreateVeilRequest",
+        "description": "Request model for creating a new Veil server.\n\nAttributes:\n    name: Name of the Veil server\n    region: Geographic region where the Veil is located\n    host: IP address or hostname of the Veil\n    port: Port number the Veil listens on\n    public: Whether the Veil is publicly accessible (default: True)"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": { "$ref": "#/components/schemas/ValidationError" },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "PublicConfluxDetails": {
+        "properties": {
+          "ca_pem": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Ca Pem"
+          },
+          "cert_pem": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Cert Pem"
+          },
+          "cidr": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Cidr"
+          },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "id": {
+            "anyOf": [
+              { "type": "string", "format": "uuid" },
+              { "type": "null" }
+            ],
+            "title": "Id"
+          },
+          "key_pem": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Key Pem"
+          },
+          "last_seen": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Last Seen"
+          },
+          "portal": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Portal"
+          },
+          "realm": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Realm"
+          },
+          "realm_id": {
+            "anyOf": [
+              { "type": "string", "format": "uuid" },
+              { "type": "null" }
+            ],
+            "title": "Realm Id"
+          },
+          "region": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Region"
+          },
+          "rift": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Rift"
+          },
+          "signature": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Signature"
+          },
+          "subnet": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Subnet"
+          },
+          "tag": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tag"
+          },
+          "user_id": {
+            "anyOf": [
+              { "type": "string", "format": "uuid" },
+              { "type": "null" }
+            ],
+            "title": "User Id"
+          },
+          "veil_host": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Veil Host"
+          },
+          "veil_id": {
+            "anyOf": [
+              { "type": "string", "format": "uuid" },
+              { "type": "null" }
+            ],
+            "title": "Veil Id"
+          },
+          "veil_port": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Veil Port"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ca_pem",
+          "cert_pem",
+          "cidr",
+          "created_at",
+          "id",
+          "key_pem",
+          "last_seen",
+          "portal",
+          "realm",
+          "realm_id",
+          "region",
+          "rift",
+          "signature",
+          "subnet",
+          "tag",
+          "user_id",
+          "veil_host",
+          "veil_id",
+          "veil_port"
+        ],
+        "title": "PublicConfluxDetails"
+      },
+      "PublicIdentities": {
+        "properties": {
+          "audience": { "type": "string", "title": "Audience" },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "issuer": { "type": "string", "title": "Issuer" },
+          "jwks_url": { "type": "string", "title": "Jwks Url" },
+          "user_id": { "type": "string", "format": "uuid", "title": "User Id" }
+        },
+        "type": "object",
+        "required": [
+          "audience",
+          "created_at",
+          "id",
+          "issuer",
+          "jwks_url",
+          "user_id"
+        ],
+        "title": "PublicIdentities"
+      },
+      "PublicProfiles": {
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "display_name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Display Name"
+          },
+          "email": { "type": "string", "title": "Email" },
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "is_superuser": { "type": "boolean", "title": "Is Superuser" }
+        },
+        "type": "object",
+        "required": [
+          "created_at",
+          "display_name",
+          "email",
+          "id",
+          "is_superuser"
+        ],
+        "title": "PublicProfiles"
+      },
+      "PublicRealmDetails": {
+        "properties": {
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "id": {
+            "anyOf": [
+              { "type": "string", "format": "uuid" },
+              { "type": "null" }
+            ],
+            "title": "Id"
+          },
+          "name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Name"
+          },
+          "public": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Public"
+          },
+          "region": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Region"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "trialing",
+                  "active",
+                  "canceled",
+                  "incomplete",
+                  "incomplete_expired",
+                  "past_due",
+                  "unpaid",
+                  "paused"
+                ]
+              },
+              { "type": "null" }
+            ],
+            "title": "Status"
+          },
+          "subnet": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Subnet"
+          },
+          "subscription": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Subscription"
+          },
+          "user_id": {
+            "anyOf": [
+              { "type": "string", "format": "uuid" },
+              { "type": "null" }
+            ],
+            "title": "User Id"
+          },
+          "veil_host": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Veil Host"
+          },
+          "veil_id": {
+            "anyOf": [
+              { "type": "string", "format": "uuid" },
+              { "type": "null" }
+            ],
+            "title": "Veil Id"
+          },
+          "veil_port": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Veil Port"
+          }
+        },
+        "type": "object",
+        "required": [
+          "created_at",
+          "id",
+          "name",
+          "public",
+          "region",
+          "status",
+          "subnet",
+          "subscription",
+          "user_id",
+          "veil_host",
+          "veil_id",
+          "veil_port"
+        ],
+        "title": "PublicRealmDetails"
+      },
+      "PublicRealmMembers": {
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "realm_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Realm Id"
+          },
+          "user_id": { "type": "string", "format": "uuid", "title": "User Id" }
+        },
+        "type": "object",
+        "required": ["created_at", "id", "realm_id", "user_id"],
+        "title": "PublicRealmMembers"
+      },
+      "PublicRegistrationTokens": {
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "realm_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Realm Id"
+          },
+          "tag": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tag"
+          },
+          "token_hash": { "type": "string", "title": "Token Hash" },
+          "token_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Token Id"
+          },
+          "user_id": { "type": "string", "format": "uuid", "title": "User Id" }
+        },
+        "type": "object",
+        "required": [
+          "created_at",
+          "expires_at",
+          "realm_id",
+          "tag",
+          "token_hash",
+          "token_id",
+          "user_id"
+        ],
+        "title": "PublicRegistrationTokens"
+      },
+      "PublicVeils": {
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "host": { "type": "string", "title": "Host" },
+          "id": { "type": "string", "format": "uuid", "title": "Id" },
+          "name": { "type": "string", "title": "Name" },
+          "port": { "type": "integer", "title": "Port" },
+          "public": { "type": "boolean", "title": "Public" },
+          "region": { "type": "string", "title": "Region" },
+          "user_id": {
+            "anyOf": [
+              { "type": "string", "format": "uuid" },
+              { "type": "null" }
+            ],
+            "title": "User Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "created_at",
+          "host",
+          "id",
+          "name",
+          "port",
+          "public",
+          "region",
+          "user_id"
+        ],
+        "title": "PublicVeils"
+      },
+      "RealmSubscribeRequest": {
+        "properties": {
+          "success_url": { "type": "string", "title": "Success Url" },
+          "cancel_url": { "type": "string", "title": "Cancel Url" }
+        },
+        "type": "object",
+        "required": ["success_url", "cancel_url"],
+        "title": "RealmSubscribeRequest",
+        "description": "Request model for creating a realm subscription checkout session.\n\nAttributes:\n    success_url: URL to redirect to after successful payment\n    cancel_url: URL to redirect to if payment is cancelled"
+      },
+      "RegisterConfluxRequest": {
+        "properties": {
+          "tag": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tag"
+          },
+          "jwt": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Jwt"
+          },
+          "jwks_url": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Jwks Url"
+          },
+          "audience": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Audience"
+          },
+          "issuer": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Issuer"
+          }
+        },
+        "type": "object",
+        "title": "RegisterConfluxRequest",
+        "description": "Request model for registering a conflux.\n\nAttributes:\n    tag: Optional tag for categorizing the conflux\n    jwt: Optional JWT for authentication\n    jwks_url: Optional JWKS URL for authentication\n    audience: Optional audience for authentication\n    issuer: Optional issuer for authentication"
+      },
+      "RemoveRealmMemberRequest": {
+        "properties": {
+          "realm_id": { "type": "string", "title": "Realm Id" },
+          "user_id": { "type": "string", "title": "User Id" }
+        },
+        "type": "object",
+        "required": ["realm_id", "user_id"],
+        "title": "RemoveRealmMemberRequest",
+        "description": "Request model for removing a member from a realm.\n\nAttributes:\n    realm_id: ID of the realm to remove member from\n    user_id: ID of the user to remove as member"
+      },
+      "UpdateDisplayNameRequest": {
+        "properties": {
+          "display_name": { "type": "string", "title": "Display Name" }
+        },
+        "type": "object",
+        "required": ["display_name"],
+        "title": "UpdateDisplayNameRequest",
+        "description": "Request model for updating user display name.\n\nAttributes:\n    display_name: New display name for the user"
+      },
+      "UpdateRealmSubscriptionRequest": {
+        "properties": {
+          "realm_id": { "type": "string", "title": "Realm Id" },
+          "subscription_id": { "type": "string", "title": "Subscription Id" }
+        },
+        "type": "object",
+        "required": ["realm_id", "subscription_id"],
+        "title": "UpdateRealmSubscriptionRequest",
+        "description": "Request model for updating realm subscription.\n\nAttributes:\n    realm_id: ID of the realm to update\n    subscription_id: ID of the subscription to associate"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": { "type": "string", "title": "Message" },
+          "type": { "type": "string", "title": "Error Type" }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "OAuth2PasswordBearer": {
+        "type": "oauth2",
+        "flows": { "password": { "scopes": {}, "tokenUrl": "/auth/login" } }
+      },
+      "HTTPBearer": { "type": "http", "scheme": "bearer" },
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-conflux-token"
+      }
+    }
+  }
+}

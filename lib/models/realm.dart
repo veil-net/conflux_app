@@ -13,8 +13,11 @@ abstract class Realm with _$Realm {
     required String name,
     required String subnet,
     required bool public,
-    required int portals,
+    required String region,
+    required String veil_host,
+    required int veil_port,
     String? subscription,
+    String? status,
   }) = _Realm;
 
   factory Realm.fromJson(Map<String, dynamic> json) => _$RealmFromJson(json);

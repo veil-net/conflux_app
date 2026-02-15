@@ -31,4 +31,4 @@ analyzer:
   errors:
     non_constant_identifier_names: ignore
   plugins:
-    - custom_lint
+    riverpod_lint: <latest version from https://pub.dev/packages/riverpod_lint>
