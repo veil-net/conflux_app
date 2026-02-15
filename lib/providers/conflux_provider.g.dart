@@ -57,8 +57,8 @@ abstract class _$Confluxes extends $AsyncNotifier<List<Conflux>> {
 final confluxByIDProvider = ConfluxByIDFamily._();
 
 final class ConfluxByIDProvider
-    extends $FunctionalProvider<AsyncValue<Conflux>, Conflux, Stream<Conflux>>
-    with $FutureModifier<Conflux>, $StreamProvider<Conflux> {
+    extends $FunctionalProvider<AsyncValue<Conflux>, Conflux, FutureOr<Conflux>>
+    with $FutureModifier<Conflux>, $FutureProvider<Conflux> {
   ConfluxByIDProvider._({
     required ConfluxByIDFamily super.from,
     required String super.argument,
@@ -82,11 +82,11 @@ final class ConfluxByIDProvider
 
   @$internal
   @override
-  $StreamProviderElement<Conflux> $createElement($ProviderPointer pointer) =>
-      $StreamProviderElement(pointer);
+  $FutureProviderElement<Conflux> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
 
   @override
-  Stream<Conflux> create(Ref ref) {
+  FutureOr<Conflux> create(Ref ref) {
     final argument = this.argument as String;
     return confluxByID(ref, argument);
   }
@@ -102,10 +102,10 @@ final class ConfluxByIDProvider
   }
 }
 
-String _$confluxByIDHash() => r'7affa15dbcd7f19dd2ebcd8c047edd108b8bf995';
+String _$confluxByIDHash() => r'5a29ceb98db4b140c55e161944d780dce8744501';
 
 final class ConfluxByIDFamily extends $Family
-    with $FunctionalFamilyOverride<Stream<Conflux>, String> {
+    with $FunctionalFamilyOverride<FutureOr<Conflux>, String> {
   ConfluxByIDFamily._()
     : super(
         retry: null,

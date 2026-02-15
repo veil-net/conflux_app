@@ -2,6 +2,10 @@ package app.veilnet.conflux
 
 import android.content.Intent
 import android.net.VpnService
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.ResultReceiver
 import androidx.core.content.ContextCompat
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.android.FlutterActivity
@@ -10,7 +14,13 @@ import io.flutter.plugin.common.MethodChannel
 class MainActivity : FlutterActivity() {
     private val channel = "veilnet/service"
 
+    private var pendingResult: MethodChannel.Result? = null
+
+
     companion object {
+
+        const val RESULT_SUCCESS = 1
+        const val RESULT_FAILURE = 0
         private var guardian: String? = null
         private var token: String? = null
     }
@@ -23,37 +33,46 @@ class MainActivity : FlutterActivity() {
                 when (call.method) {
 
                     "start" -> {
+                        pendingResult = result
                         try {
                             guardian = call.argument<String>("guardian")
                             token = call.argument<String>("token")
                             if (guardian == null || token == null) {
+
                                 result.error(
-                                    "Missing argument",
+                                    "VEILNET",
                                     "Guardian Url or VeilNet token is missing",
                                     null
                                 )
+                                return@setMethodCallHandler
                             }
                             val vpnIntent = VpnService.prepare(context)
                             if (vpnIntent != null) {
                                 startActivityForResult(vpnIntent, 1001)
-                                result.success(true)
                             } else {
-                                onActivityResult(1001, RESULT_OK, null)
-                                result.success(true)
+                                callVeilNetService(action = "Start")
                             }
                         } catch (e: Exception) {
-                            result.error("Fail to start", e.message, null)
+
+                            result.error("VEILNET", e.message, null)
                         }
                     }
 
                     "stop" -> {
+                        pendingResult = result
                         try {
-                            val intent = Intent(context, VeilNetVPNService::class.java)
-                            intent.action = "Stop"
-                            ContextCompat.startForegroundService(this, intent)
-                            result.success(true)
+                            callVeilNetService("Stop")
                         } catch (e: Exception) {
-                            result.error("Fail to stop", e.message, null)
+                            result.error("VEILNET", e.message, null)
+                        }
+                    }
+
+                    "ID" -> {
+                        val id = VeilNetVPNService.anchor?.id
+                        if (id != null) {
+                            result.success(id)
+                        } else {
+                            result.error("VEILNET", "VPN is not connected", null)
                         }
                     }
 
@@ -62,18 +81,47 @@ class MainActivity : FlutterActivity() {
             }
     }
 
+    private fun callVeilNetService(action: String) {
+        val receiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
+            override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
+
+                if (pendingResult == null) {
+                    return
+                }
+
+                when (resultCode) {
+                    RESULT_SUCCESS -> when (action) {
+                        "Start" -> {
+                            pendingResult?.success(true)
+                        }
+
+                        "Stop" -> {
+                            pendingResult?.success(true)
+                        }
+                    }
+                    RESULT_FAILURE -> {
+                        val message = resultData?.getString("error") ?: "VeilNet Service failed for action $action"
+                        pendingResult?.error("VEILNET", message, null)
+                    }
+                }
+            }
+        }
+
+        val intent = Intent(context, VeilNetVPNService::class.java)
+        intent.putExtra("guardian", guardian)
+        intent.putExtra("token", token)
+        intent.putExtra("result_receiver", receiver)
+        intent.action = action
+        ContextCompat.startForegroundService(this, intent)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             1001 -> {
                 if (resultCode == RESULT_OK) {
-                    val veilnetIntent = Intent(context, VeilNetVPNService::class.java)
-                    veilnetIntent.putExtra("guardian", guardian)
-                    veilnetIntent.putExtra("token", token)
-                    veilnetIntent.action = "Start"
-                    ContextCompat.startForegroundService(this, veilnetIntent)
+                    callVeilNetService(action = "Start")
                 }
             }
-
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }

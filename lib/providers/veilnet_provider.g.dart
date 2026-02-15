@@ -56,7 +56,7 @@ abstract class _$ConfluxService extends $AsyncNotifier<ConfluxService> {
 @ProviderFor(VeilNet)
 final veilNetProvider = VeilNetProvider._();
 
-final class VeilNetProvider extends $NotifierProvider<VeilNet, VeilNetState> {
+final class VeilNetProvider extends $AsyncNotifierProvider<VeilNet, Conflux?> {
   VeilNetProvider._()
     : super(
         from: null,
@@ -74,29 +74,21 @@ final class VeilNetProvider extends $NotifierProvider<VeilNet, VeilNetState> {
   @$internal
   @override
   VeilNet create() => VeilNet();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(VeilNetState value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<VeilNetState>(value),
-    );
-  }
 }
 
-String _$veilNetHash() => r'd09ba9a0832ee05fc41069f8590a38302bbd88f5';
+String _$veilNetHash() => r'9c7d0bc617778abfc52b7923fec4a235f6c1479b';
 
-abstract class _$VeilNet extends $Notifier<VeilNetState> {
-  VeilNetState build();
+abstract class _$VeilNet extends $AsyncNotifier<Conflux?> {
+  FutureOr<Conflux?> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<VeilNetState, VeilNetState>;
+    final ref = this.ref as $Ref<AsyncValue<Conflux?>, Conflux?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<VeilNetState, VeilNetState>,
-              VeilNetState,
+              AnyNotifier<AsyncValue<Conflux?>, Conflux?>,
+              AsyncValue<Conflux?>,
               Object?,
               Object?
             >;

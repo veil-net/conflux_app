@@ -1,80 +1,64 @@
-import 'package:conflux/components/app_button.dart';
-import 'package:conflux/components/app_card.dart';
 import 'package:conflux/models/realm.dart';
-import 'package:conflux/providers/conflux_provider.dart';
-import 'package:conflux/providers/page_controller_provider.dart';
-import 'package:conflux/providers/realm_provider.dart';
-import 'package:conflux/providers/settings_provider.dart';
 import 'package:conflux/providers/veilnet_provider.dart';
-import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class RealmTile extends HookConsumerWidget {
-  final Realm realm;
-  const RealmTile({super.key, required this.realm});
 
+class RealmTile extends HookConsumerWidget {
+  const RealmTile({super.key, required this.realm});
+  final Realm realm;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final veilNetState = ref.watch(veilNetProvider);
-    final confluxPortals = ref.watch(confluxPortalsProvider);
-    final numberOfPortals = useState(
-      confluxPortals.value
-              ?.where((conflux) => conflux.realm_id == realm.id)
-              .length ??
-          0,
-    );
-    final developerMode = ref.watch(developerModeProvider);
+    final conflux = ref.watch(veilNetProvider);
+    final isLoading = useState(false);
+    Future<void> connect() async {
+      try {
+        isLoading.value = true;
+        await ref.read(veilNetProvider.notifier).connect(realm);
+      } catch (e) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(e.toString())));
+        }
+      } finally {
+        isLoading.value = false;
+      }
+    }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).orientation == Orientation.portrait
-                ? constraints.maxWidth
-                : 500 < constraints.maxWidth * 0.5
-                ? 500
-                : constraints.maxWidth * 0.5,
+    return ListTile(
+      title: Text(realm.name),
+      subtitle: Text(realm.subnet),
+      trailing: conflux.when(
+        data: (conflux) => ElevatedButton(
+          onPressed: isLoading.value ? null : conflux == null ? connect : null,
+          child: isLoading.value
+              ? SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                )
+              : Text("Connect"),
+        ),
+        error: (error, stackTrace) => IconButton(
+          onPressed: () {
+            ref.invalidate(veilNetProvider);
+          },
+          icon: Icon(Icons.refresh),
+        ),
+        loading: () => SizedBox(
+          height: 20,
+          width: 20,
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
-          child: AppCard(
-            child: ListTile(
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
-              leading: SizedBox(
-                width: 40,
-                height: 30,
-                child: CountryFlag.fromCountryCode(realm.region),
-              ),
-              title: Text(
-                realm.name,
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
-              ),
-              subtitle: developerMode
-                  ? Text(
-                      "You have ${numberOfPortals.value} Portals on this realm",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                    )
-                  : null,
-              trailing: AppButton(
-                outline: false,
-                expand: false,
-                label: 'Select',
-                onPressed: veilNetState == VeilNetState.disconnected
-                    ? () async {
-                        await ref
-                            .read(selectedRealmProvider.notifier)
-                            .setSelectedRealm(realm);
-                        ref.read(pageControllerProvider).jumpToPage(0);
-                      }
-                    : null,
-              ),
-            ),
-          ).animate().slideY(duration: 250.milliseconds, curve: Curves.easeInOut),
-        );
-      },
+        ),
+      ),
     );
   }
 }

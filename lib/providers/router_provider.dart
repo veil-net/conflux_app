@@ -1,6 +1,5 @@
 import 'package:conflux/pages/auth_page.dart';
 import 'package:conflux/pages/main_page.dart';
-import 'package:conflux/pages/notification_page.dart';
 import 'package:conflux/providers/supabase_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -41,21 +40,6 @@ GoRouter router(Ref ref) {
           return '/';
         } catch (e) {
           return null;
-        }
-      },
-    ),
-    GoRoute(
-      path: '/notification',
-      builder: (context, state) => NotificationPage(),
-      redirect: (context, state) {
-        try {
-          final user = supabase.auth.currentUser;
-          if (user == null) {
-            return '/auth';
-          }
-          return null;
-        } catch (e) {
-          return '/auth';
         }
       },
     ),
