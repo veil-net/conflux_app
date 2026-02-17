@@ -1,4 +1,5 @@
 import 'package:conflux/pages/auth_page.dart';
+import 'package:conflux/pages/auth_register_page.dart';
 import 'package:conflux/pages/main_page.dart';
 import 'package:conflux/providers/supabase_provider.dart';
 import 'package:go_router/go_router.dart';
@@ -31,6 +32,12 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/auth',
         builder: (context, state) => const AuthPage(),
+        routes: [
+          GoRoute(
+            path: 'register',
+            builder: (context, state) => const AuthRegisterPage(),
+          ),
+        ],
         redirect: (context, state) {
           try {
             final user = supabase.auth.currentUser;

@@ -96,7 +96,16 @@ class SelectedRealmCard extends HookConsumerWidget {
                               ),
                             ),
                       error: (error, stackTrace) =>
-                          Text('Failed to connect: $error'),
+                          ListTile(
+                            leading: Icon(Icons.error, color: Colors.red),
+                            title: Text('Failed to load VeilNet status'),
+                            trailing: IconButton(
+                              onPressed: () {
+                                ref.invalidate(veilNetProvider);
+                              },
+                              icon: Icon(Icons.refresh),
+                            ),
+                          ),
                       loading: () => LinearProgressIndicator(),
                     ),
                   ],

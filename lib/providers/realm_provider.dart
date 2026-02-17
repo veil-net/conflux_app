@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:conflux/models/realm.dart';
 import 'package:conflux/providers/api_provider.dart';
 import 'package:conflux/providers/preference_provider.dart';
@@ -116,12 +118,14 @@ class SelectedRealm extends _$SelectedRealm {
     final prefs = await ref.watch(preferenceProvider.future);
     final selectedRealmId = prefs.getString('selected_realm');
     if (selectedRealmId == null || selectedRealmId.isEmpty) {
+      log('No selected realm');
       return null;
     }
     try {
       return await ref.watch(realmProvider(selectedRealmId).future);
     } catch (e) {
       prefs.remove('selected_realm');
+      log('Failed to load selected realm: $e');
       return null;
     }
   }

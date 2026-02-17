@@ -76,7 +76,7 @@ final class VeilNetProvider extends $AsyncNotifierProvider<VeilNet, Conflux?> {
   VeilNet create() => VeilNet();
 }
 
-String _$veilNetHash() => r'e7c54ae25448ab2e0301ecf7c71f768ba9125374';
+String _$veilNetHash() => r'435431f52ceeca47749b4cfaf4de2749123f17df';
 
 abstract class _$VeilNet extends $AsyncNotifier<Conflux?> {
   FutureOr<Conflux?> build();

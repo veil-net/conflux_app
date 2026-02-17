@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:conflux/providers/applinks_provider.dart';
@@ -53,7 +52,7 @@ class MyApp extends HookConsumerWidget {
     final router = ref.read(routerProvider);
     final appLinks = ref.read(appLinksProvider);
     appLinks.uriLinkStream.listen((uri) {
-      log(uri.toString());
+
     });
     return MaterialApp.router(
       title: 'VeilNet Console',

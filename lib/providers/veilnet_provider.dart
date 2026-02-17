@@ -168,7 +168,7 @@ class VeilNet extends _$VeilNet {
         return null;
       }
       try {
-        final conflux = await ref.watch(confluxByIDProvider(id!).future);
+        final conflux = await ref.watch(confluxByIDProvider(id).future);
         return conflux;
       } catch (e) {
         return null;
