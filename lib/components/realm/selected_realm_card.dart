@@ -76,32 +76,52 @@ class SelectedRealmCard extends HookConsumerWidget {
                     veilnet.when(
                       data: (veilnet) => veilnet == null
                           ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
                                 width: double.infinity,
                                 child: FilledButton(
                                   onPressed: loading.value ? null : connect,
                                   child: Text('Connect'),
                                 ),
                               ),
-                          )
+                            )
                           : Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
                                 width: double.infinity,
                                 child: FilledButton(
                                   onPressed: loading.value ? null : disconnect,
                                   child: Text('Disconnect'),
                                 ),
                               ),
-                          ),
+                            ),
                       error: (error, stackTrace) =>
                           Text('Failed to connect: $error'),
                       loading: () => LinearProgressIndicator(),
                     ),
                   ],
                 )
-              : const SizedBox.shrink(),
+              : Card(
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text('No realm selected'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: FilledButton(
+                            onPressed: () {
+                              ref.read(pageControllerProvider).jumpToPage(1);
+                            },
+                            child: Text('Select a realm'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
           error: (error, stackTrace) => ListTile(
             leading: Icon(Icons.error, color: Colors.red),
             title: Text('Failed to load selected realm'),

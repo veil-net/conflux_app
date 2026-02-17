@@ -26,3 +26,12 @@ abstract class Conflux with _$Conflux {
   factory Conflux.fromJson(Map<String, dynamic> json) =>
       _$ConfluxFromJson(json);
 }
+
+
+@freezed
+abstract class Taint with _$Taint {
+  factory Taint({
+    required String taint,
+  }) = _Taint;
+  factory Taint.fromJson(Map<String, dynamic> json) => _$TaintFromJson(json);
+}

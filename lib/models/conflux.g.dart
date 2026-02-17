@@ -41,3 +41,10 @@ Map<String, dynamic> _$ConfluxToJson(_Conflux instance) => <String, dynamic>{
   'veil_host': instance.veil_host,
   'veil_port': instance.veil_port,
 };
+
+_Taint _$TaintFromJson(Map<String, dynamic> json) =>
+    _Taint(taint: json['taint'] as String);
+
+Map<String, dynamic> _$TaintToJson(_Taint instance) => <String, dynamic>{
+  'taint': instance.taint,
+};

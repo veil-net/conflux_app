@@ -316,4 +316,267 @@ as int,
 
 }
 
+
+/// @nodoc
+mixin _$Taint {
+
+ String get taint;
+/// Create a copy of Taint
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TaintCopyWith<Taint> get copyWith => _$TaintCopyWithImpl<Taint>(this as Taint, _$identity);
+
+  /// Serializes this Taint to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Taint&&(identical(other.taint, taint) || other.taint == taint));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,taint);
+
+@override
+String toString() {
+  return 'Taint(taint: $taint)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $TaintCopyWith<$Res>  {
+  factory $TaintCopyWith(Taint value, $Res Function(Taint) _then) = _$TaintCopyWithImpl;
+@useResult
+$Res call({
+ String taint
+});
+
+
+
+
+}
+/// @nodoc
+class _$TaintCopyWithImpl<$Res>
+    implements $TaintCopyWith<$Res> {
+  _$TaintCopyWithImpl(this._self, this._then);
+
+  final Taint _self;
+  final $Res Function(Taint) _then;
+
+/// Create a copy of Taint
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? taint = null,}) {
+  return _then(_self.copyWith(
+taint: null == taint ? _self.taint : taint // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [Taint].
+extension TaintPatterns on Taint {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Taint value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Taint() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Taint value)  $default,){
+final _that = this;
+switch (_that) {
+case _Taint():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Taint value)?  $default,){
+final _that = this;
+switch (_that) {
+case _Taint() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String taint)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Taint() when $default != null:
+return $default(_that.taint);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String taint)  $default,) {final _that = this;
+switch (_that) {
+case _Taint():
+return $default(_that.taint);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String taint)?  $default,) {final _that = this;
+switch (_that) {
+case _Taint() when $default != null:
+return $default(_that.taint);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _Taint implements Taint {
+   _Taint({required this.taint});
+  factory _Taint.fromJson(Map<String, dynamic> json) => _$TaintFromJson(json);
+
+@override final  String taint;
+
+/// Create a copy of Taint
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TaintCopyWith<_Taint> get copyWith => __$TaintCopyWithImpl<_Taint>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$TaintToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Taint&&(identical(other.taint, taint) || other.taint == taint));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,taint);
+
+@override
+String toString() {
+  return 'Taint(taint: $taint)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TaintCopyWith<$Res> implements $TaintCopyWith<$Res> {
+  factory _$TaintCopyWith(_Taint value, $Res Function(_Taint) _then) = __$TaintCopyWithImpl;
+@override @useResult
+$Res call({
+ String taint
+});
+
+
+
+
+}
+/// @nodoc
+class __$TaintCopyWithImpl<$Res>
+    implements _$TaintCopyWith<$Res> {
+  __$TaintCopyWithImpl(this._self, this._then);
+
+  final _Taint _self;
+  final $Res Function(_Taint) _then;
+
+/// Create a copy of Taint
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? taint = null,}) {
+  return _then(_Taint(
+taint: null == taint ? _self.taint : taint // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
 // dart format on

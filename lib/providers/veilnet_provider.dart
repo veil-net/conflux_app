@@ -164,7 +164,9 @@ class VeilNet extends _$VeilNet {
 
     try {
       final id = await getID();
-      log('ID: $id');
+      if (id == null) {
+        return null;
+      }
       try {
         final conflux = await ref.watch(confluxByIDProvider(id!).future);
         return conflux;

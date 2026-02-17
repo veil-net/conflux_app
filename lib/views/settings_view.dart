@@ -1,5 +1,6 @@
 import 'package:conflux/components/settings/account_settings.dart';
 import 'package:conflux/components/settings/general_settings.dart';
+import 'package:conflux/components/settings/veilnet_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -9,8 +10,10 @@ class SettingsView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return CustomScrollView(
       slivers: [
+        SliverToBoxAdapter(child: Image.asset('assets/images/Logo_H.png')),
         SliverToBoxAdapter(child: GeneralSettings()),
         SliverToBoxAdapter(child: AccountSettings()),
+        SliverToBoxAdapter(child: VeilnetSettings()),
       ],
     );
   }
