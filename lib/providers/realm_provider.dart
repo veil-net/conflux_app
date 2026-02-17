@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:conflux/models/realm.dart';
 import 'package:conflux/providers/api_provider.dart';
 import 'package:conflux/providers/preference_provider.dart';
@@ -16,7 +14,9 @@ class Realms extends _$Realms {
     final api = ref.watch(apiProvider);
     final response = await api.get('/realm/list');
     final rawList = response.data as List;
-    return rawList.map((e) => Realm.fromJson(e as Map<String, dynamic>)).toList();
+    return rawList
+        .map((e) => Realm.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   Future<void> createRealm(
@@ -114,35 +114,21 @@ class SelectedRealm extends _$SelectedRealm {
   Future<Realm?> build() async {
     ref.keepAlive();
     final prefs = await ref.watch(preferenceProvider.future);
-    final currentRealmData = prefs.getString('selected_realm');
-    if (currentRealmData == null || currentRealmData.isEmpty) {
-      return null;
-    }
-    Realm? cachedRealm;
-    try {
-      cachedRealm = Realm.fromJson(jsonDecode(currentRealmData));
-    } catch (_) {
-      await prefs.remove('selected_realm');
+    final selectedRealmId = prefs.getString('selected_realm');
+    if (selectedRealmId == null || selectedRealmId.isEmpty) {
       return null;
     }
     try {
-      return await ref
-          .watch(realmProvider(cachedRealm.id).future)
-          .timeout(const Duration(seconds: 10), onTimeout: () => cachedRealm);
-    } on DioException catch (e) {
-      if (e.response?.statusCode == 404) {
-        await prefs.remove('selected_realm');
-        return null;
-      }
-      return cachedRealm;
-    } catch (_) {
-      return cachedRealm;
+      return await ref.watch(realmProvider(selectedRealmId).future);
+    } catch (e) {
+      prefs.remove('selected_realm');
+      return null;
     }
   }
 
   Future<void> setSelectedRealm(Realm realm) async {
     final prefs = await ref.watch(preferenceProvider.future);
-    await prefs.setString('selected_realm', jsonEncode(realm.toJson()));
+    await prefs.setString('selected_realm', realm.id);
     ref.invalidateSelf();
   }
 }
@@ -161,29 +147,5 @@ class RealmFilter extends _$RealmFilter {
 
   void clearRealmFilter() {
     state = '';
-  }
-}
-
-@riverpod
-class RealmPublicity extends _$RealmPublicity {
-  @override
-  bool? build() {
-    ref.keepAlive();
-    return null; // null = show all, true = show public only, false = show private only
-  }
-
-  void setPublicity(bool? publicity) {
-    state = publicity;
-  }
-
-  void togglePublicity() {
-    // Cycle through: null (all) -> true (public) -> false (private) -> null (all)
-    if (state == null) {
-      state = true;
-    } else if (state == true) {
-      state = false;
-    } else {
-      state = null;
-    }
   }
 }

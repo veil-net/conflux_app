@@ -10,14 +10,14 @@ Raw<PageController> pageController(Ref ref) {
 }
 
 @riverpod
-class CurrentPage extends _$CurrentPage {
+class CurrentPageIndex extends _$CurrentPageIndex {
   @override
   int build() {
     ref.keepAlive();
     return 0;
   }
 
-  void setPage(int page) {
-    state = page;
+  void setIndex(int index) {
+    state = index;
   }
 }

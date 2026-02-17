@@ -222,7 +222,7 @@ final class SelectedRealmProvider
   SelectedRealm create() => SelectedRealm();
 }
 
-String _$selectedRealmHash() => r'87af5d40f405862814a84aafb3729377e4f8ade7';
+String _$selectedRealmHash() => r'bf3e6192fae44d92cbd376236d195951dc011a84';
 
 abstract class _$SelectedRealm extends $AsyncNotifier<Realm?> {
   FutureOr<Realm?> build();
@@ -286,58 +286,6 @@ abstract class _$RealmFilter extends $Notifier<String> {
             as $ClassProviderElement<
               AnyNotifier<String, String>,
               String,
-              Object?,
-              Object?
-            >;
-    element.handleCreate(ref, build);
-  }
-}
-
-@ProviderFor(RealmPublicity)
-final realmPublicityProvider = RealmPublicityProvider._();
-
-final class RealmPublicityProvider
-    extends $NotifierProvider<RealmPublicity, bool?> {
-  RealmPublicityProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'realmPublicityProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$realmPublicityHash();
-
-  @$internal
-  @override
-  RealmPublicity create() => RealmPublicity();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(bool? value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<bool?>(value),
-    );
-  }
-}
-
-String _$realmPublicityHash() => r'c4a05f0b278bec6e0cdf46fcda86511f36227b5f';
-
-abstract class _$RealmPublicity extends $Notifier<bool?> {
-  bool? build();
-  @$mustCallSuper
-  @override
-  void runBuild() {
-    final ref = this.ref as $Ref<bool?, bool?>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<bool?, bool?>,
-              bool?,
               Object?,
               Object?
             >;

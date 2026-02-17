@@ -56,27 +56,28 @@ final class PageControllerProvider
 
 String _$pageControllerHash() => r'7a8d1760d17ec41748bb24be997ec523cffc982f';
 
-@ProviderFor(CurrentPage)
-final currentPageProvider = CurrentPageProvider._();
+@ProviderFor(CurrentPageIndex)
+final currentPageIndexProvider = CurrentPageIndexProvider._();
 
-final class CurrentPageProvider extends $NotifierProvider<CurrentPage, int> {
-  CurrentPageProvider._()
+final class CurrentPageIndexProvider
+    extends $NotifierProvider<CurrentPageIndex, int> {
+  CurrentPageIndexProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'currentPageProvider',
+        name: r'currentPageIndexProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$currentPageHash();
+  String debugGetCreateSourceHash() => _$currentPageIndexHash();
 
   @$internal
   @override
-  CurrentPage create() => CurrentPage();
+  CurrentPageIndex create() => CurrentPageIndex();
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(int value) {
@@ -87,9 +88,9 @@ final class CurrentPageProvider extends $NotifierProvider<CurrentPage, int> {
   }
 }
 
-String _$currentPageHash() => r'1fc060a78c6ef5efc22019acb0813c0df2f7e812';
+String _$currentPageIndexHash() => r'613edb824ba6a0083b5db812a51580e18e90e8d6';
 
-abstract class _$CurrentPage extends $Notifier<int> {
+abstract class _$CurrentPageIndex extends $Notifier<int> {
   int build();
   @$mustCallSuper
   @override

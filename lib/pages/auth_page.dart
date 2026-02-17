@@ -1,3 +1,4 @@
+import 'package:conflux/components/social_sign_in_card.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:conflux/components/login_form.dart';
@@ -10,11 +11,17 @@ class AuthPage extends HookConsumerWidget {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(child: LoginForm()),
+            SliverFillRemaining(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [LoginForm(), SocialSignInForm()],
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
-

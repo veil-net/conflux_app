@@ -152,6 +152,7 @@ class ConfluxService extends _$ConfluxService {
 
 @riverpod
 class VeilNet extends _$VeilNet {
+
   @override
   Future<Conflux?> build() async {
     ref.keepAlive();

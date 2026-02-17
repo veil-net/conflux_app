@@ -10,39 +10,39 @@ part 'router_provider.g.dart';
 GoRouter router(Ref ref) {
   ref.keepAlive();
   final supabase = ref.read(supabaseClientProvider);
-  return  GoRouter(
-  initialLocation: '/auth',
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const MainPage(),
-      redirect: (context, state) {
-        try {
-          final user = supabase.auth.currentUser;
-          if (user == null) {
+  return GoRouter(
+    initialLocation: '/auth',
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const MainPage(),
+        redirect: (context, state) {
+          try {
+            final user = supabase.auth.currentUser;
+            if (user == null) {
+              return '/auth';
+            }
+            return null;
+          } catch (e) {
             return '/auth';
           }
-          return null;
-        } catch (e) {
-          return '/auth';
-        }
-      },
-    ),
-    GoRoute(
-      path: '/auth',
-      builder: (context, state) => const AuthPage(),
-      redirect: (context, state) {
-        try {
-          final user = supabase.auth.currentUser;
-          if (user == null) {
+        },
+      ),
+      GoRoute(
+        path: '/auth',
+        builder: (context, state) => const AuthPage(),
+        redirect: (context, state) {
+          try {
+            final user = supabase.auth.currentUser;
+            if (user == null) {
+              return null;
+            }
+            return '/';
+          } catch (e) {
             return null;
           }
-          return '/';
-        } catch (e) {
-          return null;
-        }
-      },
-    ),
-  ],
-);
+        },
+      ),
+    ],
+  );
 }
