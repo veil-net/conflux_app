@@ -1,6 +1,7 @@
 import 'package:conflux/models/realm.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
 import 'package:conflux/providers/realm_provider.dart';
+import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -11,6 +12,11 @@ class RealmTile extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       child: ListTile(
+        leading: SizedBox(
+          width: 32,
+          height: 24,
+          child: CountryFlag.fromCountryCode(realm.region),
+        ),
         title: Text(realm.name),
         subtitle: Text(realm.subnet),
         trailing: FilledButton(
