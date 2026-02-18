@@ -102,7 +102,7 @@ final class ConfluxByIDProvider
   }
 }
 
-String _$confluxByIDHash() => r'5016b0cc2688247c590201bd32e706b5f5a051ca';
+String _$confluxByIDHash() => r'706ac971e38d9175a5d43cc1769a000d4a061b37';
 
 final class ConfluxByIDFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Conflux>, String> {
