@@ -10,41 +10,29 @@ class VeilnetSettings extends HookConsumerWidget {
       child: Column(
         children: [
           ListTile(title: Text('VeilNet')),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: () {
-                  launchUrl(Uri.parse('https://console.veilnet.app/'));
-                },
-                child: Text('Dashboard'),
-              ),
-            ),
+          ListTile(
+            title: Text('Console'),
+            leading: Icon(Icons.dashboard),
+            trailing: Icon(Icons.open_in_new),
+            onTap: () {
+              launchUrl(Uri.parse('https://console.veilnet.app/'));
+            },
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: () {
-                  launchUrl(Uri.parse('https://console.veilnet.app/conflux'));
-                },
-                child: Text('Manage Conflux'),
-              ),
-            ),
+          ListTile(
+            title: Text('Manage Conflux'),
+            leading: Icon(Icons.cyclone),
+            trailing: Icon(Icons.open_in_new),
+            onTap: () {
+              launchUrl(Uri.parse('https://console.veilnet.app/conflux'));
+            },
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: () {
-                  launchUrl(Uri.parse('https://console.veilnet.app/realm'));
-                },
-                child: Text('Manage Realm'),
-              ),
-            ),
+          ListTile(
+            title: Text('Manage Realm'),
+            leading: Icon(Icons.public),
+            trailing: Icon(Icons.open_in_new),
+            onTap: () {
+              launchUrl(Uri.parse('https://console.veilnet.app/realm'));
+            },
           ),
         ],
       ),

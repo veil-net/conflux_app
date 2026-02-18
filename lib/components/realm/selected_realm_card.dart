@@ -66,11 +66,12 @@ class SelectedRealmCard extends HookConsumerWidget {
                       ),
                       title: Text(realm.name),
                       subtitle: Text(realm.subnet),
-                      trailing: OutlinedButton(
+                      trailing: OutlinedButton.icon(
                         onPressed: () {
                           ref.read(pageControllerProvider).jumpToPage(1);
                         },
-                        child: Text('Change'),
+                        icon: Icon(Icons.public),
+                        label: Text('Change'),
                       ),
                     ),
                     veilnet.when(
@@ -79,9 +80,10 @@ class SelectedRealmCard extends HookConsumerWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(
                                 width: double.infinity,
-                                child: FilledButton(
+                                child: FilledButton.icon(
                                   onPressed: loading.value ? null : connect,
-                                  child: Text('Connect'),
+                                  icon: Icon(Icons.link),
+                                  label: Text('Connect'),
                                 ),
                               ),
                             )
@@ -89,46 +91,45 @@ class SelectedRealmCard extends HookConsumerWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(
                                 width: double.infinity,
-                                child: FilledButton(
+                                child: FilledButton.icon(
                                   onPressed: loading.value ? null : disconnect,
-                                  child: Text('Disconnect'),
+                                  icon: Icon(Icons.link_off),
+                                  label: Text('Disconnect'),
                                 ),
                               ),
                             ),
-                      error: (error, stackTrace) =>
-                          ListTile(
-                            leading: Icon(Icons.error, color: Colors.red),
-                            title: Text('Failed to load VeilNet status'),
-                            trailing: IconButton(
-                              onPressed: () {
-                                ref.invalidate(veilNetProvider);
-                              },
-                              icon: Icon(Icons.refresh),
-                            ),
-                          ),
+                      error: (error, stackTrace) => ListTile(
+                        leading: Icon(Icons.error, color: Colors.red),
+                        title: Text('Failed to load VeilNet status'),
+                        trailing: IconButton(
+                          onPressed: () {
+                            ref.invalidate(veilNetProvider);
+                          },
+                          icon: Icon(Icons.refresh),
+                        ),
+                      ),
                       loading: () => LinearProgressIndicator(),
                     ),
                   ],
                 )
               : Column(
-                children: [
-                  ListTile(
-                    title: Text('No realm selected'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: FilledButton(
-                        onPressed: () {
-                          ref.read(pageControllerProvider).jumpToPage(1);
-                        },
-                        child: Text('Select a realm'),
+                  children: [
+                    ListTile(title: Text('No realm selected')),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: FilledButton.icon(
+                          onPressed: () {
+                            ref.read(pageControllerProvider).jumpToPage(1);
+                          },
+                          icon: Icon(Icons.public),
+                          label: Text('Select a realm'),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
           error: (error, stackTrace) => ListTile(
             leading: Icon(Icons.error, color: Colors.red),
             title: Text('Failed to load selected realm'),

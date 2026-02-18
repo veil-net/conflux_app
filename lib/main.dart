@@ -55,13 +55,13 @@ class MyApp extends HookConsumerWidget {
 
     });
     return MaterialApp.router(
-      title: 'VeilNet Console',
+      title: 'VeilNet Conflux',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 14, 165, 233),
           primary: const Color.fromARGB(255, 14, 165, 233),
           secondary: const Color.fromARGB(255, 139, 92, 246),
-          surface: const Color.fromARGB(255, 245, 245, 244),
+          // surface: const Color.fromARGB(255, 245, 245, 244),
           // surfaceContainerLowest: const Color.fromARGB(255, 245, 245, 244),
           // surfaceContainerLow: const Color.fromARGB(255, 231, 229, 228),
           // surfaceContainer: const Color.fromARGB(255, 214, 211, 209),
@@ -75,7 +75,7 @@ class MyApp extends HookConsumerWidget {
           seedColor: const Color.fromARGB(255, 14, 165, 233),
           primary: const Color.fromARGB(255, 14, 165, 233),
           secondary: const Color.fromARGB(255, 139, 92, 246),
-          surface: const Color.fromARGB(255, 28, 25, 23),
+          // surface: const Color.fromARGB(255, 28, 25, 23),
           // surfaceContainerLowest: const Color.fromARGB(255, 28, 25, 23),
           // surfaceContainerLow: const Color.fromARGB(255, 41, 37, 36),
           // surfaceContainer: const Color.fromARGB(255, 68, 64, 60),

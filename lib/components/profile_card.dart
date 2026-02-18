@@ -33,19 +33,17 @@ class ProfileCard extends HookConsumerWidget {
 
     return AnimatedSize(
       duration: Duration(milliseconds: 300),
-      child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: SizedBox(width: 32, height: 32, child: Image.asset('assets/icon/icon.png')),
-              title: Text("Hello"),
-              subtitle: Text(user?.email ?? 'Unknown'),
-              trailing: IconButton(onPressed: signOut, icon: Icon(Icons.logout)),
-            ),
-            ConfluxSummary(),
-          ],
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: SizedBox(width: 32, height: 32, child: Image.asset('assets/icon/icon.png')),
+            title: Text("Hello"),
+            subtitle: Text(user?.email ?? 'Unknown'),
+            trailing: IconButton(onPressed: signOut, icon: Icon(Icons.logout)),
+          ),
+          ConfluxSummary(),
+        ],
       ),
     );
   }

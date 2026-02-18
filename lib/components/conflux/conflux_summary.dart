@@ -74,79 +74,91 @@ class ConfluxSummary extends HookConsumerWidget {
       );
       return null;
     }, [confluxes]);
-    return Column(
-      children: [
-        if (isLoading.value)
-          ListTile(
-            leading: CircularProgressIndicator(),
-            title: Text('Loading Conflux information...'),
-          ),
-        if (isError.value)
-          ListTile(
-            leading: Icon(Icons.error),
-            title: Text('Failed to load Conflux information'),
-            trailing: IconButton(
-              onPressed: () {
-                ref.invalidate(confluxesProvider);
-              },
-              icon: Icon(Icons.refresh),
+    return Card(
+      child: Column(
+        children: [
+          if (isLoading.value)
+            ListTile(
+              leading: CircularProgressIndicator(),
+              title: Text('Loading Conflux information...'),
             ),
-          ),
-        if (!isLoading.value && !isError.value)
-          ListTile(
-            title: Text('Your Conflux Nodes'),
-            trailing: IconButton(
-              onPressed: () {
-                ref.invalidate(confluxesProvider);
-              },
-              icon: Icon(Icons.refresh),
+          if (isError.value)
+            ListTile(
+              leading: Icon(Icons.error, color: Colors.red),
+              title: Text('Failed to load Conflux information'),
+              trailing: IconButton(
+                onPressed: () {
+                  ref.invalidate(confluxesProvider);
+                },
+                icon: Icon(Icons.refresh),
+              ),
             ),
-          ),
-        if (!isLoading.value && !isError.value)
-          Row(
-            children: [
-              Flexible(
-                child: ListTile(
-                  leading: Icon(Icons.check_circle, color: Colors.green),
-                  title: Text('${onlineCount.value}/${totalCount.value}'),
-                  subtitle: Text('Online'),
-                ),
+          if (!isLoading.value && !isError.value)
+            ListTile(
+              title: Text('Your Conflux Nodes'),
+              trailing: IconButton(
+                onPressed: () {
+                  ref.invalidate(confluxesProvider);
+                },
+                icon: Icon(Icons.refresh),
               ),
-              Flexible(
-                child: ListTile(
-                  leading: Icon(Icons.cancel, color: Colors.red),
-                  title: Text('${offlineCount.value}/${totalCount.value}'),
-                  subtitle: Text('Offline'),
-                ),
-              ),
-            ],
-          ),
-        if (!isLoading.value && !isError.value)
-          Row(
-            children: [
-              Flexible(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.cyclone,
-                    color: Theme.of(context).colorScheme.primary,
+            ),
+          if (!isLoading.value && !isError.value)
+            Row(
+              spacing: 16,
+              children: [
+                Flexible(
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(Icons.check_circle, color: Colors.green),
+                      title: Text('${onlineCount.value}/${totalCount.value}'),
+                      subtitle: Text('Online'),
+                    ),
                   ),
-                  title: Text('${portalCount.value}/${totalCount.value}'),
-                  subtitle: Text('Portal'),
                 ),
-              ),
-              Flexible(
-                child: ListTile(
-                  leading: Icon(
-                    Icons.electric_bolt,
-                    color: Theme.of(context).colorScheme.primary,
+                Flexible(
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(Icons.cancel, color: Colors.red),
+                      title: Text('${offlineCount.value}/${totalCount.value}'),
+                      subtitle: Text('Offline'),
+                    ),
                   ),
-                  title: Text('${riftCount.value}/${totalCount.value}'),
-                  subtitle: Text('Rift'),
                 ),
-              ),
-            ],
-          ),
-      ],
+              ],
+            ),
+          if (!isLoading.value && !isError.value)
+            Row(
+              spacing: 16,
+              children: [
+                Flexible(
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.cyclone,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      title: Text('${portalCount.value}/${totalCount.value}'),
+                      subtitle: Text('Portal'),
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.electric_bolt,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      title: Text('${riftCount.value}/${totalCount.value}'),
+                      subtitle: Text('Rift'),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ),
     );
   }
 }

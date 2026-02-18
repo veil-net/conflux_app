@@ -58,9 +58,10 @@ class ConfluxTaintCard extends HookConsumerWidget {
             controller: taintController,
             decoration: InputDecoration(hintText: 'Enter a new taint'),
           ),
-          trailing: FilledButton(
+          trailing: FilledButton.icon(
             onPressed: isLoading.value ? null : addTaint,
-            child: Text('Add'),
+            icon: Icon(Icons.add_circle_rounded),
+            label: Text('Add'),
           ),
         ),
         taints.when(
@@ -75,9 +76,7 @@ class ConfluxTaintCard extends HookConsumerWidget {
                         padding: const EdgeInsets.only(right: 8),
                         child: Chip(
                           label: Text(taint.taint),
-                          deleteIcon: Icon(
-                            Icons.close,
-                          ),
+                          deleteIcon: Icon(Icons.close),
                           onDeleted: isLoading.value
                               ? null
                               : () => removeTaint(taint.taint),

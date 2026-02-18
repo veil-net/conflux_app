@@ -18,7 +18,7 @@ class StatusCard extends HookConsumerWidget {
           data: (conflux) {
             if (conflux == null) {
               return ListTile(
-                leading: Icon(Icons.warning),
+                leading: Icon(Icons.warning, color: Colors.yellow),
                 title: Text("Not Connected"),
                 subtitle: Text("Please select a VeilNet Realm to connect"),
               );
@@ -53,10 +53,6 @@ class StatusCard extends HookConsumerWidget {
                           title: Text("Signature"),
                           trailing: Text(conflux.signature ?? "Unknown"),
                         ),
-                        ListTile(
-                          title: Text("CIDR"),
-                          trailing: Text(conflux.cidr ?? "Unknown"),
-                        ),
                       ],
                     ),
                   if (isExpanded.value)
@@ -71,8 +67,8 @@ class StatusCard extends HookConsumerWidget {
             }
           },
           error: (error, stackTrace) => ListTile(
+            leading: Icon(Icons.error, color: Colors.red),
             title: Text("Failed to load VeilNet status"),
-            subtitle: Text(error.toString()),
             trailing: IconButton(
               onPressed: () {
                 ref.invalidate(veilNetProvider);
@@ -80,7 +76,10 @@ class StatusCard extends HookConsumerWidget {
               icon: Icon(Icons.refresh),
             ),
           ),
-          loading: () => ListTile(title: Text('Loading VeilNet status...')),
+          loading: () => ListTile(
+            title: Text('Loading VeilNet status...'),
+            subtitle: LinearProgressIndicator(),
+          ),
         ),
       ),
     );

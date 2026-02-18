@@ -15,13 +15,14 @@ class AccountSettings extends HookConsumerWidget {
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
               width: double.infinity,
-              child: OutlinedButton(
+              child: OutlinedButton.icon(
                 onPressed: () {
                   launchUrl(
                     Uri.parse('https://console.veilnet.app/password/reset'),
                   );
                 },
-                child: Text('Reset Password'),
+                icon: Icon(Icons.lock),
+                label: Text('Reset Password'),
               ),
             ),
           ),
