@@ -33,7 +33,7 @@ final class ConfluxesProvider
   Confluxes create() => Confluxes();
 }
 
-String _$confluxesHash() => r'19e9809fb8fdf2ce5bb9521b7e426f065d8d576e';
+String _$confluxesHash() => r'a847686fe78c836abf983dccb2478dc683a39221';
 
 abstract class _$Confluxes extends $AsyncNotifier<List<Conflux>> {
   FutureOr<List<Conflux>> build();

@@ -72,7 +72,7 @@ class VeilNetVPNService : VpnService() {
 
                 anchor = Anchor_()
                 try {
-                    anchor!!.start(guardian, token, "", false, false)
+                    anchor!!.start(guardian, token, "", true, false)
                 } catch (e: Exception) {
                     resultReceiver?.send(RESULT_FAILURE, Bundle().apply {
                         putString("error", e.message ?: "Failed to start anchor")
@@ -84,10 +84,12 @@ class VeilNetVPNService : VpnService() {
                 try {
                     val cidr = anchor!!.cidr
                     val (ip, mask) = cidr.split("/")
+                    val gatewayCIDR = anchor!!.gatewayCIDR
+                    val (gatewayIP, gatewayMask) = gatewayCIDR.split("/")
                     val builder = Builder()
                         .setSession("VeilNet")
                         .addAddress(ip, mask.toInt())
-                        .addDnsServer("10.128.0.1")
+                        .addDnsServer(gatewayIP)
                         .addRoute("0.0.0.0", 0)
                         .setMtu(1500)
                         .addDisallowedApplication(applicationContext.packageName)

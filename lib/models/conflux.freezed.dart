@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Conflux {
 
- String get id; DateTime get created_at; DateTime get last_seen; String get user_id; String? get tag; String? get signature; String? get cidr; String get subnet; String get realm; String get realm_id; bool get rift; bool get portal; String get region; String get veil_host; int get veil_port;
+ String get id; DateTime get created_at; DateTime? get last_seen; String get user_id; String? get tag; String? get signature; String? get cidr; String get subnet; String get realm; String get realm_id; bool? get rift; bool? get portal; String get region; String get veil_host; int get veil_port;
 /// Create a copy of Conflux
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $ConfluxCopyWith<$Res>  {
   factory $ConfluxCopyWith(Conflux value, $Res Function(Conflux) _then) = _$ConfluxCopyWithImpl;
 @useResult
 $Res call({
- String id, DateTime created_at, DateTime last_seen, String user_id, String? tag, String? signature, String? cidr, String subnet, String realm, String realm_id, bool rift, bool portal, String region, String veil_host, int veil_port
+ String id, DateTime created_at, DateTime? last_seen, String user_id, String? tag, String? signature, String? cidr, String subnet, String realm, String realm_id, bool? rift, bool? portal, String region, String veil_host, int veil_port
 });
 
 
@@ -65,21 +65,21 @@ class _$ConfluxCopyWithImpl<$Res>
 
 /// Create a copy of Conflux
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? last_seen = null,Object? user_id = null,Object? tag = freezed,Object? signature = freezed,Object? cidr = freezed,Object? subnet = null,Object? realm = null,Object? realm_id = null,Object? rift = null,Object? portal = null,Object? region = null,Object? veil_host = null,Object? veil_port = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? created_at = null,Object? last_seen = freezed,Object? user_id = null,Object? tag = freezed,Object? signature = freezed,Object? cidr = freezed,Object? subnet = null,Object? realm = null,Object? realm_id = null,Object? rift = freezed,Object? portal = freezed,Object? region = null,Object? veil_host = null,Object? veil_port = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
-as DateTime,last_seen: null == last_seen ? _self.last_seen : last_seen // ignore: cast_nullable_to_non_nullable
-as DateTime,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable
+as DateTime,last_seen: freezed == last_seen ? _self.last_seen : last_seen // ignore: cast_nullable_to_non_nullable
+as DateTime?,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable
 as String,tag: freezed == tag ? _self.tag : tag // ignore: cast_nullable_to_non_nullable
 as String?,signature: freezed == signature ? _self.signature : signature // ignore: cast_nullable_to_non_nullable
 as String?,cidr: freezed == cidr ? _self.cidr : cidr // ignore: cast_nullable_to_non_nullable
 as String?,subnet: null == subnet ? _self.subnet : subnet // ignore: cast_nullable_to_non_nullable
 as String,realm: null == realm ? _self.realm : realm // ignore: cast_nullable_to_non_nullable
 as String,realm_id: null == realm_id ? _self.realm_id : realm_id // ignore: cast_nullable_to_non_nullable
-as String,rift: null == rift ? _self.rift : rift // ignore: cast_nullable_to_non_nullable
-as bool,portal: null == portal ? _self.portal : portal // ignore: cast_nullable_to_non_nullable
-as bool,region: null == region ? _self.region : region // ignore: cast_nullable_to_non_nullable
+as String,rift: freezed == rift ? _self.rift : rift // ignore: cast_nullable_to_non_nullable
+as bool?,portal: freezed == portal ? _self.portal : portal // ignore: cast_nullable_to_non_nullable
+as bool?,region: null == region ? _self.region : region // ignore: cast_nullable_to_non_nullable
 as String,veil_host: null == veil_host ? _self.veil_host : veil_host // ignore: cast_nullable_to_non_nullable
 as String,veil_port: null == veil_port ? _self.veil_port : veil_port // ignore: cast_nullable_to_non_nullable
 as int,
@@ -167,7 +167,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  DateTime last_seen,  String user_id,  String? tag,  String? signature,  String? cidr,  String subnet,  String realm,  String realm_id,  bool rift,  bool portal,  String region,  String veil_host,  int veil_port)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  DateTime? last_seen,  String user_id,  String? tag,  String? signature,  String? cidr,  String subnet,  String realm,  String realm_id,  bool? rift,  bool? portal,  String region,  String veil_host,  int veil_port)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Conflux() when $default != null:
 return $default(_that.id,_that.created_at,_that.last_seen,_that.user_id,_that.tag,_that.signature,_that.cidr,_that.subnet,_that.realm,_that.realm_id,_that.rift,_that.portal,_that.region,_that.veil_host,_that.veil_port);case _:
@@ -188,7 +188,7 @@ return $default(_that.id,_that.created_at,_that.last_seen,_that.user_id,_that.ta
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  DateTime last_seen,  String user_id,  String? tag,  String? signature,  String? cidr,  String subnet,  String realm,  String realm_id,  bool rift,  bool portal,  String region,  String veil_host,  int veil_port)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime created_at,  DateTime? last_seen,  String user_id,  String? tag,  String? signature,  String? cidr,  String subnet,  String realm,  String realm_id,  bool? rift,  bool? portal,  String region,  String veil_host,  int veil_port)  $default,) {final _that = this;
 switch (_that) {
 case _Conflux():
 return $default(_that.id,_that.created_at,_that.last_seen,_that.user_id,_that.tag,_that.signature,_that.cidr,_that.subnet,_that.realm,_that.realm_id,_that.rift,_that.portal,_that.region,_that.veil_host,_that.veil_port);case _:
@@ -208,7 +208,7 @@ return $default(_that.id,_that.created_at,_that.last_seen,_that.user_id,_that.ta
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  DateTime last_seen,  String user_id,  String? tag,  String? signature,  String? cidr,  String subnet,  String realm,  String realm_id,  bool rift,  bool portal,  String region,  String veil_host,  int veil_port)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime created_at,  DateTime? last_seen,  String user_id,  String? tag,  String? signature,  String? cidr,  String subnet,  String realm,  String realm_id,  bool? rift,  bool? portal,  String region,  String veil_host,  int veil_port)?  $default,) {final _that = this;
 switch (_that) {
 case _Conflux() when $default != null:
 return $default(_that.id,_that.created_at,_that.last_seen,_that.user_id,_that.tag,_that.signature,_that.cidr,_that.subnet,_that.realm,_that.realm_id,_that.rift,_that.portal,_that.region,_that.veil_host,_that.veil_port);case _:
@@ -223,12 +223,12 @@ return $default(_that.id,_that.created_at,_that.last_seen,_that.user_id,_that.ta
 @JsonSerializable()
 
 class _Conflux implements Conflux {
-   _Conflux({required this.id, required this.created_at, required this.last_seen, required this.user_id, this.tag, this.signature, this.cidr, required this.subnet, required this.realm, required this.realm_id, required this.rift, required this.portal, required this.region, required this.veil_host, required this.veil_port});
+   _Conflux({required this.id, required this.created_at, this.last_seen, required this.user_id, this.tag, this.signature, this.cidr, required this.subnet, required this.realm, required this.realm_id, this.rift, this.portal, required this.region, required this.veil_host, required this.veil_port});
   factory _Conflux.fromJson(Map<String, dynamic> json) => _$ConfluxFromJson(json);
 
 @override final  String id;
 @override final  DateTime created_at;
-@override final  DateTime last_seen;
+@override final  DateTime? last_seen;
 @override final  String user_id;
 @override final  String? tag;
 @override final  String? signature;
@@ -236,8 +236,8 @@ class _Conflux implements Conflux {
 @override final  String subnet;
 @override final  String realm;
 @override final  String realm_id;
-@override final  bool rift;
-@override final  bool portal;
+@override final  bool? rift;
+@override final  bool? portal;
 @override final  String region;
 @override final  String veil_host;
 @override final  int veil_port;
@@ -275,7 +275,7 @@ abstract mixin class _$ConfluxCopyWith<$Res> implements $ConfluxCopyWith<$Res> {
   factory _$ConfluxCopyWith(_Conflux value, $Res Function(_Conflux) _then) = __$ConfluxCopyWithImpl;
 @override @useResult
 $Res call({
- String id, DateTime created_at, DateTime last_seen, String user_id, String? tag, String? signature, String? cidr, String subnet, String realm, String realm_id, bool rift, bool portal, String region, String veil_host, int veil_port
+ String id, DateTime created_at, DateTime? last_seen, String user_id, String? tag, String? signature, String? cidr, String subnet, String realm, String realm_id, bool? rift, bool? portal, String region, String veil_host, int veil_port
 });
 
 
@@ -292,21 +292,21 @@ class __$ConfluxCopyWithImpl<$Res>
 
 /// Create a copy of Conflux
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? last_seen = null,Object? user_id = null,Object? tag = freezed,Object? signature = freezed,Object? cidr = freezed,Object? subnet = null,Object? realm = null,Object? realm_id = null,Object? rift = null,Object? portal = null,Object? region = null,Object? veil_host = null,Object? veil_port = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? created_at = null,Object? last_seen = freezed,Object? user_id = null,Object? tag = freezed,Object? signature = freezed,Object? cidr = freezed,Object? subnet = null,Object? realm = null,Object? realm_id = null,Object? rift = freezed,Object? portal = freezed,Object? region = null,Object? veil_host = null,Object? veil_port = null,}) {
   return _then(_Conflux(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,created_at: null == created_at ? _self.created_at : created_at // ignore: cast_nullable_to_non_nullable
-as DateTime,last_seen: null == last_seen ? _self.last_seen : last_seen // ignore: cast_nullable_to_non_nullable
-as DateTime,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable
+as DateTime,last_seen: freezed == last_seen ? _self.last_seen : last_seen // ignore: cast_nullable_to_non_nullable
+as DateTime?,user_id: null == user_id ? _self.user_id : user_id // ignore: cast_nullable_to_non_nullable
 as String,tag: freezed == tag ? _self.tag : tag // ignore: cast_nullable_to_non_nullable
 as String?,signature: freezed == signature ? _self.signature : signature // ignore: cast_nullable_to_non_nullable
 as String?,cidr: freezed == cidr ? _self.cidr : cidr // ignore: cast_nullable_to_non_nullable
 as String?,subnet: null == subnet ? _self.subnet : subnet // ignore: cast_nullable_to_non_nullable
 as String,realm: null == realm ? _self.realm : realm // ignore: cast_nullable_to_non_nullable
 as String,realm_id: null == realm_id ? _self.realm_id : realm_id // ignore: cast_nullable_to_non_nullable
-as String,rift: null == rift ? _self.rift : rift // ignore: cast_nullable_to_non_nullable
-as bool,portal: null == portal ? _self.portal : portal // ignore: cast_nullable_to_non_nullable
-as bool,region: null == region ? _self.region : region // ignore: cast_nullable_to_non_nullable
+as String,rift: freezed == rift ? _self.rift : rift // ignore: cast_nullable_to_non_nullable
+as bool?,portal: freezed == portal ? _self.portal : portal // ignore: cast_nullable_to_non_nullable
+as bool?,region: null == region ? _self.region : region // ignore: cast_nullable_to_non_nullable
 as String,veil_host: null == veil_host ? _self.veil_host : veil_host // ignore: cast_nullable_to_non_nullable
 as String,veil_port: null == veil_port ? _self.veil_port : veil_port // ignore: cast_nullable_to_non_nullable
 as int,

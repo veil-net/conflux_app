@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:conflux/providers/conflux_provider.dart';
 import 'package:flutter/material.dart';
@@ -31,16 +32,20 @@ class ConfluxSummary extends HookConsumerWidget {
         data: (data) {
           onlineCount.value = data
               .where(
-                (conflux) => conflux.last_seen.isAfter(
-                  DateTime.now().subtract(Duration(seconds: 30)),
-                ),
+                (conflux) =>
+                    conflux.last_seen != null &&
+                    conflux.last_seen!.isAfter(
+                      DateTime.now().subtract(Duration(seconds: 30)),
+                    ),
               )
               .length;
           offlineCount.value = data
               .where(
-                (conflux) => conflux.last_seen.isBefore(
-                  DateTime.now().subtract(Duration(seconds: 30)),
-                ),
+                (conflux) =>
+                    conflux.last_seen != null &&
+                    conflux.last_seen!.isBefore(
+                      DateTime.now().subtract(Duration(seconds: 30)),
+                    ),
               )
               .length;
           portalCount.value = data
@@ -55,6 +60,7 @@ class ConfluxSummary extends HookConsumerWidget {
         },
         error: (error, stackTrace) {
           isError.value = true;
+          log(error.toString());
         },
         loading: () {
           onlineCount.value = 0;

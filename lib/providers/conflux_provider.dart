@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:conflux/models/conflux.dart';
 import 'package:conflux/providers/api_provider.dart';
 import 'package:dio/dio.dart';
@@ -12,6 +13,7 @@ class Confluxes extends _$Confluxes {
     ref.keepAlive();
     final api = ref.read(apiProvider);
     final response = await api.get('/conflux/list');
+    log(response.data.toString());
     final rawList = response.data as List;
     return rawList
         .map((e) => Conflux.fromJson(e as Map<String, dynamic>))
