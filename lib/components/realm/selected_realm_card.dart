@@ -11,7 +11,7 @@ class SelectedRealmCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedRealm = ref.watch(selectedRealmProvider);
-    final veilnet = ref.watch(veilNetProvider);
+    final status = ref.watch(veilNetProvider);
     final loading = useState(false);
 
     Future<void> connect() async {
@@ -74,9 +74,11 @@ class SelectedRealmCard extends HookConsumerWidget {
                         label: Text('Change'),
                       ),
                     ),
-                    veilnet.when(
-                      data: (veilnet) => veilnet == null
-                          ? Padding(
+                    status.when(
+                      data: (status) {
+                        switch (status) {
+                          case VeilNetStatus.disconnected:
+                            return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(
                                 width: double.infinity,
@@ -86,8 +88,9 @@ class SelectedRealmCard extends HookConsumerWidget {
                                   label: Text('Connect'),
                                 ),
                               ),
-                            )
-                          : Padding(
+                            );
+                          case VeilNetStatus.connected:
+                            return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(
                                 width: double.infinity,
@@ -97,7 +100,28 @@ class SelectedRealmCard extends HookConsumerWidget {
                                   label: Text('Disconnect'),
                                 ),
                               ),
-                            ),
+                            );
+                          case VeilNetStatus.connecting:
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: LinearProgressIndicator(),
+                              ),
+                            );
+                          case VeilNetStatus.error:
+                            return ListTile(
+                              leading: Icon(Icons.error, color: Colors.red),
+                              title: Text('Failed to load VeilNet status'),
+                              trailing: IconButton(
+                                onPressed: () {
+                                  ref.invalidate(veilNetProvider);
+                                },
+                                icon: Icon(Icons.refresh),
+                              ),
+                            );
+                        }
+                      },
                       error: (error, stackTrace) => ListTile(
                         leading: Icon(Icons.error, color: Colors.red),
                         title: Text('Failed to load VeilNet status'),
@@ -108,7 +132,10 @@ class SelectedRealmCard extends HookConsumerWidget {
                           icon: Icon(Icons.refresh),
                         ),
                       ),
-                      loading: () => LinearProgressIndicator(),
+                      loading: () => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: LinearProgressIndicator(),
+                      ),
                     ),
                   ],
                 )

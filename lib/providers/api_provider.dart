@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:conflux/providers/current_session_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -21,6 +19,5 @@ Dio api(Ref ref) {
       },
     ),
   );
-  log('API initialized');
   return dio;
 }

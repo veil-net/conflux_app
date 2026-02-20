@@ -33,7 +33,7 @@ final class ConfluxesProvider
   Confluxes create() => Confluxes();
 }
 
-String _$confluxesHash() => r'a847686fe78c836abf983dccb2478dc683a39221';
+String _$confluxesHash() => r'19e9809fb8fdf2ce5bb9521b7e426f065d8d576e';
 
 abstract class _$Confluxes extends $AsyncNotifier<List<Conflux>> {
   FutureOr<List<Conflux>> build();
@@ -102,7 +102,7 @@ final class ConfluxByIDProvider
   }
 }
 
-String _$confluxByIDHash() => r'706ac971e38d9175a5d43cc1769a000d4a061b37';
+String _$confluxByIDHash() => r'5a29ceb98db4b140c55e161944d780dce8744501';
 
 final class ConfluxByIDFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<Conflux>, String> {

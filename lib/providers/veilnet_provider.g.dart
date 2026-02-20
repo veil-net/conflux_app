@@ -56,7 +56,8 @@ abstract class _$ConfluxService extends $AsyncNotifier<ConfluxService> {
 @ProviderFor(VeilNet)
 final veilNetProvider = VeilNetProvider._();
 
-final class VeilNetProvider extends $AsyncNotifierProvider<VeilNet, Conflux?> {
+final class VeilNetProvider
+    extends $AsyncNotifierProvider<VeilNet, VeilNetStatus> {
   VeilNetProvider._()
     : super(
         from: null,
@@ -76,19 +77,19 @@ final class VeilNetProvider extends $AsyncNotifierProvider<VeilNet, Conflux?> {
   VeilNet create() => VeilNet();
 }
 
-String _$veilNetHash() => r'435431f52ceeca47749b4cfaf4de2749123f17df';
+String _$veilNetHash() => r'7cd060f0c8233d34990ec5bc99cf322f634d3f45';
 
-abstract class _$VeilNet extends $AsyncNotifier<Conflux?> {
-  FutureOr<Conflux?> build();
+abstract class _$VeilNet extends $AsyncNotifier<VeilNetStatus> {
+  FutureOr<VeilNetStatus> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<Conflux?>, Conflux?>;
+    final ref = this.ref as $Ref<AsyncValue<VeilNetStatus>, VeilNetStatus>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<Conflux?>, Conflux?>,
-              AsyncValue<Conflux?>,
+              AnyNotifier<AsyncValue<VeilNetStatus>, VeilNetStatus>,
+              AsyncValue<VeilNetStatus>,
               Object?,
               Object?
             >;

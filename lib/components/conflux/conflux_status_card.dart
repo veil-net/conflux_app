@@ -8,15 +8,16 @@ class StatusCard extends HookConsumerWidget {
   const StatusCard({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final conflux = ref.watch(veilNetProvider);
+    final status = ref.watch(veilNetProvider);
+    final conflux = ref.watch(veilNetProvider.notifier).conflux;
     final isExpanded = useState(false);
 
     return AnimatedSize(
       duration: Duration(milliseconds: 300),
       child: Card(
-        child: conflux.when(
-          data: (conflux) {
-            if (conflux == null) {
+        child: status.when(
+          data: (status) {
+            if (status == VeilNetStatus.disconnected) {
               return ListTile(
                 leading: Icon(Icons.warning, color: Colors.yellow),
                 title: Text("Not Connected"),
@@ -26,18 +27,19 @@ class StatusCard extends HookConsumerWidget {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ListTile(
-                    leading: Icon(Icons.check_circle, color: Colors.green),
-                    title: Text("Connected"),
-                    subtitle: Text(conflux.tag ?? "Unknown"),
-                    trailing: Chip(
-                      label: Text(conflux.realm),
-                      side: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                  if (conflux != null)
+                    ListTile(
+                      leading: Icon(Icons.check_circle, color: Colors.green),
+                      title: Text("Connected"),
+                      subtitle: Text(conflux.tag ?? "Unknown"),
+                      trailing: Chip(
+                        label: Text(conflux.realm),
+                        side: BorderSide(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                     ),
-                  ),
-                  ConfluxTaintCard(conflux: conflux),
+                  if (conflux != null) ConfluxTaintCard(conflux: conflux),
                   if (!isExpanded.value)
                     GestureDetector(
                       onTap: () {
@@ -46,15 +48,19 @@ class StatusCard extends HookConsumerWidget {
                       child: Icon(Icons.expand_more),
                     ),
                   if (isExpanded.value)
-                    Column(
-                      children: [
-                        ListTile(title: Text("ID"), trailing: Text(conflux.id)),
-                        ListTile(
-                          title: Text("Signature"),
-                          trailing: Text(conflux.signature ?? "Unknown"),
-                        ),
-                      ],
-                    ),
+                    if (conflux != null)
+                      Column(
+                        children: [
+                          ListTile(
+                            title: Text("ID"),
+                            trailing: Text(conflux.id),
+                          ),
+                          ListTile(
+                            title: Text("Signature"),
+                            trailing: Text(conflux.signature ?? "Unknown"),
+                          ),
+                        ],
+                      ),
                   if (isExpanded.value)
                     GestureDetector(
                       onTap: () {

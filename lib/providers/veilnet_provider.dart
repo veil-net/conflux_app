@@ -150,11 +150,14 @@ class ConfluxService extends _$ConfluxService {
   }
 }
 
+enum VeilNetStatus { disconnected, connected, connecting, error }
+
 @riverpod
 class VeilNet extends _$VeilNet {
+  Conflux? _conflux;
 
   @override
-  Future<Conflux?> build() async {
+  Future<VeilNetStatus> build() async {
     ref.keepAlive();
 
     final timer = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -163,18 +166,21 @@ class VeilNet extends _$VeilNet {
     ref.onDispose(() => timer.cancel());
 
     try {
-      final id = await getID();
-      if (id == null) {
-        return null;
+      String? id;
+      try{
+        id = await getID();
+      } catch (e) {
+        return VeilNetStatus.disconnected;
       }
       try {
-        final conflux = await ref.watch(confluxByIDProvider(id).future);
-        return conflux;
+        final conflux = await ref.watch(confluxByIDProvider(id!).future);
+        _conflux = conflux;
+        return VeilNetStatus.connected;
       } catch (e) {
-        return null;
+        return VeilNetStatus.connecting;
       }
     } catch (e) {
-      return null;
+      return VeilNetStatus.error;
     }
   }
 
@@ -251,4 +257,6 @@ class VeilNet extends _$VeilNet {
     }
     ref.invalidateSelf();
   }
+
+  Conflux? get conflux => _conflux;
 }
