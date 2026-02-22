@@ -9,43 +9,47 @@ part of 'preference_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(preference)
-final preferenceProvider = PreferenceProvider._();
+@ProviderFor(Preferences)
+final preferencesProvider = PreferencesProvider._();
 
-final class PreferenceProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<SharedPreferences>,
-          SharedPreferences,
-          FutureOr<SharedPreferences>
-        >
-    with
-        $FutureModifier<SharedPreferences>,
-        $FutureProvider<SharedPreferences> {
-  PreferenceProvider._()
+final class PreferencesProvider
+    extends $AsyncNotifierProvider<Preferences, SharedPreferences> {
+  PreferencesProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'preferenceProvider',
+        name: r'preferencesProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$preferenceHash();
+  String debugGetCreateSourceHash() => _$preferencesHash();
 
   @$internal
   @override
-  $FutureProviderElement<SharedPreferences> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<SharedPreferences> create(Ref ref) {
-    return preference(ref);
-  }
+  Preferences create() => Preferences();
 }
 
-String _$preferenceHash() => r'daeae5689da26f1aa9f84cb2c09ef89a41ac1d68';
+String _$preferencesHash() => r'bc0da9204ba03f7d61ff60ffc51b436d2f1da485';
+
+abstract class _$Preferences extends $AsyncNotifier<SharedPreferences> {
+  FutureOr<SharedPreferences> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref =
+        this.ref as $Ref<AsyncValue<SharedPreferences>, SharedPreferences>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<SharedPreferences>, SharedPreferences>,
+              AsyncValue<SharedPreferences>,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}

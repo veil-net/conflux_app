@@ -1,11 +1,13 @@
+import 'dart:async';
 import 'dart:io';
 
-import 'package:conflux/providers/applinks_provider.dart';
-import 'package:conflux/providers/router_provider.dart';
-import 'package:conflux/providers/settings_provider.dart';
-import 'package:flutter/material.dart';
+import 'package:app_links/app_links.dart';
+import 'package:conflux/pages/auth_page.dart';
+import 'package:conflux/pages/home_page.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:win32_registry/win32_registry.dart';
 
@@ -36,56 +38,60 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
   await Supabase.initialize(
     url: 'https://nabcgmuuviyfakyrhakv.supabase.co',
     anonKey: 'sb_publishable_c757oKzF-QNBms8a7TLWeQ_tOEm9Q3t',
   );
-  runApp(const ProviderScope(child: MyApp()));
+
+  appLinks.uriLinkStream.listen((uri) {});
+
+  runApp(
+    ProviderScope(
+      child: ShadcnApp.router(
+        title: 'Weave',
+        routerConfig: router,
+        theme: ThemeData(colorScheme: ColorSchemes.lightStone.cyan),
+      ),
+    ),
+  );
 }
 
-class MyApp extends HookConsumerWidget {
-  const MyApp({super.key});
+final supabase = Supabase.instance.client;
+
+final appLinks = AppLinks();
+
+class AuthNotifier extends ChangeNotifier {
+  Session? session;
+  late final StreamSubscription<AuthState> subscription;
+  AuthNotifier() {
+    subscription = supabase.auth.onAuthStateChange.listen((event) {
+      session = event.session;
+      notifyListeners();
+    });
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final darkMode = ref.watch(darkModeProvider);
-    final router = ref.read(routerProvider);
-    final appLinks = ref.read(appLinksProvider);
-    appLinks.uriLinkStream.listen((uri) {
-
-    });
-    return MaterialApp.router(
-      title: 'VeilNet Conflux',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 14, 165, 233),
-          primary: const Color.fromARGB(255, 14, 165, 233),
-          secondary: const Color.fromARGB(255, 139, 92, 246),
-          // surface: const Color.fromARGB(255, 245, 245, 244),
-          // surfaceContainerLowest: const Color.fromARGB(255, 245, 245, 244),
-          // surfaceContainerLow: const Color.fromARGB(255, 231, 229, 228),
-          // surfaceContainer: const Color.fromARGB(255, 214, 211, 209),
-          // surfaceContainerHigh: const Color.fromARGB(255, 168, 162, 158),
-          // surfaceContainerHighest: const Color.fromARGB(255, 120, 113, 108),
-          brightness: Brightness.light,
-        ),
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 14, 165, 233),
-          primary: const Color.fromARGB(255, 14, 165, 233),
-          secondary: const Color.fromARGB(255, 139, 92, 246),
-          // surface: const Color.fromARGB(255, 28, 25, 23),
-          // surfaceContainerLowest: const Color.fromARGB(255, 28, 25, 23),
-          // surfaceContainerLow: const Color.fromARGB(255, 41, 37, 36),
-          // surfaceContainer: const Color.fromARGB(255, 68, 64, 60),
-          // surfaceContainerHigh: const Color.fromARGB(255, 87, 83, 78),
-          // surfaceContainerHighest: const Color.fromARGB(255, 120, 113, 108),
-          brightness: Brightness.dark,
-        ),
-      ),
-      themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
-      routerConfig: router,
-    );
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
   }
 }
+
+final authNotifier = AuthNotifier();
+
+final router = GoRouter(
+  refreshListenable: authNotifier,
+  initialLocation: '/',
+  redirect: (context, state) {
+    final session = authNotifier.session;
+    final isAuthRoute = state.matchedLocation == '/auth';
+    if (session == null && !isAuthRoute) return '/auth';
+    if (session != null && isAuthRoute) return '/';
+    return null;
+  },
+  routes: [
+    GoRoute(path: '/auth', builder: (context, state) => const AuthPage()),
+    GoRoute(path: '/', builder: (context, state) => const HomePage()),
+  ],
+);

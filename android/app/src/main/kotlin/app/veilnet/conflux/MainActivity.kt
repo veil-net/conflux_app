@@ -68,11 +68,23 @@ class MainActivity : FlutterActivity() {
                     }
 
                     "ID" -> {
-                        val id = VeilNetVPNService.anchor?.id
-                        if (id != null) {
+                        try {
+                            val id = VeilNetVPNService.anchor?.id
                             result.success(id)
-                        } else {
-                            result.error("VEILNET", "VPN is not connected", null)
+                        } catch (e: Exception) {
+                            result.error("VEILNET", e.message ?: "Failed to get anchor ID", null)
+                        }
+                    }
+
+                    "isRunning" -> {
+                        try {
+                            if (VeilNetVPNService.anchor != null) {
+                                result.success(true)
+                            } else {
+                                result.success(false)
+                            }
+                        } catch (e: Exception){
+                            result.error("VEILNET", e.message ?: "Failed to check anchor status", null)
                         }
                     }
 

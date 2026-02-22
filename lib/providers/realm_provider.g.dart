@@ -222,7 +222,7 @@ final class SelectedRealmProvider
   SelectedRealm create() => SelectedRealm();
 }
 
-String _$selectedRealmHash() => r'ad5594f3a6ba711802850eb80f176a2c638eec21';
+String _$selectedRealmHash() => r'38372aa70f8e99209768936a19a411a56919c798';
 
 abstract class _$SelectedRealm extends $AsyncNotifier<Realm?> {
   FutureOr<Realm?> build();

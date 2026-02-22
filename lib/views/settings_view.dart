@@ -1,19 +1,16 @@
-import 'package:conflux/components/settings/account_settings.dart';
-import 'package:conflux/components/settings/general_settings.dart';
-import 'package:conflux/components/settings/veilnet_settings.dart';
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 class SettingsView extends HookConsumerWidget {
   const SettingsView({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(child: Image.asset('assets/images/Logo_H.png')),
-        SliverToBoxAdapter(child: GeneralSettings()),
-        SliverToBoxAdapter(child: AccountSettings()),
-        SliverToBoxAdapter(child: VeilnetSettings()),
+        SliverFillRemaining(
+          child: Card(child: Column(children: [Text('Settings')])),
+        ),
       ],
     );
   }

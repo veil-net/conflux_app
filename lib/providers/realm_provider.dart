@@ -115,7 +115,7 @@ class SelectedRealm extends _$SelectedRealm {
   @override
   Future<Realm?> build() async {
     ref.keepAlive();
-    final prefs = await ref.watch(preferenceProvider.future);
+    final prefs = await ref.watch(preferencesProvider.future);
     final selectedRealmId = prefs.getString('selected_realm');
     if (selectedRealmId == null || selectedRealmId.isEmpty) {
       log('No selected realm');
@@ -131,7 +131,7 @@ class SelectedRealm extends _$SelectedRealm {
   }
 
   Future<void> setSelectedRealm(Realm realm) async {
-    final prefs = await ref.watch(preferenceProvider.future);
+    final prefs = await ref.watch(preferencesProvider.future);
     await prefs.setString('selected_realm', realm.id);
     ref.invalidateSelf();
   }

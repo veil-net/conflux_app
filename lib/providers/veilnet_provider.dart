@@ -13,7 +13,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'veilnet_provider.g.dart';
 
-final _vpnChannel = MethodChannel('veilnet/service');
+final veilnetChannel = MethodChannel('veilnet/service');
 
 @riverpod
 class ConfluxService extends _$ConfluxService {
@@ -150,38 +150,51 @@ class ConfluxService extends _$ConfluxService {
   }
 }
 
-enum VeilNetStatus { disconnected, connected, connecting, error }
+enum VeilnetState { connected, disconnected, loading }
 
 @riverpod
-class VeilNet extends _$VeilNet {
+class Veilnet extends _$Veilnet {
   Conflux? _conflux;
 
-  @override
-  Future<VeilNetStatus> build() async {
-    ref.keepAlive();
+  Conflux? get conflux => _conflux;
 
-    final timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      ref.invalidateSelf();
-    });
-    ref.onDispose(() => timer.cancel());
+  @override
+  Future<VeilnetState> build() async {
+    ref.keepAlive();
+    final timer = Timer(const Duration(seconds: 1), ref.invalidateSelf);
+    ref.onDispose(timer.cancel);
 
     try {
-      String? id;
-      try{
-        id = await getID();
-      } catch (e) {
-        return VeilNetStatus.disconnected;
+      // Check if Veilnet is running
+      final isRunning = await veilnetChannel.invokeMethod<bool>('isRunning');
+      if (isRunning == null || !isRunning) {
+        return VeilnetState.disconnected;
       }
+
+      // Get the anchor ID
+      final id = await veilnetChannel.invokeMethod<String>('ID');
+      if (id == null) {
+        return VeilnetState.loading;
+      }
+
+      // Fetch the Conflux information from the API
       try {
-        final conflux = await ref.watch(confluxByIDProvider(id!).future);
+        final conflux = await ref.watch(confluxByIDProvider(id).future);
+        log('Fetched Conflux information from API: ${conflux.signature}');
         _conflux = conflux;
-        return VeilNetStatus.connected;
+        return VeilnetState.connected;
       } catch (e) {
-        return VeilNetStatus.connecting;
+        // If the Conflux information is not found, return loading state
+        return VeilnetState.loading;
       }
     } catch (e) {
-      return VeilNetStatus.error;
+      return VeilnetState.disconnected;
     }
+  }
+
+  Future<bool> isRunning() async {
+    final isRunning = await veilnetChannel.invokeMethod<bool>('isRunning');
+    return isRunning ?? false;
   }
 
   Future<String?> getID() async {
@@ -193,7 +206,7 @@ class VeilNet extends _$VeilNet {
       case "macos":
         return null;
       case "android":
-        final id = await _vpnChannel.invokeMethod<String>('ID');
+        final id = await veilnetChannel.invokeMethod<String>('ID');
         return id;
       default:
         return null;
@@ -223,7 +236,7 @@ class VeilNet extends _$VeilNet {
         await ref.read(confluxServiceProvider.notifier).up(anchorToken);
         break;
       case "android":
-        final success = await _vpnChannel.invokeMethod<bool>('start', {
+        final success = await veilnetChannel.invokeMethod<bool>('start', {
           "guardian": api.options.baseUrl,
           "token": anchorToken,
         });
@@ -253,10 +266,8 @@ class VeilNet extends _$VeilNet {
         await ref.read(confluxServiceProvider.notifier).down();
         break;
       case "android":
-        await _vpnChannel.invokeMethod<bool>('stop');
+        await veilnetChannel.invokeMethod<bool>('stop');
     }
     ref.invalidateSelf();
   }
-
-  Conflux? get conflux => _conflux;
 }
