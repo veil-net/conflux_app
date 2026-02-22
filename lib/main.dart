@@ -51,7 +51,7 @@ Future<void> main() async {
       child: ShadcnApp.router(
         title: 'Weave',
         routerConfig: router,
-        theme: ThemeData(colorScheme: ColorSchemes.lightStone.cyan),
+        theme: ThemeData(colorScheme: ColorSchemes.darkStone.cyan),
       ),
     ),
   );
