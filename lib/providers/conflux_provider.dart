@@ -45,6 +45,7 @@ class Confluxes extends _$Confluxes {
 
 @riverpod
 Future<Conflux> confluxByID(Ref ref, String id) async {
+  ref.keepAlive();
   final api = ref.read(apiProvider);
   final response = await api.get('/conflux?conflux_id=$id');
   final data = response.data as Map<String, dynamic>;

@@ -18,6 +18,8 @@ class HomePage extends HookConsumerWidget {
       footers: [Divider(), AppFooter()],
       child: PageView(
         controller: pageController,
+        onPageChanged: (index) =>
+            ref.read(currentPageIndexProvider.notifier).setIndex(index),
         children: [ConfluxView(), RealmView(), SettingsView()],
       ),
     );

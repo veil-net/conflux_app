@@ -1,7 +1,9 @@
+import 'package:conflux/components/toast.dart';
 import 'package:conflux/providers/page_controller_provider.dart';
 import 'package:conflux/providers/realm_provider.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
+import 'package:conflux/providers/veilnet_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shadcn_flutter/shadcn_flutter.dart';
 
 class SelectedRealm extends HookConsumerWidget {
   const SelectedRealm({super.key});
@@ -10,6 +12,7 @@ class SelectedRealm extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final realm = ref.watch(selectedRealmProvider);
     final pageController = ref.watch(pageControllerProvider);
+    final veilnet = ref.watch(veilnetProvider);
     return Card(
       child: realm.when(
         data: (realm) {
@@ -54,11 +57,60 @@ class SelectedRealm extends HookConsumerWidget {
                   },
                 ),
               ),
-              PrimaryButton(
-                child: Text('Connect'),
-                onPressed: () {
-                  pageController.jumpToPage(1);
+              veilnet.when(
+                data: (data) {
+                  switch (data) {
+                    case VeilnetState.connected:
+                      return PrimaryButton(
+                        child: Text('Disconnect'),
+                        onPressed: () async {
+                          try {
+                            await ref
+                                .read(veilnetProvider.notifier)
+                                .disconnect();
+                          } catch (e) {
+                            if (context.mounted) {
+                              toast(
+                                context,
+                                'Error',
+                                e.toString(),
+                                ToastType.error,
+                              );
+                            }
+                          }
+                        },
+                      );
+                    case VeilnetState.disconnected:
+                      return PrimaryButton(
+                        child: Text('Connect'),
+                        onPressed: () async {
+                          try {
+                            await ref
+                                .read(veilnetProvider.notifier)
+                                .connect(realm);
+                          } catch (e) {
+                            if (context.mounted) {
+                              toast(
+                                context,
+                                'Error',
+                                e.toString(),
+                                ToastType.error,
+                              );
+                            }
+                          }
+                        },
+                      );
+                    case VeilnetState.loading:
+                      return PrimaryButton(child: Text('......'));
+                  }
                 },
+                error: (error, stackTrace) => PrimaryButton(
+                  child: Text('failed to load veilnet state').small().muted(),
+                  onPressed: () {
+                    ref.invalidate(veilnetProvider);
+                  },
+                ),
+                loading: () => PrimaryButton(child: Text('......')),
               ),
             ],
           );

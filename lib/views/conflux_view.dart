@@ -1,3 +1,4 @@
+import 'package:conflux/components/greeting_card.dart';
 import 'package:conflux/components/realm/selected_realm.dart';
 
 import 'package:shadcn_flutter/shadcn_flutter.dart';
@@ -10,6 +11,7 @@ class ConfluxView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return CustomScrollView(
       slivers: [
+        SliverFloatingHeader(child: GreetingCard()),
         SliverFillRemaining(
           child: Column(
             mainAxisSize: MainAxisSize.min,
